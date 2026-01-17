@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LariKalcer Dashboard Peserta</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1d4ed8", // Using a strong blue similar to sidebar highlight
+                        "sidebar-bg": "#1e3a8a", // Dark blue from reference
+                        "sidebar-hover": "#2563eb",
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#111827",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1f2937",
+                        "text-light": "#1f2937",
+                        "text-dark": "#f9fafb",
+                        "muted-light": "#6b7280",
+                        "muted-dark": "#9ca3af",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark min-h-screen flex transition-colors duration-200">
+    <aside
+        class="w-64 bg-sidebar-bg text-white flex-shrink-0 hidden md:flex flex-col h-screen fixed left-0 top-0 overflow-y-auto z-10 shadow-xl">
+        <div class="p-6 flex items-center justify-between">
+            <h1 class="text-2xl font-bold tracking-tight italic">Lari<span class="text-yellow-400">Kalcer</span></h1>
+        </div>
+        <nav class="flex-1 px-4 space-y-2 py-4">
+            <a class="flex items-center gap-3 px-4 py-3 bg-sidebar-hover/80 text-white rounded-lg shadow-sm transition-colors group"
+                href="#">
+                <span class="material-icons-outlined text-xl">dashboard</span>
+                <span class="font-medium text-sm">Dashboard</span>
+            </a>
+            <div class="pt-4 pb-2">
+                <p class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Management</p>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span
+                    class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">calendar_today</span>
+                <span class="font-medium text-sm">Events</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">groups</span>
+                <span class="font-medium text-sm">Participants</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span
+                    class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">inventory_2</span>
+                <span class="font-medium text-sm">Race Packs</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">payments</span>
+                <span class="font-medium text-sm">Payments</span>
+            </a>
+            <div class="pt-4 pb-2">
+                <p class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Race Data</p>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">timer</span>
+                <span class="font-medium text-sm">Results &amp; Timing</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span
+                    class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">emoji_events</span>
+                <span class="font-medium text-sm">Leaderboards</span>
+            </a>
+            <div class="pt-4 pb-2">
+                <p class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">System</p>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">history</span>
+                <span class="font-medium text-sm">Logs &amp; Audit</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
+                href="#">
+                <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">settings</span>
+                <span class="font-medium text-sm">Settings</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-blue-800">
+            <div class="flex items-center gap-3">
+                <img alt="User Profile" class="w-10 h-10 rounded-full border-2 border-blue-400"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfncrwZZFqdQCCufJfp-nrjbxj62ZflSjNPh8GYgShbkPpto9A92HICmNjs5RTsy15z3LbDL2yPY53htupuw2EYZtPJ9D_R3haFs9PMIueU2BVEF8qibNlleYiG51gQqy71sWrDU6jrS_MeUbR0vfyeHIAtISziyty8rgdDdYb54cSgaRIKDJCfACAwUWWK1CcIOnAsls4UR75EmMXSCFWJeF2xfgKygWWnW909RRP8KWwdQsnd4rdF_PNwODFcdwFKeZoE0tNksk" />
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-white">Budi Santoso</span>
+                    <span class="text-xs text-blue-300">Organizer</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <main class="flex-1 md:ml-64 p-4 md:p-8 overflow-y-auto">
+        <div class="md:hidden flex items-center justify-between mb-6">
+            <h1 class="text-xl font-bold italic text-sidebar-bg dark:text-blue-400">Lari<span
+                    class="text-yellow-500">Kalcer</span></h1>
+            <button class="p-2 text-text-light dark:text-text-dark">
+                <span class="material-icons-outlined">menu</span>
+            </button>
+        </div>
+        <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <div>
+                <h2 class="text-3xl font-bold text-text-light dark:text-text-dark">Selamat Datang, Budi! 👋</h2>
+                <p class="text-muted-light dark:text-muted-dark mt-1">Ini ringkasan aktivitas event lari Anda hari ini.
+                </p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative hidden md:block">
+                    <span
+                        class="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-light dark:text-muted-dark">
+                        <span class="material-icons-outlined">search</span>
+                    </span>
+                    <input
+                        class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-card-dark text-sm focus:ring-primary focus:border-primary w-64"
+                        placeholder="Cari event, peserta..." type="text" />
+                </div>
+                <button class="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="material-icons-outlined text-muted-light dark:text-muted-dark">notifications</span>
+                    <span
+                        class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-gray-900"></span>
+                </button>
+                <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    onclick="document.documentElement.classList.toggle('dark')">
+                    <span
+                        class="material-icons-outlined text-muted-light dark:text-muted-dark dark:hidden">dark_mode</span>
+                    <span
+                        class="material-icons-outlined text-muted-light dark:text-muted-dark hidden dark:inline">light_mode</span>
+                </button>
+            </div>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div
+                class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between group hover:shadow-md transition-all">
+                <div>
+                    <p class="text-sm font-medium text-muted-light dark:text-muted-dark mb-1">Event Terdaftar</p>
+                    <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">12</h3>
+                    <p class="text-xs text-green-500 flex items-center gap-1 mt-2 font-medium">
+                        <span class="material-icons-outlined text-sm">trending_up</span> +2 bulan ini
+                    </p>
+                </div>
+                <div
+                    class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary">
+                    <span class="material-icons-outlined text-2xl">confirmation_number</span>
+                </div>
+            </div>
+            <div
+                class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between group hover:shadow-md transition-all">
+                <div>
+                    <p class="text-sm font-medium text-muted-light dark:text-muted-dark mb-1">Total Jarak (km)</p>
+                    <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">42.5</h3>
+                    <p class="text-xs text-green-500 flex items-center gap-1 mt-2 font-medium">
+                        <span class="material-icons-outlined text-sm">arrow_upward</span> Personal Best
+                    </p>
+                </div>
+                <div
+                    class="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                    <span class="material-icons-outlined text-2xl">directions_run</span>
+                </div>
+            </div>
+            <div
+                class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between group hover:shadow-md transition-all">
+                <div>
+                    <p class="text-sm font-medium text-muted-light dark:text-muted-dark mb-1">Peringkat Global</p>
+                    <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">#842</h3>
+                    <p class="text-xs text-blue-500 flex items-center gap-1 mt-2 font-medium">
+                        Top 15% Pelari
+                    </p>
+                </div>
+                <div
+                    class="w-12 h-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600 dark:text-yellow-400">
+                    <span class="material-icons-outlined text-2xl">emoji_events</span>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-text-light dark:text-text-dark">Event Mendatang</h3>
+                    <a class="text-sm text-primary font-medium hover:underline" href="#">Lihat Semua</a>
+                </div>
+                <div
+                    class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow flex flex-col sm:flex-row">
+                    <div class="h-48 sm:h-auto sm:w-48 bg-gray-200 relative">
+                        <img alt="Runners on a track at sunrise" class="w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8mV7uGQBvlzj2nRT4E7QZQFmTNZd3ANVNvgYZQdxCZWp6o_NYxYt0E_wH_NtdYat929Qo9t59V6TDy5ojoBS__QQ9QGxypZ1P-gVgqi3cdss2XIxksCN15TjFBUXhY9ZO8ypQSOaNPjB7RWkgxLe6ICwVSnR5njn1FCTCKucUNuJHX6pf4TJyS2wV077UbtwNVJFt-f7tT5v7HU6mnm_1tJYzpTJFR3csoUlRxw5nymepKcp5uPbYi6Z2OpcQEV0VfDPTzW_iRgI" />
+                        <div
+                            class="absolute top-2 right-2 bg-white dark:bg-black/50 backdrop-blur-md px-2 py-1 rounded text-xs font-bold shadow-sm">
+                            24 SEP
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span
+                                    class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-semibold rounded-full">Terdaftar</span>
+                                <span class="text-xs text-muted-light dark:text-muted-dark flex items-center gap-1">
+                                    <span class="material-icons-outlined text-sm">place</span> GBK, Jakarta
+                                </span>
+                            </div>
+                            <h4 class="text-lg font-bold text-text-light dark:text-text-dark mb-1">Jakarta Marathon 2024
+                            </h4>
+                            <p class="text-sm text-muted-light dark:text-muted-dark mb-4">Kategori: Full Marathon (42K)
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <div class="flex -space-x-2">
+                                <img alt="Friend"
+                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhw0WvRVviSRxCDcaDc8nohaumvqqqmyh_BlGSxEa_a_oIs5MGVxcmB17qM14Lmjrogdow_ab0zcyEKWLg-h3thhm2160vC11XkzFcPL2p_3zGfMxNcwMP1XwaIwtApLOMfqfjXXM0rwOzRZKFwRgOq3TG9YR-y1qLMvgSEccCu7Vzh-MkRqwJK2dNRdep1IV-g3ySMCFyrhIZE6XhnfhuL5S6tHccX_9e98fFZLojyoGLyvmx6Rk6UCgDplErTTV8NG6le_BzGbQ" />
+                                <img alt="Friend"
+                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlJgH8zL6mmKEPYN2TU4_NJ2fh7TwErijRcWovso7oh9_owrsBS78IvnupqGAqt9PQ5LWAy3ZLfHNqGVjirvcGJ2jeyXXoolDxVU98jB6CkQlcNcME7C7NFX63yMrcYq-NqRN_RbHapAxISN-rU3kKTXVHxyB7CQDHhdNNH24PzBhcuZl6Fi1mj0FWu_5GLLCwH8GNRiFtvC1md3_YReixdzZft8MlREdc7aewp3R4G9qXlGRg6GBQt8IH7S6J5aSUFZKyYXeI_lM" />
+                                <img alt="Friend"
+                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3yr6Z_Hts_u-roV3AiB2m1HAAKTVplALFLiVsP68UZK8d-mKF5tf4Np44aQoknkyLD8yVvzoUGjaahSqlUcdkEBXulTmh2c9uhSV4OmbLNkoJ3tZVHBrrw-5eXd5mJ3AxPM_1BJ0k9HBr1Dq38o3h5v5goiP4tYiZaGiGcaHb1enB4t4ytEX-iQW6ufC_Lq7ac7iQlP-Ll6vNQVqIa30iuSHkyuPkDlKF0dk0stzj-JlhqBbyqRhc5dTczsjz0KUNmdukSvdTK2k" />
+                                <div
+                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xs font-medium text-gray-500 dark:text-gray-400">
+                                    +12</div>
+                            </div>
+                            <button
+                                class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                                Detail Race Pack
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow flex flex-col sm:flex-row opacity-90">
+                    <div class="h-48 sm:h-auto sm:w-48 bg-gray-200 relative">
+                        <img alt="Trail runner in forest" class="w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0euMKUGx5rz-k5FlyN9OeZjtHjcPXt52IJAadl0kVrsx00toe_bqQuu9VSRLSMIZulaLrc-MJ2v-iYL8-5TrRlnu8_VS6F-p6t19-itPiHXG4nFE5Uefs6-zyLa5t5W3ntXMzYDHDSJNlGi3MdjxFQr8y88ioBRJKyPX8aUK1AQsHlgwpe7BMwY-ROURvkkWH29r-dKpbVKbEs2N_awEzIcBnCHXuBZeU9oeq8iQpfCkgkihkgCYyUv0Y8S-K0be-IdveSCwATfs" />
+                        <div
+                            class="absolute top-2 right-2 bg-white dark:bg-black/50 backdrop-blur-md px-2 py-1 rounded text-xs font-bold shadow-sm">
+                            10 OKT
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span
+                                    class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs font-semibold rounded-full">Menunggu
+                                    Pembayaran</span>
+                                <span class="text-xs text-muted-light dark:text-muted-dark flex items-center gap-1">
+                                    <span class="material-icons-outlined text-sm">place</span> Bandung, Jawa Barat
+                                </span>
+                            </div>
+                            <h4 class="text-lg font-bold text-text-light dark:text-text-dark mb-1">Pocari Sweat Run 2024
+                            </h4>
+                            <p class="text-sm text-muted-light dark:text-muted-dark mb-4">Kategori: 10K Run</p>
+                        </div>
+                        <div class="flex items-center justify-end mt-2">
+                            <button
+                                class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-text-light dark:text-text-dark text-sm font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors mr-2">
+                                Batalkan
+                            </button>
+                            <button
+                                class="px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg hover:bg-yellow-600 transition-colors">
+                                Bayar Sekarang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="bg-primary rounded-xl p-6 text-white shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
+                    <div class="absolute -right-10 bottom-0 w-32 h-32 bg-white opacity-10 rounded-full"></div>
+                    <h3 class="text-lg font-bold mb-4 relative z-10">Aksi Cepat</h3>
+                    <div class="grid grid-cols-2 gap-3 relative z-10">
+                        <button
+                            class="bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-lg flex flex-col items-center justify-center gap-2 transition-colors">
+                            <span class="material-icons-outlined">add_circle</span>
+                            <span class="text-xs font-medium">Daftar Event</span>
+                        </button>
+                        <button
+                            class="bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-lg flex flex-col items-center justify-center gap-2 transition-colors">
+                            <span class="material-icons-outlined">qr_code</span>
+                            <span class="text-xs font-medium">Ambil Racepack</span>
+                        </button>
+                        <button
+                            class="bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-lg flex flex-col items-center justify-center gap-2 transition-colors">
+                            <span class="material-icons-outlined">cloud_upload</span>
+                            <span class="text-xs font-medium">Upload Hasil</span>
+                        </button>
+                        <button
+                            class="bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-lg flex flex-col items-center justify-center gap-2 transition-colors">
+                            <span class="material-icons-outlined">support_agent</span>
+                            <span class="text-xs font-medium">Bantuan</span>
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+                    <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">Aktivitas Terkini</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="mt-1">
+                                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-light dark:text-text-dark">Pendaftaran Jakarta
+                                    Marathon</p>
+                                <p class="text-xs text-muted-light dark:text-muted-dark">Berhasil diverifikasi • 2 jam
+                                    yang lalu</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1">
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-light dark:text-text-dark">Pembayaran Diterima
+                                </p>
+                                <p class="text-xs text-muted-light dark:text-muted-dark">INV-2024001 • 5 jam yang lalu
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1">
+                                <div class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-light dark:text-text-dark">Login Sistem</p>
+                                <p class="text-xs text-muted-light dark:text-muted-dark">Dari Chrome Desktop • Hari ini
+                                    08:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full mt-4 text-center text-xs text-muted-light dark:text-muted-dark hover:text-primary transition-colors">
+                        Lihat Log Lengkap
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>
