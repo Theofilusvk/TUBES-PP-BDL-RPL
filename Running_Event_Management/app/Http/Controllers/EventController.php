@@ -8,11 +8,20 @@ use App\Models\Event;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::with('categories.slots')->get();
+        $filter = $request->query('filter', 'upcoming');
+        $query = Event::with('categories.slots');
 
-        // Sort by earliest slot date
+        if ($filter == 'past') {
+            $query->where('StatusEvent', 'Tutup');
+        } else {
+            $query->where('StatusEvent', '!=', 'Tutup');
+        }
+
+        $events = $query->get();
+
+        // Sort by earliest slot date (or just created_at/date if available)
         $events = $events->sortBy(function($event) {
             $earliest = null;
             foreach($event->categories as $cat) {
@@ -25,6 +34,7 @@ class EventController extends Controller
             return $earliest ?? now()->addYears(10);
         });
 
-        return view('dashboard.events.index', compact('events'));
+        // Pass filter to view for tab active state
+        return view('dashboard.events.index', compact('events', 'filter'));
     }
 }

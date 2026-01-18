@@ -73,10 +73,10 @@
         <span class="hidden lg:block material-icons text-sm text-blue-300 transition-transform duration-200" :class="{'rotate-180': open}">expand_more</span>
     </button>
     <div x-show="open" x-collapse class="block pl-3 pr-2 py-2 space-y-1 border-l-2 border-accent/30 ml-4 lg:ml-6 my-1">
-        <a href="{{ route('dashboard.events') }}?filter=upcoming" class="flex items-center px-2 py-1.5 text-sm text-white bg-accent/20 rounded font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-2"></span> Upcoming
+        <a href="{{ route('dashboard.events', ['filter' => 'upcoming']) }}" class="{{ $filter === 'upcoming' ? 'flex items-center px-2 py-1.5 text-sm text-white bg-accent/20 rounded font-medium' : 'block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors' }}">
+            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-2 inline-block"></span> Upcoming
         </a>
-        <a href="{{ route('dashboard.events') }}?filter=past" class="block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors">
+        <a href="{{ route('dashboard.events', ['filter' => 'past']) }}" class="{{ $filter === 'past' ? 'flex items-center px-2 py-1.5 text-sm text-white bg-accent/20 rounded font-medium' : 'block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors' }}">
             <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mr-2 inline-block"></span> Past Events
         </a>
     </div>
@@ -138,10 +138,61 @@
 </span>
 <input class="pl-9 pr-4 py-2 bg-gray-100 dark:bg-gray-800 border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary text-gray-900 dark:text-white placeholder-gray-500" placeholder="Search events..." type="text"/>
 </div>
-<button class="relative text-gray-400 hover:text-primary transition-colors">
-<span class="material-icons">notifications</span>
-<span class="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full border-2 border-white dark:border-card-dark"></span>
-</button>
+<div class="relative" x-data="{
+    notificationsOpen: false,
+    hasUnread: true,
+    notifications: [
+        { id: 1, title: 'Upcoming Event: Jakarta Marathon', time: '2 hours ago', desc: 'Don\'t forget to pick up your race pack!' },
+        { id: 2, title: 'New Result Available', time: '1 day ago', desc: 'Your timing for Bandung Night Run is out.' },
+        { id: 3, title: 'Registration Successful', time: '3 days ago', desc: 'You are booked for Bali Ultra 2026.' }
+    ],
+    toggleNotifications() {
+        this.notificationsOpen = !this.notificationsOpen;
+        if (this.notificationsOpen) {
+            this.hasUnread = false;
+        }
+    }
+}">
+    <button @click="toggleNotifications()" @click.outside="notificationsOpen = false" class="relative text-gray-400 hover:text-primary transition-colors focus:outline-none">
+        <span class="material-icons">notifications</span>
+        <span x-show="hasUnread" x-transition.scale class="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full border-2 border-white dark:border-card-dark"></span>
+    </button>
+
+    <div x-show="notificationsOpen"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 translate-y-1"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 translate-y-1"
+         style="display: none;"
+         class="absolute right-0 mt-2 w-80 bg-white dark:bg-card-dark rounded-xl shadow-2xl border border-gray-100 dark:border-gray-700 py-2 z-50 origin-top-right">
+         
+         <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+            <h3 class="font-bold text-gray-900 dark:text-white text-sm">Notifications</h3>
+            <button @click="hasUnread = false" class="text-xs text-primary hover:text-blue-600 font-medium">Mark all read</button>
+         </div>
+
+         <div class="max-h-64 overflow-y-auto no-scrollbar">
+             <template x-for="note in notifications" :key="note.id">
+                 <a href="#" class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-b border-gray-50 dark:border-gray-800/50 last:border-0">
+                    <div class="flex gap-3">
+                        <div class="mt-1 flex-shrink-0">
+                             <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary dark:text-blue-400">
+                                <span class="material-icons text-sm">campaign</span>
+                             </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-900 dark:text-white" x-text="note.title"></p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-text="note.desc"></p>
+                            <p class="text-[10px] text-gray-400 mt-1" x-text="note.time"></p>
+                        </div>
+                    </div>
+                 </a>
+             </template>
+         </div>
+    </div>
+</div>
 <div class="flex items-center gap-3 pl-6 border-l border-gray-200 dark:border-gray-700">
 <div class="text-right hidden md:block">
 <div class="text-sm font-bold text-gray-900 dark:text-white">{{ Auth::user()->NamaLengkap ?? 'User' }}</div>
@@ -170,16 +221,27 @@
                     </button>
 </div>
 <div class="border-b border-gray-200 dark:border-gray-700">
+@php
+    $isUpcoming = $filter === 'upcoming';
+    $isPast = $filter === 'past';
+@endphp
 <nav aria-label="Tabs" class="-mb-px flex space-x-8">
-<a class="border-accent text-accent whitespace-nowrap py-4 px-1 border-b-2 font-bold text-sm flex items-center gap-2" href="#">
-<span class="material-icons text-lg">calendar_month</span>
-                            Upcoming Events
-                            <span class="bg-accent/10 text-accent py-0.5 px-2.5 rounded-full text-xs ml-2">3</span>
-</a>
-<a class="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2" href="#">
-<span class="material-icons text-lg">history</span>
-                            Past Events
-                        </a>
+    <a class="{{ $isUpcoming ? 'border-accent text-accent font-bold' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 font-medium' }} whitespace-nowrap py-4 px-1 border-b-2 text-sm flex items-center gap-2" 
+       href="{{ route('dashboard.events', ['filter' => 'upcoming']) }}">
+        <span class="material-icons text-lg">calendar_month</span>
+        Upcoming Events
+        @if($isUpcoming)
+        <span class="bg-accent/10 text-accent py-0.5 px-2.5 rounded-full text-xs ml-2">{{ $events->count() }}</span>
+        @endif
+    </a>
+    <a class="{{ $isPast ? 'border-accent text-accent font-bold' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 font-medium' }} whitespace-nowrap py-4 px-1 border-b-2 text-sm flex items-center gap-2" 
+       href="{{ route('dashboard.events', ['filter' => 'past']) }}">
+        <span class="material-icons text-lg">history</span>
+        Past Events
+        @if($isPast)
+        <span class="bg-accent/10 text-accent py-0.5 px-2.5 rounded-full text-xs ml-2">{{ $events->count() }}</span>
+        @endif
+    </a>
 </nav>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">

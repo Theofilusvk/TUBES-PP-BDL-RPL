@@ -28,8 +28,8 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/events', [EventController::class, 'index'])->name('dashboard.events');
-    // Route::get('/participants', [ParticipantController::class, 'index'])->name('dashboard.participants');
-    // Route::get('/participants/{id}', [ParticipantController::class, 'show'])->name('dashboard.participants.show');
+    Route::get('/participants', [ParticipantController::class, 'index'])->name('dashboard.participants');
+    Route::get('/participants/{id}', [ParticipantController::class, 'show'])->name('dashboard.participants.show');
     Route::get('/results', [ResultController::class, 'index'])->name('dashboard.results');
     Route::get('/leaderboards', [LeaderboardController::class, 'index'])->name('dashboard.leaderboards');
     Route::get('/settings', [SettingController::class, 'index'])->name('dashboard.settings');

@@ -38,15 +38,49 @@ class DummyDataSeeder extends Seeder
                 'Password' => Hash::make('password'),
                 'PeranID' => 4,
             ],
+            // New Users from Mockup
+            [
+                'Username' => 'sarah_swift',
+                'Email' => 'sarah@example.com',
+                'NamaLengkap' => 'Sarah Wijaya',
+                'Password' => Hash::make('password'),
+                'PeranID' => 4,
+            ],
+            [
+                'Username' => 'andi_explore',
+                'Email' => 'andi@example.com',
+                'NamaLengkap' => 'Andi Pratama',
+                'Password' => Hash::make('password'),
+                'PeranID' => 4,
+            ],
         ];
 
         $userIds = [];
+        // City Assignments (Domicile)
+        $cities = [
+            'budi_runner' => 'Jakarta',
+            'sarah_swift' => 'Jakarta',
+            'andi_explore' => 'Bandung',
+            'joko_speed' => 'Bandung',
+            'siti_lari' => 'Surabaya',
+        ];
+
         foreach ($users as $user) {
             $exists = DB::table('tr_pengguna')->where('Email', $user['Email'])->first();
+            
+            // Add Kota to array before inserting
+            $userWithCity = $user;
+            if(isset($cities[$user['Username']])) {
+                $userWithCity['Kota'] = $cities[$user['Username']];
+            }
+
             if (!$exists) {
-                $userIds[$user['Username']] = DB::table('tr_pengguna')->insertGetId($user);
+                $userIds[$user['Username']] = DB::table('tr_pengguna')->insertGetId($userWithCity);
             } else {
                 $userIds[$user['Username']] = $exists->PenggunaID;
+                if(isset($cities[$user['Username']])) {
+                    DB::table('tr_pengguna')->where('PenggunaID', $exists->PenggunaID)->update(['Kota' => $cities[$user['Username']]]);
+                }
             }
         }
 
@@ -79,10 +113,19 @@ class DummyDataSeeder extends Seeder
                 'name' => 'Bandung Night Run 2025',
                 'desc' => 'Lari malam menikmati kota Bandung.',
                 'status' => 'Tutup', // Past Event
-                'status' => 'Tutup', // Past Event
                 'image' => 'https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?w=600&h=400&fit=crop',
                 'categories' => [
                     ['name' => '10K Night', 'dist' => '10K', 'min' => 15, 'max' => 60, 'quota' => 200],
+                ]
+            ],
+            [
+                'name' => 'Surabaya Heritage Run 2025',
+                'desc' => 'Menelusuri jejak sejarah kota pahlawan.',
+                'status' => 'Tutup', // Past Event (Assuming early 2025)
+                'image' => 'https://images.unsplash.com/photo-1596423736561-12502755e966?w=600&h=400&fit=crop', // Historical/City vibe
+                'categories' => [
+                    ['name' => '5K Historical', 'dist' => '5K', 'min' => 10, 'max' => 80, 'quota' => 150],
+                    ['name' => '10K City', 'dist' => '10K', 'min' => 15, 'max' => 70, 'quota' => 100],
                 ]
             ]
         ];
@@ -162,6 +205,7 @@ class DummyDataSeeder extends Seeder
                     'KategoriID' => $cid,
                     'StatusPendaftaran' => $status,
                     'TanggalPendaftaran' => Carbon::now()->subDays(rand(1, 30)),
+                    'NomorBIB' => 'BIB-' . rand(1000, 9999), // Dummy BIB
                 ]);
             } else {
                 $pid = $exists->PendaftaranID;
@@ -199,6 +243,14 @@ class DummyDataSeeder extends Seeder
         // Budi: Past Events (Seeded for History)
         $pid5 = $register('budi_runner', 'Bandung Night Run 2025', '10K Night', 'Selesai', true);
 
+        // Sarah: Registered for Jakarta 10K & Bandung 10K
+        $pidSarah1 = $register('sarah_swift', 'Jakarta Marathon 2026', '10K Race', 'Selesai', true);
+        $pidSarah2 = $register('sarah_swift', 'Bandung Night Run 2025', '10K Night', 'Selesai', true);
+
+        // Andi: Registered for Bali Ultra 50K
+        $pidAndi1 = $register('andi_explore', 'Bali Ultra 2026', 'Ultra 50K', 'Selesai', true); // Pretend it's finished for leaderboard stats
+
+
         // 5. Results (tr_hasillomba)
         // Add results for Budi and Joko
         $addResult = function($pid, $time, $rank) {
@@ -215,6 +267,13 @@ class DummyDataSeeder extends Seeder
         $addResult($pid5, '00:55:00', 120);
         // Joko finished 10K in 40 mins
         $addResult($pid4, '00:40:00', 15);
+
+        // Sarah Results
+        $addResult($pidSarah1, '00:48:00', 10); // 10K
+        $addResult($pidSarah2, '00:50:00', 35); // 10K
+
+        // Andi Results
+        $addResult($pidAndi1, '04:15:00', 3); // 50K Ultra!
 
         // 4. Populate total_distances based on registered events (Dummy Logic)
         // In a real scenario, this would sum tr_hasillomba, but we don't have results seeded yet.

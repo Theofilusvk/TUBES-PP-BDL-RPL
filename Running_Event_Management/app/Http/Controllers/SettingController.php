@@ -23,6 +23,7 @@ class SettingController extends Controller
             'Username' => 'required|string|max:50|unique:tr_pengguna,Username,' . $user->PenggunaID . ',PenggunaID',
             'Email' => 'required|string|email|max:100|unique:tr_pengguna,Email,' . $user->PenggunaID . ',PenggunaID',
             'NomorTelepon' => 'nullable|string|max:20',
+            'Kota' => 'nullable|string|max:100', // Validating City
             'Gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -30,6 +31,7 @@ class SettingController extends Controller
         $user->Username = $request->Username;
         $user->Email = $request->Email; // Careful with email changes, usually requires verification
         $user->NomorTelepon = $request->NomorTelepon;
+        $user->Kota = $request->Kota; // Updating City
 
         if ($request->hasFile('Gambar')) {
             // Delete old image if exists and not a placeholder (optional)

@@ -4,6 +4,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Kalcer Run - Landing &amp; Login</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Oswald:wght@500;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 <script>
@@ -168,13 +169,24 @@
 </div>
 </div>
 <div>
-<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="password">Password</label>
-<div class="relative">
-<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-<span class="material-icons text-gray-400 text-sm">lock</span>
-</div>
-<input class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm text-gray-900 dark:text-white transition duration-150 ease-in-out" id="password" name="password" placeholder="••••••••" type="password" required />
-</div>
+                <div x-data="{ showPassword: false }">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="password">Password</label>
+                    <div class="relative">
+                        <input 
+                            class="block w-full pl-4 pr-10 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm text-gray-900 dark:text-white transition duration-150 ease-in-out" 
+                            id="password" 
+                            name="password" 
+                            placeholder="••••••••" 
+                            :type="showPassword ? 'text' : 'password'" 
+                            required 
+                        />
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <button type="button" @click="showPassword = !showPassword" class="focus:outline-none text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                                <span class="material-icons text-sm" x-text="showPassword ? 'visibility' : 'visibility_off'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 </div>
 <div class="flex items-center justify-between">
 <div class="flex items-center">
