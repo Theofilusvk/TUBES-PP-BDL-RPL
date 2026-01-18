@@ -1,127 +1,153 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Admin - @yield('title', 'Console')</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>@yield('title', 'Admin Central') | Pelari Kalcer</title>
+    
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: "#2563EB", // Royal Blue
-                        secondary: "#F97316", // Orange accent for 'kalcer' vibe
-                        "background-light": "#F3F4F6",
-                        "background-dark": "#111827",
-                        "surface-light": "#FFFFFF",
-                        "surface-dark": "#1F2937",
-                        "text-light": "#1F2937",
-                        "text-dark": "#F9FAFB",
-                        "border-light": "#E5E7EB",
-                        "border-dark": "#374151",
+                        "primary": "#00ff80", // Neon Green
+                        "accent-neon": "#39FF14",
+                        "accent-cyan": "#00f0ff",
+                        "secondary": "#FF00FF",
+                        "background-light": "#fafafa",
+                        "background-dark": "#0a0a0a", // Unified dark bg
+                        "card-dark": "#121212",
+                        "surface-dark": "#1c1f23",
+                        "border-dark": "#2d3239",
+                        "sidebar-dark": "#080a0f"
                     },
                     fontFamily: {
-                        display: ["Inter", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.5rem",
-                    },
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
                 },
             },
-        };
+        }
     </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }.scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
+
+    <!-- Custom Admin CSS -->
+    <link rel="stylesheet" href="{{ asset('css/admin_custom.css') }}">
+    @stack('styles')
 </head>
-<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased transition-colors duration-200">
-<div class="flex h-screen overflow-hidden">
-    <aside class="w-64 flex-shrink-0 bg-primary flex flex-col transition-all duration-300 shadow-xl z-20">
-        <div class="h-16 flex items-center px-6 bg-blue-700 dark:bg-blue-800 shadow-sm">
-            <span class="material-icons-outlined text-white mr-2 text-2xl">directions_run</span>
-            <span class="text-white font-bold text-lg tracking-wide">LariKalcer</span>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200 transition-colors duration-200 selection:bg-primary selection:text-background-dark">
+
+<div class="flex h-screen overflow-hidden kalcer-grid">
+    <!-- Sidebar -->
+    <aside class="w-72 bg-background-light dark:bg-sidebar-dark border-r border-slate-200 dark:border-border-dark flex flex-col z-20 shrink-0">
+        <div class="p-6 border-b border-slate-200 dark:border-border-dark flex items-center gap-3">
+            <div class="w-10 h-10 bg-primary flex items-center justify-center rounded-sm shadow-[0_0_15px_rgba(0,255,128,0.3)]">
+                <span class="material-symbols-outlined text-background-dark font-bold">bolt</span>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold tracking-tighter text-slate-900 dark:text-white uppercase leading-none">Admin Central</h1>
+                <p class="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Pelari Kalcer</p>
+            </div>
         </div>
-        <nav class="flex-1 overflow-y-auto py-4 scrollbar-hide">
-            <div class="px-4 mb-2">
-                <a class="flex items-center px-4 py-3 bg-blue-700 rounded-lg text-white group transition-colors shadow-inner" href="{{ route('admin.dashboard') }}">
-                    <span class="material-icons-outlined mr-3">dashboard</span>
-                    <span class="font-medium">Dashboard</span>
-                </a>
-            </div>
-            <div class="px-6 mt-6 mb-2">
-                <p class="text-xs font-semibold text-blue-200 uppercase tracking-wider">Management</p>
-            </div>
-            <div class="space-y-1 px-4">
-                <a class="flex items-center px-4 py-2 text-blue-100 hover:bg-blue-600 rounded-lg transition-colors group" href="#">
-                    <span class="material-icons-outlined mr-3 group-hover:text-white">calendar_today</span>
-                    <span class="font-medium group-hover:text-white">Events</span>
-                </a>
-                <a class="flex items-center px-4 py-2 text-blue-100 hover:bg-blue-600 rounded-lg transition-colors group" href="#">
-                    <span class="material-icons-outlined mr-3 group-hover:text-white">people</span>
-                    <span class="font-medium group-hover:text-white">Participants</span>
-                </a>
-                <a class="flex items-center px-4 py-2 text-blue-100 hover:bg-blue-600 rounded-lg transition-colors group" href="#">
-                    <span class="material-icons-outlined mr-3 group-hover:text-white">inventory_2</span>
-                    <span class="font-medium group-hover:text-white">Race Packs</span>
-                </a>
-            </div>
-            <div class="px-6 mt-6 mb-2">
-                <p class="text-xs font-semibold text-blue-200 uppercase tracking-wider">System</p>
-            </div>
-            <div class="space-y-1 px-4 mb-6">
-                 <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="flex w-full items-center px-4 py-2 text-blue-100 hover:bg-blue-600 rounded-lg transition-colors group">
-                        <span class="material-icons-outlined mr-3 group-hover:text-white">logout</span>
-                        <span class="font-medium group-hover:text-white">Logout</span>
-                    </button>
-                </form>
-            </div>
+        
+        <nav class="flex-1 py-6 px-4 space-y-1">
+            <a class="flex items-center gap-4 px-6 py-3 group transition-all rounded-lg {{ request()->routeIs('admin.dashboard') ? 'sidebar-item-active' : 'text-slate-500 hover:text-primary' }}" href="{{ route('admin.dashboard') }}">
+                <span class="material-symbols-outlined {{ request()->routeIs('admin.dashboard') ? 'text-primary' : '' }} group-hover:scale-110 transition-transform">dashboard</span>
+                <span class="text-sm font-semibold uppercase tracking-wider">Dashboard</span>
+            </a>
+            
+            <a class="flex items-center gap-4 px-6 py-3 group transition-all rounded-lg {{ request()->routeIs('admin.users*') ? 'sidebar-item-active' : 'text-slate-500 hover:text-primary' }}" href="#">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform">group</span>
+                <span class="text-sm font-semibold uppercase tracking-wider">User Management</span>
+            </a>
+            
+            <a class="flex items-center gap-4 px-6 py-3 group transition-all rounded-lg {{ request()->routeIs('admin.events*') ? 'sidebar-item-active' : 'text-slate-500 hover:text-primary' }}" href="#">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform">event_seat</span>
+                <span class="text-sm font-semibold uppercase tracking-wider">Event Config</span>
+            </a>
+            
+            <a class="flex items-center gap-4 px-6 py-3 group transition-all rounded-lg {{ request()->routeIs('admin.financial*') ? 'sidebar-item-active' : 'text-slate-500 hover:text-primary' }}" href="#">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform">account_balance_wallet</span>
+                <span class="text-sm font-semibold uppercase tracking-wider">Financial Reports</span>
+            </a>
+            
+            <a class="flex items-center gap-4 px-6 py-3 group transition-all rounded-lg {{ request()->routeIs('admin.triggers*') ? 'sidebar-item-active' : 'text-slate-500 hover:text-primary' }}" href="#">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform">database</span>
+                <span class="text-sm font-semibold uppercase tracking-wider">DB Triggers</span>
+            </a>
         </nav>
-        <div class="p-4 bg-blue-800 dark:bg-blue-900 border-t border-blue-700">
-            <div class="flex items-center gap-3">
-                <img alt="Admin Profile" class="h-9 w-9 rounded-full object-cover border-2 border-white/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsHs2q3lClUURierS_-TvCdRralRrHeyjZQXgngJfR-_lDrsoTGEza7D1ifF2lCEA1Y5n8HcfnoIevwc_vapY-SiDUpX1K-PJJRigS0n8Qi58n54kMZJ9G9XGjLajvPs6I8ShAGI_N2o7qQvkKrYE4pzqiK9r5euDDpD4joWZ7TPKhC2G4Lt8J8zPpCaX5MCzAtCznlcxj_K-Nkp_nQFSHFq1KTga8drhRvu2_pRxBMaiqRZjuy7uaxHAVm7KEOCbOHZlNSjOk04o"/>
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-white truncate">Admin Panitia</p>
-                    <p class="text-xs text-blue-200 truncate">Super Admin</p>
+
+        <div class="p-6 mt-auto border-t border-slate-200 dark:border-border-dark">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden shadow-[0_0_10px_rgba(0,255,128,0.2)]">
+                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNKmw_zERdI-sZRx4B8jm2zDp_aZY7pNF-8yrsVpp1eoMoCziqMr2rYfTbSk-xhHFlR4fWbnAsLGS77tymdSvbziAyZb2Ioe5AQglORCZEdwOem4S9tpP3MolZ-iCDNSVGISgggnF3L2AVioBBjJ_xmGlQXXIW_z1GBtnEKmxGRGCDNGUJ3SMEUWhhXslQyY0-mSEqOmROSV2LVwLroqxXL1AW5RLHdrOsOWmvapI3T8Hm9v4mGWE4vQw44qyF0qn1iH5hSvieGX0" alt="Admin"/>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-sm font-bold text-slate-900 dark:text-white truncate">{{ Auth::user()->NamaLengkap ?? 'Admin' }}</p>
+                    <p class="text-xs text-slate-500 truncate">{{ Auth::user()->Email ?? '' }}</p>
                 </div>
             </div>
+            
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="w-full flex items-center justify-center gap-2 py-2 px-4 rounded bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-border-dark text-slate-600 dark:text-slate-400 hover:text-primary hover:border-primary transition-colors">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    <span class="text-xs font-bold uppercase tracking-widest">Sign Out</span>
+                </button>
+            </form>
         </div>
     </aside>
-    <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-background-light dark:bg-background-dark">
-        <header class="h-16 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-6 shadow-sm z-10">
-            <div class="flex items-center gap-4">
-                <h1 class="text-xl font-semibold text-gray-800 dark:text-white">@yield('header', 'Dashboard Overview')</h1>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
+        <!-- Topbar -->
+        <header class="h-20 flex items-center justify-between px-10 border-b border-slate-200 dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-primary uppercase tracking-[0.3em] shadow-primary drop-shadow-sm">System Status:</span>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#00ff80]"></div>
+                    <span class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Nominal</span>
+                </div>
             </div>
-            <div class="flex items-center gap-4">
-                <button class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors focus:outline-none" onclick="document.documentElement.classList.toggle('dark')">
-                    <span class="material-icons-outlined block dark:hidden">dark_mode</span>
-                    <span class="material-icons-outlined hidden dark:block">light_mode</span>
-                </button>
-                <button class="relative p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors">
-                    <span class="material-icons-outlined">notifications</span>
-                    <span class="absolute top-1 right-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
-                </button>
+            <div class="flex items-center gap-6">
+                <!-- Lang Switcher -->
+                <div class="flex p-1 bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-border-dark rounded-sm">
+                    <button class="px-3 py-1 text-[10px] font-bold tracking-tighter bg-primary text-background-dark rounded-sm">ID</button>
+                    <button class="px-3 py-1 text-[10px] font-bold tracking-tighter text-slate-500 hover:text-primary transition-colors">EN</button>
+                </div>
+                <!-- Controls -->
+                <div class="flex items-center gap-4">
+                    <button class="p-2 text-slate-500 hover:text-primary transition-colors relative">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span class="absolute top-2 right-2 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_5px_#00ff80]"></span>
+                    </button>
+                    <button class="p-2 text-slate-500 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">settings</span>
+                    </button>
+                </div>
             </div>
         </header>
-        <div class="flex-1 overflow-auto p-6 md:p-8">
+
+        <!-- Content Area -->
+        <div class="flex-1">
             @yield('content')
+        </div>
+        
+        <!-- Footer (Optional) -->
+        <div class="px-10 py-6 border-t border-slate-200 dark:border-border-dark opacity-50 flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-slate-500 mt-auto">
+             <span>Pelari Kalcer Admin v2.4</span>
+             <span>{{ now()->format('Y-m-d H:i:s') }}</span>
         </div>
     </main>
 </div>
+
+@stack('scripts')
 </body>
 </html>

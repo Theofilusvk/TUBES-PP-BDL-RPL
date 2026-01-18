@@ -1,0 +1,41 @@
+.sidebar-item-active {
+    background: linear-gradient(90deg, rgba(0, 255, 128, 0.15) 0%, rgba(0, 255, 128, 0) 100%);
+    border-left: 3px solid #00ff80;
+    color: white;
+}
+
+.kalcer-grid {
+    background-image: radial-gradient(#2d3239 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #05070a;
+}
+::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00ff80;
+}
+
+/* Neon Utilities */
+.neon-glow-primary {
+    box-shadow: 0 0 15px rgba(0, 255, 128, 0.15);
+}
+.neon-text-primary {
+    text-shadow: 0 0 8px rgba(0, 255, 128, 0.4);
+}
+.neon-text-cyan {
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
+
+.terminal-text {
+    font-family: 'JetBrains Mono', monospace;
+}

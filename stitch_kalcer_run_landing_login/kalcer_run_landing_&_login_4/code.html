@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kalcer Run - Events Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Oswald:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563EB", 
+              secondary: "#10B981", 
+              accent: "#F43F5E",
+              "background-light": "#F3F4F6",
+              "background-dark": "#111827",
+              "card-light": "#FFFFFF",
+              "card-dark": "#1F2937",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Oswald", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans h-screen flex overflow-hidden selection:bg-primary selection:text-white transition-colors duration-300">
+<aside class="w-20 lg:w-64 flex-shrink-0 bg-primary dark:bg-slate-900 flex flex-col justify-between border-r border-white/10 dark:border-gray-800 transition-all duration-300 z-20 shadow-xl">
+<div>
+<div class="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-white/10 dark:border-gray-800 bg-primary/10">
+<div class="flex items-center gap-3">
+<span class="material-icons text-3xl text-white">directions_run</span>
+<h1 class="hidden lg:block font-display font-bold text-2xl text-white tracking-wide uppercase italic">Kalcer<span class="text-accent">Run</span></h1>
+</div>
+</div>
+<nav class="mt-6 px-3 space-y-1.5 overflow-y-auto max-h-[calc(100vh-280px)] no-scrollbar">
+<a class="group flex items-center px-3 py-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-icons group-hover:text-accent transition-colors">dashboard</span>
+<span class="hidden lg:block ml-3 font-medium text-sm">Dashboard</span>
+</a>
+<div class="hidden lg:block px-3 mt-6 mb-2 text-[10px] font-bold text-blue-200/70 uppercase tracking-widest">Management</div>
+<div class="relative group bg-black/10 rounded-xl overflow-hidden">
+<a class="group flex items-center px-3 py-2.5 text-white bg-white/5 cursor-pointer" href="#">
+<span class="material-icons text-accent">calendar_today</span>
+<span class="hidden lg:block ml-3 font-semibold text-sm flex-1">Events</span>
+<span class="hidden lg:block material-icons text-sm text-blue-300">expand_less</span>
+</a>
+<div class="block pl-3 pr-2 py-2 space-y-1 border-l-2 border-accent/30 ml-4 lg:ml-6 my-1">
+<a class="flex items-center px-2 py-1.5 text-sm text-white bg-accent/20 rounded font-medium" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-accent mr-2"></span>
+                            Upcoming
+                        </a>
+<a class="block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors" href="#">Past Events</a>
+<a class="block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors" href="#">Race Packs</a>
+</div>
+</div>
+<a class="group flex items-center px-3 py-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-icons group-hover:text-accent transition-colors">groups</span>
+<span class="hidden lg:block ml-3 font-medium text-sm">Participants</span>
+</a>
+<div class="hidden lg:block px-3 mt-6 mb-2 text-[10px] font-bold text-blue-200/70 uppercase tracking-widest">Race Data</div>
+<a class="group flex items-center px-3 py-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-icons group-hover:text-accent transition-colors">timer</span>
+<span class="hidden lg:block ml-3 font-medium text-sm">Results &amp; Timing</span>
+</a>
+<a class="group flex items-center px-3 py-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-icons group-hover:text-accent transition-colors">emoji_events</span>
+<span class="hidden lg:block ml-3 font-medium text-sm">Leaderboards</span>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-white/10 dark:border-gray-800 bg-black/10">
+<a class="group flex items-center px-3 py-2 mb-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl group-hover:text-accent transition-colors">settings</span>
+<span class="hidden lg:block ml-3 font-medium text-sm">Settings</span>
+</a>
+<div class="flex flex-col gap-3">
+<div class="flex items-center bg-black/20 rounded-lg p-1 border border-white/5">
+<button class="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xs font-bold text-primary bg-white shadow-sm transition-all">
+<span>ID</span>
+</button>
+<button class="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xs font-medium text-blue-200 hover:text-white hover:bg-white/10 transition-all">
+<span>EN</span>
+</button>
+</div>
+<button class="relative w-full flex items-center justify-between px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all border border-transparent hover:border-white/10 group" onclick="document.documentElement.classList.toggle('dark')">
+<div class="flex items-center gap-2">
+<span class="material-icons text-sm group-hover:text-yellow-300 transition-colors">light_mode</span>
+<span class="hidden lg:block text-xs font-medium">Theme</span>
+</div>
+<div class="hidden lg:block relative w-8 h-4 bg-black/40 rounded-full border border-white/10 dark:bg-primary dark:border-transparent transition-colors">
+<div class="absolute left-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm transform dark:translate-x-4 transition-transform duration-300"></div>
+</div>
+</button>
+</div>
+</div>
+</aside>
+<main class="flex-1 relative flex flex-col overflow-hidden bg-gray-50 dark:bg-[#0B1120]">
+<header class="h-20 bg-white dark:bg-card-dark border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-8 z-10 shadow-sm">
+<div class="flex items-center gap-4">
+<button class="lg:hidden text-gray-500 hover:text-primary">
+<span class="material-icons">menu</span>
+</button>
+<nav class="hidden md:flex items-center text-sm font-medium text-gray-500 dark:text-gray-400">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-icons text-base mx-2">chevron_right</span>
+<span class="text-gray-900 dark:text-white font-semibold">Events Hub</span>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:block relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-gray-400 text-sm">search</span>
+</span>
+<input class="pl-9 pr-4 py-2 bg-gray-100 dark:bg-gray-800 border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary text-gray-900 dark:text-white placeholder-gray-500" placeholder="Search events..." type="text"/>
+</div>
+<button class="relative text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full border-2 border-white dark:border-card-dark"></span>
+</button>
+<div class="flex items-center gap-3 pl-6 border-l border-gray-200 dark:border-gray-700">
+<div class="text-right hidden md:block">
+<div class="text-sm font-bold text-gray-900 dark:text-white">Rina Runner</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">Organizer</div>
+</div>
+<div class="h-10 w-10 rounded-full bg-gradient-to-tr from-primary to-accent p-[2px]">
+<img alt="Profile" class="h-full w-full rounded-full object-cover border-2 border-white dark:border-card-dark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Pc3kJvNAbvqYzreNIQQiy7Ru1RhyVGUdu7w2mKgc6eC2TrzlB4Df56MWznmrEJ_mm7NYtyofbmhvyPoQlfhP448KQJ6hE9Az7t1-TGFOoUO9-tS_wG9N6mQg76rE46K9w9gRLQaN1gLbe0eKoVABzrJ9G1ENiMnQPYME_DYOiybhPx0h0VXmnc1LRhL79MX4nB64diFaVeOzyRaHCZWBITBxyn1AgK1YQrEiIMAPL6Aw05Z7Kj-h_-DLrZrbElmgHX_e_SF1vEE"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-6 lg:p-10 no-scrollbar">
+<div class="max-w-7xl mx-auto space-y-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl lg:text-4xl font-display font-bold uppercase italic text-gray-900 dark:text-white">
+                            Events <span class="text-primary">Master Hub</span>
+</h1>
+<p class="mt-2 text-gray-600 dark:text-gray-400 max-w-2xl">
+                            Manage your race portfolio. Create new events, track registrations, and coordinate race pack distributions all in one place.
+                        </p>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg shadow-lg shadow-blue-500/20 transition-all transform hover:-translate-y-0.5 font-medium">
+<span class="material-icons text-sm">add</span>
+                        Create Event
+                    </button>
+</div>
+<div class="border-b border-gray-200 dark:border-gray-700">
+<nav aria-label="Tabs" class="-mb-px flex space-x-8">
+<a class="border-accent text-accent whitespace-nowrap py-4 px-1 border-b-2 font-bold text-sm flex items-center gap-2" href="#">
+<span class="material-icons text-lg">calendar_month</span>
+                            Upcoming Events
+                            <span class="bg-accent/10 text-accent py-0.5 px-2.5 rounded-full text-xs ml-2">3</span>
+</a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2" href="#">
+<span class="material-icons text-lg">history</span>
+                            Past Events
+                        </a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 group" href="#">
+<span class="material-icons text-lg group-hover:text-yellow-500 transition-colors">inventory_2</span>
+                            Race Pack Info
+                            <span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 py-0.5 px-2 rounded-full text-xs ml-2 group-hover:bg-yellow-100 dark:group-hover:bg-yellow-900/30 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">Action Required</span>
+</a>
+</nav>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<div class="group bg-white dark:bg-card-dark rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-48 overflow-hidden">
+<img alt="Marathon" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtAjKfQu5UKS8bAfVOdEaJPd4-dxNukQSG8pJ8fy2Oee46MwfNsG3hNdAsPc8lGQhZJVzNKWbBBthbqqcgaLE59BkzKcULrao1mWhU8BR1x9vKQT5slsF620pnaidZEmH4kGp7rx5y9dxfCB7E5hmBhWcr-p4TnqZRhtVfSA_CocgZbbZn-qGud2JABQL5evAiTLkpMtiwR4QhJslnKPu7kK8GypqpD2TU3mm5b1sp2ky4_mDdy2yYgNNFxuUC7ix8fvPGBXsxNsg"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-primary/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Marathon</span>
+<span class="bg-white/90 backdrop-blur-md text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">42K</span>
+</div>
+<div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+<span class="material-icons text-yellow-400 text-sm">timer</span>
+<span class="text-xs font-mono font-bold">05 DAYS LEFT</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-display font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Jakarta City Marathon</h3>
+<div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mt-1">
+<span class="material-icons text-sm mr-1">location_on</span>
+                                        Monas, Jakarta Pusat
+                                    </div>
+</div>
+<div class="text-center bg-gray-100 dark:bg-gray-800 rounded-lg p-2 min-w-[60px]">
+<div class="text-xs text-gray-500 uppercase font-bold">Oct</div>
+<div class="text-xl font-bold text-gray-900 dark:text-white">25</div>
+</div>
+</div>
+<div class="w-full h-24 bg-gray-100 dark:bg-gray-800 rounded-lg mb-4 overflow-hidden relative group/map">
+<div class="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-400">
+<span class="material-icons">map</span>
+</div>
+<div class="absolute inset-0 bg-blue-900/10 dark:bg-blue-900/20"></div>
+<div class="absolute bottom-2 left-2 bg-white/90 dark:bg-black/80 text-[10px] px-2 py-0.5 rounded shadow">Route Map</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-gray-300 border border-white dark:border-card-dark"></div>
+<div class="w-6 h-6 rounded-full bg-gray-400 border border-white dark:border-card-dark"></div>
+<div class="w-6 h-6 rounded-full bg-gray-500 border border-white dark:border-card-dark flex items-center justify-center text-[8px] text-white font-bold">+2k</div>
+</div>
+<span class="text-xs text-gray-500">Registered</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                    Registration Closed
+                                </span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-card-dark rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-48 overflow-hidden">
+<img alt="Trail Run" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAxyf5ss9MIikf_ejLP70RTM6jrJLnSsD48mpKwkJriwzQkAWN04Mz3zuFPp8QCv4dWLYd6sP7OvYasxW0HGF7xu047CCA9MNYkYGvkRmK7wcfBuvlxK9tiZz_PztMRJIGMFJ0Tpc83wXi9w7JMq080aq1RAybtZUsve45msevJA1sfTmex1cO_lqes99IrVsI5ffzrmf87d3iuFRdmyXIyVLpej5fKu5PK53Gy3ESn1zlO9inV4PMsmQ0wsY3nMriA5SsiGROke0"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-secondary/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Trail</span>
+<span class="bg-white/90 backdrop-blur-md text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">25K</span>
+</div>
+<div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+<span class="material-icons text-secondary text-sm">event_available</span>
+<span class="text-xs font-mono font-bold">OPEN NOW</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-display font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Bali Ultra Trail</h3>
+<div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mt-1">
+<span class="material-icons text-sm mr-1">location_on</span>
+                                        Kintamani, Bali
+                                    </div>
+</div>
+<div class="text-center bg-gray-100 dark:bg-gray-800 rounded-lg p-2 min-w-[60px]">
+<div class="text-xs text-gray-500 uppercase font-bold">Nov</div>
+<div class="text-xl font-bold text-gray-900 dark:text-white">12</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="bg-gray-50 dark:bg-gray-800/50 p-2 rounded border border-gray-100 dark:border-gray-700">
+<div class="text-[10px] text-gray-500 uppercase">Elevation</div>
+<div class="text-sm font-bold text-gray-800 dark:text-gray-200">1,200m</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 p-2 rounded border border-gray-100 dark:border-gray-700">
+<div class="text-[10px] text-gray-500 uppercase">COT</div>
+<div class="text-sm font-bold text-gray-800 dark:text-gray-200">7 Hours</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2 text-xs text-primary font-medium">
+<span class="material-icons text-sm">download</span>
+                                    Race Guide Available
+                                </div>
+<button class="bg-primary hover:bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors shadow-lg shadow-blue-500/20">
+                                    Manage
+                                </button>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-card-dark rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 opacity-90">
+<div class="relative h-48 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="Fun Run" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfGXI_2I3MNmd-XMZssbjQ2mNXY5EGoh6527SyDUyhPkeFHEjqia2LG9e1JJdFWSTE5u8wzoxf2nX3GN-jlseorADWrpXDbhATNxQuW2twx_-6KUFT6zsWZrklu6fxYNF8GRo8REMvCXKlt8nppeRpjdnX3RGpyOFyAI_Ms9MGvK9h34LklbOxNMLGfNMwoXMqP6SpbQu8mOMrSPmg6JHKtX8mpxKD3GxygFGnRhPzHn1sQnTPEJNBjc5C4cpdmxLOXd_Lm_npF6s"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-accent/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Fun Run</span>
+<span class="bg-white/90 backdrop-blur-md text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">5K</span>
+</div>
+<div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+<span class="material-icons text-gray-300 text-sm">schedule</span>
+<span class="text-xs font-mono font-bold">COMING SOON</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-display font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Midnight Glow Run</h3>
+<div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mt-1">
+<span class="material-icons text-sm mr-1">location_on</span>
+                                        GBK, Jakarta
+                                    </div>
+</div>
+<div class="text-center bg-gray-100 dark:bg-gray-800 rounded-lg p-2 min-w-[60px]">
+<div class="text-xs text-gray-500 uppercase font-bold">Dec</div>
+<div class="text-xl font-bold text-gray-900 dark:text-white">05</div>
+</div>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">
+                                Experience the city lights like never before. Join thousands of runners in this neon-themed night run.
+                            </p>
+<div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+<span class="text-xs text-gray-400 flex items-center gap-1">
+<span class="material-icons text-[14px]">info</span>
+                                    Details TBA
+                                </span>
+<button class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-xs font-bold px-3 py-2 rounded-lg transition-colors border border-gray-200 dark:border-gray-700">
+                                    Preview
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden shadow-sm">
+<div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
+<span class="material-icons text-yellow-600 dark:text-yellow-400">inventory_2</span>
+</div>
+<div>
+<h3 class="font-display font-bold text-lg text-gray-900 dark:text-white">Race Pack Collection</h3>
+<p class="text-sm text-gray-500">Active schedule for Jakarta City Marathon</p>
+</div>
+</div>
+<button class="text-primary text-sm font-medium hover:underline">View All Details</button>
+</div>
+<div class="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-gray-200 dark:divide-gray-700">
+<div class="p-6">
+<h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Location</h4>
+<div class="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg mb-3 relative overflow-hidden">
+<div class="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+<span class="material-icons text-4xl text-gray-400">map</span>
+</div>
+<div class="absolute bottom-2 left-2 right-2 bg-white/95 dark:bg-card-dark/95 p-2 rounded text-xs shadow-sm flex justify-between items-center">
+<span class="font-semibold truncate">FX Sudirman, f3</span>
+<span class="material-icons text-primary text-sm">directions</span>
+</div>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">FX Sudirman Mall, 3rd Floor<br/>Jl. Jend. Sudirman, Jakarta</p>
+</div>
+<div class="p-6">
+<h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Schedule</h4>
+<ul class="space-y-4">
+<li class="flex gap-4">
+<div class="w-12 text-center">
+<div class="text-xs font-bold text-gray-900 dark:text-white">OCT 22</div>
+<div class="text-[10px] text-gray-500">TUE</div>
+</div>
+<div class="flex-1 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Early Bird Collection</div>
+<div class="text-xs text-gray-500">10:00 AM - 08:00 PM</div>
+</div>
+</li>
+<li class="flex gap-4">
+<div class="w-12 text-center">
+<div class="text-xs font-bold text-gray-900 dark:text-white">OCT 23</div>
+<div class="text-[10px] text-gray-500">WED</div>
+</div>
+<div class="flex-1 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="text-sm font-medium text-gray-900 dark:text-white">General Collection</div>
+<div class="text-xs text-gray-500">10:00 AM - 09:00 PM</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="p-6">
+<h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Required Documents</h4>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
+<span class="material-icons text-green-500">check_circle</span>
+<span class="text-sm text-gray-700 dark:text-gray-300">Original ID Card (KTP/Passport)</span>
+</li>
+<li class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
+<span class="material-icons text-green-500">check_circle</span>
+<span class="text-sm text-gray-700 dark:text-gray-300">Confirmation Email / QR Code</span>
+</li>
+<li class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
+<span class="material-icons text-gray-400">description</span>
+<span class="text-sm text-gray-500 dark:text-gray-400">Authorization Letter (if proxy)</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

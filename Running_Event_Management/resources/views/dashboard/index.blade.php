@@ -5,7 +5,7 @@
 @section('content')
 <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
     <div>
-        <h2 class="text-3xl font-bold text-text-light dark:text-text-dark">Selamat Datang, Budi! 👋</h2>
+        <h2 class="text-3xl font-bold text-text-light dark:text-text-dark">Selamat Datang, {{ $user->NamaLengkap }}! 👋</h2>
         <p class="text-muted-light dark:text-muted-dark mt-1">Ini ringkasan aktivitas event lari Anda hari ini.
         </p>
     </div>
@@ -38,7 +38,7 @@
         class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between group hover:shadow-md transition-all">
         <div>
             <p class="text-sm font-medium text-muted-light dark:text-muted-dark mb-1">Event Terdaftar</p>
-            <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">12</h3>
+            <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">{{ $registeredCount }}</h3>
             <p class="text-xs text-green-500 flex items-center gap-1 mt-2 font-medium">
                 <span class="material-icons-outlined text-sm">trending_up</span> +2 bulan ini
             </p>
@@ -52,7 +52,7 @@
         class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between group hover:shadow-md transition-all">
         <div>
             <p class="text-sm font-medium text-muted-light dark:text-muted-dark mb-1">Total Jarak (km)</p>
-            <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">42.5</h3>
+            <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">0</h3>
             <p class="text-xs text-green-500 flex items-center gap-1 mt-2 font-medium">
                 <span class="material-icons-outlined text-sm">arrow_upward</span> Personal Best
             </p>
@@ -66,9 +66,9 @@
         class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between group hover:shadow-md transition-all">
         <div>
             <p class="text-sm font-medium text-muted-light dark:text-muted-dark mb-1">Peringkat Global</p>
-            <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">#842</h3>
+            <h3 class="text-3xl font-bold text-text-light dark:text-text-dark">-</h3>
             <p class="text-xs text-blue-500 flex items-center gap-1 mt-2 font-medium">
-                Top 15% Pelari
+                Belum ada peringkat
             </p>
         </div>
         <div
@@ -80,47 +80,43 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="lg:col-span-2 space-y-6">
         <div class="flex items-center justify-between">
-            <h3 class="text-xl font-bold text-text-light dark:text-text-dark">Event Mendatang</h3>
+            <h3 class="text-xl font-bold text-text-light dark:text-text-dark">Event Saya ({{ count($myRegistrations) }})</h3>
             <a class="text-sm text-primary font-medium hover:underline" href="#">Lihat Semua</a>
         </div>
+        
+        @forelse($myRegistrations as $reg)
         <div
             class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow flex flex-col sm:flex-row">
             <div class="h-48 sm:h-auto sm:w-48 bg-gray-200 relative">
-                <img alt="Runners on a track at sunrise" class="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8mV7uGQBvlzj2nRT4E7QZQFmTNZd3ANVNvgYZQdxCZWp6o_NYxYt0E_wH_NtdYat929Qo9t59V6TDy5ojoBS__QQ9QGxypZ1P-gVgqi3cdss2XIxksCN15TjFBUXhY9ZO8ypQSOaNPjB7RWkgxLe6ICwVSnR5njn1FCTCKucUNuJHX6pf4TJyS2wV077UbtwNVJFt-f7tT5v7HU6mnm_1tJYzpTJFR3csoUlRxw5nymepKcp5uPbYi6Z2OpcQEV0VfDPTzW_iRgI" />
+                <img alt="Event Image" class="w-full h-full object-cover"
+                    src="https://images.unsplash.com/photo-1552674605-4694553024c3" />
                 <div
                     class="absolute top-2 right-2 bg-white dark:bg-black/50 backdrop-blur-md px-2 py-1 rounded text-xs font-bold shadow-sm">
-                    24 SEP
+                    {{ \Carbon\Carbon::parse($reg->category->event->TanggalMulai ?? now())->format('d M') }}
                 </div>
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-semibold rounded-full">Terdaftar</span>
+                        @if($reg->StatusPendaftaran == 'Terverifikasi')
+                        <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-semibold rounded-full">Terdaftar</span>
+                        @else
+                        <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs font-semibold rounded-full">{{ $reg->StatusPendaftaran }}</span>
+                        @endif
                         <span class="text-xs text-muted-light dark:text-muted-dark flex items-center gap-1">
-                            <span class="material-icons-outlined text-sm">place</span> GBK, Jakarta
+                            <span class="material-icons-outlined text-sm">place</span> {{ $reg->category->event->LokasiEvent ?? 'Lokasi tidak tersedia' }}
                         </span>
                     </div>
-                    <h4 class="text-lg font-bold text-text-light dark:text-text-dark mb-1">Jakarta Marathon 2024
+                    <h4 class="text-lg font-bold text-text-light dark:text-text-dark mb-1">{{ $reg->category->event->NamaEvent ?? 'Nama Event' }}
                     </h4>
-                    <p class="text-sm text-muted-light dark:text-muted-dark mb-4">Kategori: Full Marathon (42K)
+                    <p class="text-sm text-muted-light dark:text-muted-dark mb-4">Kategori: {{ $reg->category->NamaKategori ?? '-' }}
                     </p>
                 </div>
                 <div class="flex items-center justify-between mt-2">
                     <div class="flex -space-x-2">
-                        <img alt="Friend"
-                            class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhw0WvRVviSRxCDcaDc8nohaumvqqqmyh_BlGSxEa_a_oIs5MGVxcmB17qM14Lmjrogdow_ab0zcyEKWLg-h3thhm2160vC11XkzFcPL2p_3zGfMxNcwMP1XwaIwtApLOMfqfjXXM0rwOzRZKFwRgOq3TG9YR-y1qLMvgSEccCu7Vzh-MkRqwJK2dNRdep1IV-g3ySMCFyrhIZE6XhnfhuL5S6tHccX_9e98fFZLojyoGLyvmx6Rk6UCgDplErTTV8NG6le_BzGbQ" />
-                        <img alt="Friend"
-                            class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlJgH8zL6mmKEPYN2TU4_NJ2fh7TwErijRcWovso7oh9_owrsBS78IvnupqGAqt9PQ5LWAy3ZLfHNqGVjirvcGJ2jeyXXoolDxVU98jB6CkQlcNcME7C7NFX63yMrcYq-NqRN_RbHapAxISN-rU3kKTXVHxyB7CQDHhdNNH24PzBhcuZl6Fi1mj0FWu_5GLLCwH8GNRiFtvC1md3_YReixdzZft8MlREdc7aewp3R4G9qXlGRg6GBQt8IH7S6J5aSUFZKyYXeI_lM" />
-                        <img alt="Friend"
-                            class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3yr6Z_Hts_u-roV3AiB2m1HAAKTVplALFLiVsP68UZK8d-mKF5tf4Np44aQoknkyLD8yVvzoUGjaahSqlUcdkEBXulTmh2c9uhSV4OmbLNkoJ3tZVHBrrw-5eXd5mJ3AxPM_1BJ0k9HBr1Dq38o3h5v5goiP4tYiZaGiGcaHb1enB4t4ytEX-iQW6ufC_Lq7ac7iQlP-Ll6vNQVqIa30iuSHkyuPkDlKF0dk0stzj-JlhqBbyqRhc5dTczsjz0KUNmdukSvdTK2k" />
-                        <div
-                            class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xs font-medium text-gray-500 dark:text-gray-400">
-                            +12</div>
+                         <!-- Dummy Avatars -->
+                         <div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-200"></div>
+                         <div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-300"></div>
                     </div>
                     <button
                         class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
@@ -129,42 +125,11 @@
                 </div>
             </div>
         </div>
-        <div
-            class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow flex flex-col sm:flex-row opacity-90">
-            <div class="h-48 sm:h-auto sm:w-48 bg-gray-200 relative">
-                <img alt="Trail runner in forest" class="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0euMKUGx5rz-k5FlyN9OeZjtHjcPXt52IJAadl0kVrsx00toe_bqQuu9VSRLSMIZulaLrc-MJ2v-iYL8-5TrRlnu8_VS6F-p6t19-itPiHXG4nFE5Uefs6-zyLa5t5W3ntXMzYDHDSJNlGi3MdjxFQr8y88ioBRJKyPX8aUK1AQsHlgwpe7BMwY-ROURvkkWH29r-dKpbVKbEs2N_awEzIcBnCHXuBZeU9oeq8iQpfCkgkihkgCYyUv0Y8S-K0be-IdveSCwATfs" />
-                <div
-                    class="absolute top-2 right-2 bg-white dark:bg-black/50 backdrop-blur-md px-2 py-1 rounded text-xs font-bold shadow-sm">
-                    10 OKT
-                </div>
-            </div>
-            <div class="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs font-semibold rounded-full">Menunggu
-                            Pembayaran</span>
-                        <span class="text-xs text-muted-light dark:text-muted-dark flex items-center gap-1">
-                            <span class="material-icons-outlined text-sm">place</span> Bandung, Jawa Barat
-                        </span>
-                    </div>
-                    <h4 class="text-lg font-bold text-text-light dark:text-text-dark mb-1">Pocari Sweat Run 2024
-                    </h4>
-                    <p class="text-sm text-muted-light dark:text-muted-dark mb-4">Kategori: 10K Run</p>
-                </div>
-                <div class="flex items-center justify-end mt-2">
-                    <button
-                        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-text-light dark:text-text-dark text-sm font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors mr-2">
-                        Batalkan
-                    </button>
-                    <button
-                        class="px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg hover:bg-yellow-600 transition-colors">
-                        Bayar Sekarang
-                    </button>
-                </div>
-            </div>
+        @empty
+        <div class="p-6 text-center text-muted-light">
+            Belum ada event yang didaftar.
         </div>
+        @endforelse
     </div>
     <div class="space-y-6">
         <div class="bg-primary rounded-xl p-6 text-white shadow-lg relative overflow-hidden">

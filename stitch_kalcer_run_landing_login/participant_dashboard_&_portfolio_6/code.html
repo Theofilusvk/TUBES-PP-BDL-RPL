@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Official E-Certificate Preview - LariIndo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1d4ed8",
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#0f172a",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "text-main-light": "#111827",
+                        "text-main-dark": "#f9fafb",
+                        "text-muted-light": "#6b7280",
+                        "text-muted-dark": "#9ca3af",
+                        "accent": "#f59e0b",
+                        "gold": "#D4AF37",
+                        "gold-light": "#FFFAF0",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        serif: ["Merriweather", "serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                    backgroundImage: {
+                        'cert-pattern': "radial-gradient(#D4AF37 0.5px, transparent 0.5px)",
+                    }
+                },
+            },
+        };
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cert-bg-pattern {
+            background-size: 24px 24px;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark transition-colors duration-200">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-700 hidden lg:flex flex-col transition-colors duration-200">
+<div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700">
+<div class="flex items-center gap-2 text-primary font-bold text-xl tracking-tight">
+<span class="material-symbols-outlined text-3xl">directions_run</span>
+<span>Lari<span class="text-text-main-light dark:text-text-main-dark">Indo</span></span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+                    Dashboard
+                </a>
+<div class="mt-8 mb-2 px-3 text-xs font-semibold text-text-muted-light dark:text-text-muted-dark uppercase tracking-wider">
+                    Management
+                </div>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">calendar_month</span>
+                    Upcoming Events
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">confirmation_number</span>
+                    My Registrations
+                </a>
+<div class="mt-8 mb-2 px-3 text-xs font-semibold text-text-muted-light dark:text-text-muted-dark uppercase tracking-wider">
+                    Race Data
+                </div>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-primary/10 text-primary rounded-lg font-medium" href="#">
+<span class="material-symbols-outlined">timer</span>
+                    Results &amp; Timing
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">workspace_premium</span>
+                    My Portfolio
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">leaderboard</span>
+                    Leaderboards
+                </a>
+<div class="mt-8 mb-2 px-3 text-xs font-semibold text-text-muted-light dark:text-text-muted-dark uppercase tracking-wider">
+                    System
+                </div>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">history</span>
+                    Logs &amp; Audit
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+                    Settings
+                </a>
+</div>
+<div class="p-4 border-t border-gray-200 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-surface-light dark:border-surface-dark shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOs-q-mfMMi8nibzFLmVaEqhEQYa0SItVgtoRnhqlaCNWnhawigwtkYpqAyEov-MZSklccYHsgSESfAFKzdvLpmjnjxHp3RoJNxbX_Q3hRoBPpN5npglvh5mpzLhPlvz8GcsFOkpTULVWbGq7XRI8EDIfKiZfhqhvwJCREnU4cPsv0LasUniqUpy8F-wnZ7ir1lHLw7FMNpocWeWXj3B-oOP9FSr_3lhHRdkX00q0JyxpFDqW6vA8cmqrGj3trMj86ucU6f1ldSPQ"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Budi Santoso</span>
+<span class="text-xs text-text-muted-light dark:text-text-muted-dark">Peserta (Runner)</span>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto relative z-0 focus:outline-none bg-background-light dark:bg-background-dark">
+<header class="bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-20 border-b border-gray-200 dark:border-gray-700 px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="text-text-muted-light dark:text-text-muted-dark hover:text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-bold text-lg">LariIndo</span>
+</div>
+<div class="hidden lg:flex items-center gap-4">
+<a class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+</a>
+<h1 class="text-xl font-bold text-text-main-light dark:text-text-main-dark uppercase tracking-tight">Official E-Certificate Preview</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="relative p-2 rounded-full text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+</button>
+</div>
+</header>
+<div class="max-w-5xl mx-auto px-6 py-8">
+<div class="mb-8 bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-900/30 rounded-xl p-4 flex items-start gap-3 shadow-sm">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 mt-0.5">verified</span>
+<div>
+<h3 class="text-sm font-bold text-green-800 dark:text-green-300">Result Verified</h3>
+<p class="text-xs text-green-700 dark:text-green-400 mt-1 leading-relaxed">Your race result for <strong>Jakarta Marathon 2023</strong> has been officially verified by the timing system. Your certificate is ready for download and sharing.</p>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative w-full aspect-[1.414/1] bg-surface-light text-gray-900 shadow-2xl rounded-sm overflow-hidden border border-gray-300 max-w-4xl mx-auto transform transition-all duration-500">
+<div class="absolute inset-4 border-[4px] border-[#D4AF37] pointer-events-none z-10"></div>
+<div class="absolute inset-6 border-[1px] border-[#D4AF37] pointer-events-none z-10"></div>
+<div class="absolute inset-0 p-12 flex flex-col items-center justify-between text-center bg-gold-light">
+<div class="absolute inset-0 opacity-[0.4] pointer-events-none cert-bg-pattern"></div>
+<div class="mt-4 z-0 relative w-full px-8">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-5xl text-[#D4AF37]">emoji_events</span>
+<span class="material-symbols-outlined text-5xl text-[#D4AF37]">emoji_events</span>
+</div>
+<div class="-mt-12">
+<h2 class="text-5xl lg:text-6xl font-serif font-bold uppercase tracking-[0.15em] text-gray-900 drop-shadow-sm">Certificate</h2>
+<p class="text-sm lg:text-base text-[#D4AF37] font-bold uppercase tracking-[0.4em] mt-3">Of Achievement</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-center items-center w-full z-0 relative mt-4">
+<div class="mb-6 flex flex-col items-center">
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-3 ring-4 ring-primary/5">
+<span class="material-symbols-outlined text-5xl text-primary">landscape</span>
+</div>
+<h3 class="text-3xl font-bold uppercase text-primary tracking-wide">Jakarta Marathon 2023</h3>
+<p class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mt-2">October 22, 2023 • Jakarta, Indonesia</p>
+</div>
+<p class="text-lg text-gray-500 italic font-serif mb-2">This certifies that</p>
+<h1 class="text-5xl lg:text-7xl font-bold font-serif text-gray-900 mb-4 border-b-2 border-[#D4AF37]/40 pb-6 px-16 inline-block tracking-tight">Budi Santoso</h1>
+<p class="text-base text-gray-700 mt-2 max-w-xl mx-auto font-medium">
+                        Has successfully completed the <strong class="text-gray-900">Full Marathon (42.195 KM)</strong> category within the official cut-off time.
+                    </p>
+</div>
+<div class="w-full max-w-4xl mx-auto border-t border-b border-gray-200 py-5 mb-4 z-0 relative bg-white/50 backdrop-blur-sm">
+<div class="grid grid-cols-3 gap-8 divide-x divide-gray-200">
+<div class="flex flex-col items-center">
+<span class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">Official Time</span>
+<span class="text-3xl font-bold font-mono text-gray-900 tracking-tighter">04:02:15</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">Net Time</span>
+<span class="text-3xl font-bold font-mono text-primary tracking-tighter">03:59:44</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">Overall Rank</span>
+<span class="text-3xl font-bold font-mono text-gray-900 tracking-tighter">#412 <span class="text-sm text-gray-400 font-normal align-top ml-1">/ 2500</span></span>
+</div>
+</div>
+</div>
+<div class="w-full max-w-2xl mx-auto mb-6 z-0 relative px-8">
+<div class="flex flex-col items-center">
+<div class="relative w-full overflow-hidden opacity-90 mix-blend-multiply">
+<img alt="Race Route Map" class="w-full h-24 object-contain filter contrast-125 sepia-[0.3]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxV9e8SLMIBZuNziNGGOqCWuSjQF4Y6MBsXNqsuRStupy20sHBIbroll5C7NKCc_dedcmi-_honK6Z268QjZcBj5LSTg4D8F9RoQ0PHHmCNC4nQ0zk3GegI6KYa87k9kl6Nt_UMaJRVe4Sb0Q2uIlQNRE4Wpv46mL2iuoa8XVuAlkjm00mh59t57GQykgBDHw49tK1nPjQZro9aXsSWEQDdZvPr6Yu8sQINliyS3kTG5R07coP6JWTTVPLoXeTFSg4TLORbKe92aU"/>
+</div>
+<p class="text-[9px] uppercase tracking-widest text-gray-400 font-bold mt-1">Certified Course Map • 42.195 KM</p>
+</div>
+</div>
+<div class="w-full flex justify-between items-end px-8 pb-4 z-0 relative mt-auto">
+<div class="flex flex-col items-center gap-1">
+<div class="bg-white p-1.5 border border-gray-200 shadow-sm rounded-sm">
+<span class="material-symbols-outlined text-6xl text-gray-800">qr_code_2</span>
+</div>
+<span class="text-[8px] uppercase tracking-widest text-gray-400 font-bold">ID: CRT-2023-JKT-412</span>
+</div>
+<div class="flex flex-col items-center mx-auto -mb-2">
+<div class="font-serif text-2xl text-gray-800 italic" style="font-family: 'Great Vibes', cursive, 'Merriweather', serif;">Race Director</div>
+<div class="w-48 h-px bg-gray-800 mt-4 mb-1"></div>
+<span class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-600">Race Director</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative w-24 h-24 flex items-center justify-center">
+<div class="absolute inset-0 rounded-full border-2 border-[#D4AF37] border-dashed animate-[spin_12s_linear_infinite] opacity-60"></div>
+<div class="absolute inset-1 rounded-full border border-[#D4AF37] flex items-center justify-center bg-white shadow-sm">
+<div class="text-center flex flex-col items-center">
+<span class="material-symbols-outlined text-[#D4AF37] text-3xl mb-1">verified</span>
+<span class="text-[7px] font-bold uppercase text-[#D4AF37] leading-tight tracking-wider">Verified by<br/>LariIndo</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full max-w-4xl mx-auto mt-8">
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex-1 z-10">
+<h3 class="text-base font-bold text-text-main-light dark:text-text-main-dark mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-accent">emoji_events</span>
+                        Share your achievement!
+                    </h3>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Download your high-fidelity certificate or order a physical memento.</p>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto z-10">
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg shadow-blue-500/20 font-semibold text-sm transition-all transform active:scale-95">
+<span class="material-symbols-outlined text-xl">download</span> 
+                        Download PDF
+                    </button>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 py-3 rounded-lg shadow-lg shadow-purple-500/20 font-semibold text-sm transition-all transform active:scale-95">
+<span class="material-symbols-outlined text-xl">share</span> 
+                        Share to Story
+                    </button>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 bg-white border-2 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors shadow-sm">
+<span class="material-symbols-outlined text-xl">workspace_premium</span> 
+                        Order Medal
+                    </button>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center max-w-2xl mx-auto pb-12">
+<p class="text-xs text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+            This certificate is computer-generated and is valid without a signature. 
+            For verification purposes, scan the QR code located on the bottom left corner. 
+            Official timing provided by LariIndo Systems.
+        </p>
+<div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-sm text-text-muted-light dark:text-text-muted-dark flex items-center justify-center gap-2">
+<span>© 2023 LariIndo Event Management.</span>
+<span class="w-1 h-1 rounded-full bg-gray-400"></span>
+<span>Supporting Indonesian Running Culture.</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

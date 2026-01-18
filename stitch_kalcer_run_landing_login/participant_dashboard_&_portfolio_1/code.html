@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Participant Dashboard &amp; Portfolio - Race Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563eb", // Vibrant Royal Blue
+                        secondary: "#0f172a", // Dark Slate
+                        accent: "#d9f99d", // Lime Green for "Kalcer" vibes
+                        "accent-pop": "#f43f5e", // Rose for alerts
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "bg-light": "#f1f5f9",
+                        "bg-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+<style>.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .chart-bar {
+            transition: height 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-bg-light dark:bg-bg-dark text-slate-800 dark:text-slate-100 font-sans antialiased transition-colors duration-200">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-72 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-slate-200 dark:border-slate-700 hidden lg:flex flex-col transition-colors duration-200 z-20">
+<div class="h-20 flex items-center px-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2.5 text-primary font-extrabold text-2xl tracking-tighter">
+<span class="material-symbols-outlined text-4xl filled">sprint</span>
+<span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400">LariIndo</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-6 px-4 space-y-6 custom-scrollbar">
+<div>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary text-white shadow-lg shadow-primary/30 rounded-xl font-semibold transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+</div>
+<div class="space-y-1">
+<div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Management</div>
+<div class="space-y-1">
+<a class="flex items-center justify-between px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary rounded-lg transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">calendar_month</span>
+<span class="text-sm font-medium">Events</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-[16px]">expand_more</span>
+</a>
+<div class="pl-11 space-y-1 border-l-2 border-slate-100 dark:border-slate-700 ml-4">
+<a class="block px-3 py-1.5 text-sm text-slate-500 hover:text-primary dark:text-slate-500 dark:hover:text-primary transition-colors" href="#">Browse Upcoming</a>
+<a class="block px-3 py-1.5 text-sm text-slate-500 hover:text-primary dark:text-slate-500 dark:hover:text-primary transition-colors" href="#">My Registrations</a>
+</div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Race Data</div>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">timer</span>
+<span class="text-sm font-medium">Results &amp; Timing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">workspace_premium</span>
+<span class="text-sm font-medium">My Portfolio</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">leaderboard</span>
+<span class="text-sm font-medium">Global Leaderboard</span>
+</a>
+</div>
+<div class="space-y-1">
+<div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">System</div>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">history</span>
+<span class="text-sm font-medium">Activity Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">help</span>
+<span class="text-sm font-medium">Support Center</span>
+</a>
+</div>
+</div>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-3">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-600 shadow-md object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOs-q-mfMMi8nibzFLmVaEqhEQYa0SItVgtoRnhqlaCNWnhawigwtkYpqAyEov-MZSklccYHsgSESfAFKzdvLpmjnjxHp3RoJNxbX_Q3hRoBPpN5npglvh5mpzLhPlvz8GcsFOkpTULVWbGq7XRI8EDIfKiZfhqhvwJCREnU4cPsv0LasUniqUpy8F-wnZ7ir1lHLw7FMNpocWeWXj3B-oOP9FSr_3lhHRdkX00q0JyxpFDqW6vA8cmqrGj3trMj86ucU6f1ldSPQ"/>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-bold truncate text-slate-800 dark:text-slate-200">Budi Santoso</span>
+<span class="text-xs text-slate-500 dark:text-slate-400 truncate">Member ID: #PLR-8821</span>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto relative z-10 focus:outline-none bg-bg-light dark:bg-bg-dark">
+<header class="bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md sticky top-0 z-30 border-b border-slate-200 dark:border-slate-700 h-20 px-6 sm:px-8 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-extrabold text-xl text-primary tracking-tight">LariIndo</span>
+</div>
+<div class="hidden lg:flex flex-col">
+<h1 class="text-lg font-bold text-slate-800 dark:text-slate-100">Welcome back, Budi! 👋</h1>
+<p class="text-xs text-slate-500">Let's crush some kilometers today.</p>
+</div>
+<div class="flex items-center gap-3 sm:gap-5">
+<div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+<button class="px-3 py-1 rounded-md text-xs font-bold bg-white dark:bg-slate-700 shadow-sm text-primary transition-all">EN</button>
+<button class="px-3 py-1 rounded-md text-xs font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all">ID</button>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined block dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block">light_mode</span>
+</button>
+<div class="relative group">
+<button class="relative p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined fill-current">notifications</span>
+<span class="absolute top-2 right-2 w-2.5 h-2.5 bg-accent-pop rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-700 transform opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 origin-top-right z-50 pointer-events-none group-hover:pointer-events-auto">
+<div class="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+<h3 class="font-bold text-sm">Notifications</h3>
+<button class="text-xs text-primary font-medium hover:underline">Mark all read</button>
+</div>
+<div class="max-h-64 overflow-y-auto">
+<div class="p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-50 dark:border-slate-700/50 flex gap-3">
+<div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Payment Confirmed</p>
+<p class="text-xs text-slate-500">Your slot for Bali 10K is secured.</p>
+<span class="text-[10px] text-slate-400 mt-1 block">2 mins ago</span>
+</div>
+</div>
+<div class="p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors flex gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-sm">cloud</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Weather Alert</p>
+<p class="text-xs text-slate-500">Rain expected for tomorrow's training.</p>
+<span class="text-[10px] text-slate-400 mt-1 block">1 hour ago</span>
+</div>
+</div>
+</div>
+<div class="p-2 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-center rounded-b-xl">
+<button class="text-xs font-medium text-slate-500 hover:text-primary">View All History</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-7xl mx-auto px-6 sm:px-8 py-8 space-y-8">
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="lg:col-span-2 bg-gradient-to-r from-primary to-blue-600 rounded-2xl p-6 text-white shadow-lg shadow-blue-500/20 relative overflow-hidden flex flex-col justify-center min-h-[140px]">
+<div class="absolute right-0 top-0 h-full w-1/2 bg-white/10 skew-x-12 transform translate-x-8"></div>
+<div class="relative z-10">
+<h2 class="text-2xl font-bold mb-1">Ready to Race?</h2>
+<p class="text-blue-100 text-sm mb-4 max-w-sm">Find your next challenge and push your limits with our community events.</p>
+<div class="flex gap-3">
+<button class="bg-white text-primary px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-50 transition shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                                Register New Event
+                            </button>
+<button class="bg-blue-700/50 text-white border border-white/20 px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                                Certificate
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between hover:border-primary/50 transition-all cursor-pointer group">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Distance</p>
+<h3 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 mt-2">452.8 <span class="text-sm font-medium text-slate-400">km</span></h3>
+</div>
+<div class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">map</span>
+</div>
+</div>
+<div class="mt-4 flex items-center text-xs font-medium text-green-600 bg-green-50 dark:bg-green-900/20 w-fit px-2 py-1 rounded-md">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span> +12.5% this month
+                    </div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between hover:border-primary/50 transition-all cursor-pointer group">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Medals Earned</p>
+<h3 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 mt-2">8</h3>
+</div>
+<div class="w-10 h-10 rounded-full bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center text-amber-500 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">emoji_events</span>
+</div>
+</div>
+<div class="mt-4 flex items-center text-xs font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/20 w-fit px-2 py-1 rounded-md">
+                        Last: Jakarta Marathon
+                    </div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="font-bold text-slate-800 dark:text-slate-100 text-lg">Training Progress</h3>
+<p class="text-sm text-slate-500">Weekly distance trends</p>
+</div>
+<div class="flex items-center gap-2">
+<select class="text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 focus:ring-primary focus:border-primary outline-none">
+<option>Last 4 Weeks</option>
+<option>Last 3 Months</option>
+</select>
+</div>
+</div>
+<div class="relative h-48 flex items-end gap-2 sm:gap-4 justify-between pt-4 pb-2 px-2">
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none text-[10px] text-slate-300 dark:text-slate-600 font-mono">
+<div class="w-full border-t border-dashed border-slate-200 dark:border-slate-700 pt-1">50km</div>
+<div class="w-full border-t border-dashed border-slate-200 dark:border-slate-700 pt-1">25km</div>
+<div class="w-full border-t border-dashed border-slate-200 dark:border-slate-700">0km</div>
+</div>
+<div class="relative flex-1 flex flex-col justify-end group">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[40%] group-hover:bg-primary/60 transition-colors relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">20km</div>
+</div>
+<span class="text-[10px] text-slate-400 text-center mt-2">W1</span>
+</div>
+<div class="relative flex-1 flex flex-col justify-end group">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[65%] group-hover:bg-primary/60 transition-colors relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">32.5km</div>
+</div>
+<span class="text-[10px] text-slate-400 text-center mt-2">W2</span>
+</div>
+<div class="relative flex-1 flex flex-col justify-end group">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[50%] group-hover:bg-primary/60 transition-colors relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">25km</div>
+</div>
+<span class="text-[10px] text-slate-400 text-center mt-2">W3</span>
+</div>
+<div class="relative flex-1 flex flex-col justify-end group">
+<div class="w-full bg-primary rounded-t-sm h-[85%] shadow-lg shadow-primary/30 relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">42km</div>
+</div>
+<span class="text-[10px] font-bold text-primary text-center mt-2">W4</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="p-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-accent text-slate-900 uppercase tracking-wide">Featured</span>
+<span class="text-xs text-slate-500">Oct 24, 2023</span>
+</div>
+<h2 class="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary fill-current">place</span>
+                                    Bali 10K Coastal Run
+                                </h2>
+</div>
+<div class="flex items-center gap-3 bg-white dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
+<span class="material-symbols-outlined text-amber-500">sunny</span>
+<div class="flex flex-col text-right">
+<span class="text-xs font-bold text-slate-800 dark:text-slate-200">28°C</span>
+<span class="text-[10px] text-slate-400">Wind: 5km/h</span>
+</div>
+</div>
+</div>
+<div class="relative h-64 bg-slate-100 dark:bg-slate-900">
+<img alt="Map of Bali showing race route" class="w-full h-full object-cover opacity-80 mix-blend-multiply dark:mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9XCTBINHQMyd6RkhuKdmUILkmfiXK8WrwBqCTSrqdWTWQeiUKTY0ZUliPdA5JAQxYqTJiCNHsBRwhwXs2RUO1nLDaVaFAQn8Vlcz63YG_EUCG57pT4qYZ02iWSJtVrcSyDu6xO-2bwThiM_qDQraOOhVeatnskB5Ca6HHMpn6scBLShG_sdi5hGYe7BBoRVCk7fA5bfCSSQdDXBqTzu20JDZBgwM_konVvmiuKIDGJwgQVaSoA5iL8ajdlNQ6tOyVAAb5yrGhFwU"/>
+<svg class="absolute inset-0 w-full h-full pointer-events-none filter drop-shadow-lg" preserveAspectRatio="none">
+<path d="M 100 200 Q 250 100 400 150 T 700 100" fill="none" stroke="#2563eb" stroke-dasharray="8 4" stroke-linecap="round" stroke-width="5"></path>
+<g class="cursor-pointer pointer-events-auto group">
+<circle cx="100" cy="200" fill="#10b981" r="8" stroke="white" stroke-width="3"></circle>
+<rect class="opacity-0 group-hover:opacity-100 transition-opacity" fill="white" height="30" rx="4" width="60" x="70" y="160"></rect>
+<text class="opacity-0 group-hover:opacity-100 transition-opacity font-bold" fill="black" font-size="10" text-anchor="middle" x="100" y="180">START</text>
+</g>
+<g class="cursor-pointer pointer-events-auto group">
+<circle class="animate-pulse" cx="400" cy="150" fill="#f59e0b" r="8" stroke="white" stroke-width="3"></circle>
+<rect class="opacity-0 group-hover:opacity-100 transition-opacity" fill="white" height="30" rx="4" width="60" x="370" y="110"></rect>
+<text class="opacity-0 group-hover:opacity-100 transition-opacity font-bold" fill="black" font-size="10" text-anchor="middle" x="400" y="130">5KM WS</text>
+</g>
+<circle cx="700" cy="100" fill="#ef4444" r="8" stroke="white" stroke-width="3"></circle>
+</svg>
+</div>
+<div class="p-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-end mb-2">
+<span class="text-xs font-bold text-slate-500 uppercase">Elevation Profile</span>
+<span class="text-xs text-slate-400">Max Elevation: 145m</span>
+</div>
+<div class="h-16 w-full relative group">
+<div class="absolute inset-0 flex flex-col justify-between">
+<div class="border-t border-slate-100 dark:border-slate-700 w-full"></div>
+<div class="border-t border-slate-100 dark:border-slate-700 w-full"></div>
+<div class="border-t border-slate-100 dark:border-slate-700 w-full"></div>
+</div>
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
+<defs>
+<linearGradient id="elevationGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#2563eb" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#2563eb" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<path d="M0,100 L0,80 Q25,90 50,40 T100,20 L100,100 Z" fill="url(#elevationGradient)" stroke="none"></path>
+<path d="M0,80 Q25,90 50,40 T100,20" fill="none" stroke="#2563eb" stroke-width="2"></path>
+<circle class="opacity-0 group-hover:opacity-100 transition-opacity duration-300" cx="50" cy="40" fill="#ffffff" r="3" stroke="#2563eb" stroke-width="2"></circle>
+</svg>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 bg-slate-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    5km • 8% Grade
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-1 space-y-8">
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Leaderboard</h3>
+<button class="text-primary hover:text-blue-700 text-sm font-medium">View All</button>
+</div>
+<div class="flex justify-center items-end gap-2 mb-8 h-32">
+<div class="flex flex-col items-center">
+<div class="relative mb-2">
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTEnwzz9ZNCscQz5_unismkk_wS9wYcevN8b2OqVih91pudITdzhEK3aKtHljeRgpSY3ThJWLU22JaZg7nOfZFmaSB1GyOChoc2FbLj2hHRo2CPzsb5hMaMd-Awu0pEvV40IVS8yBiz8POD43W2ssQN3EXHSG1nFtzEYvOtqvN2wUzAgidqmW85NnsFbuMsSBoSAUmRfZB9QA8FdH9-caRR5O3SjGzax7I56UTb3Ymu1z7wUgu0NZrkS3I2SWJN1g81gSZdJc3uLY"/>
+<div class="absolute -bottom-1 -right-1 bg-slate-200 text-slate-600 text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</div>
+</div>
+<div class="w-14 bg-slate-100 dark:bg-slate-700 h-16 rounded-t-lg flex items-end justify-center pb-2">
+<span class="text-[10px] font-bold text-slate-400">98km</span>
+</div>
+</div>
+<div class="flex flex-col items-center z-10">
+<div class="relative mb-2">
+<img alt="User" class="w-14 h-14 rounded-full border-2 border-yellow-400" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkEMPMHllJdMRyzXCUFiG66WDQSFKFroIo_6hBMPQpFqxwlyJdtzjOwwA6ZZyPoML3zuYSfhjlTUXCiQ_W1Ddyj-D-I1HqkeRMeGCkPv-9JllZlYaZL_bEsvO3vpjvQ39bL5BLPWPfCDd1h4FimK_h_NbC5VpaSJwQbla2Xii8JfDxd9jiWu5-fZPd8djVRXoAzvW0lmLnn8bxwDajXoT39hHNHoZWawXCI_ze_KI_VSnua0isENPdKzMmwSAvsoW2IwLsgYDmgCs"/>
+<span class="absolute -top-3 left-1/2 -translate-x-1/2 text-xl">👑</span>
+</div>
+<div class="w-16 bg-gradient-to-b from-yellow-100 to-slate-50 dark:from-yellow-900/30 dark:to-slate-800 h-24 rounded-t-lg flex items-end justify-center pb-2 border-t-2 border-yellow-400">
+<span class="text-xs font-bold text-yellow-600 dark:text-yellow-500">124km</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative mb-2">
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-amber-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKvdVMYk5ND75uPHgQQIf8TByWE3yDFbA5SxgtzGJmY6Dq2GQRpmYYE0qLL6VPDeRf7Z_7I3UvUSmfeZVZnF5DU54fCcaib170SrB3ZGX9Mstl8VgO_KVyQgAyJelAUCJOyr1ygTlgrUbOBlatL6FUQkbwSZKqXgozQY9MYgxEVYi9f3h1b3ExNgEFd62agshZBcamHz6xyWbUQ_75e1a7R_bPlFofg3OqZipBdxkLsQkHzUHN3MAJS8JruP0YQO41V90yYxWKOXs"/>
+<div class="absolute -bottom-1 -right-1 bg-amber-700 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">3</div>
+</div>
+<div class="w-14 bg-slate-100 dark:bg-slate-700 h-12 rounded-t-lg flex items-end justify-center pb-2">
+<span class="text-[10px] font-bold text-slate-400">82km</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+<div class="flex-shrink-0 font-bold text-slate-400 w-6 text-center text-sm">4</div>
+<img alt="User" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDITRxdrpTq90ZkvIcoTRWLvp82zNYv62hvoU5vw4YXawM7raH6-8GLem7gf_wDZDmd3_Ikf86Yxn7EJ-eCmc3JLcFE686DqC7mTPhW8FYDxFG3_gS5vigfGWmVmXeS3GX1rRWcRbLDpXQ_v1fpEJQw-JaU0BSlEoOW9YtIQe-LSwRJ416BNxe9tjIX-yvV9mX_k7_H4J8jW7dYhwy2v-Zo23W1N_Vko4fmIFN5dL7gw6UszEcbl3uHnY9W57L6rw3qPFwQ6L_alGU"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate">Dedi Kurniawan</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-slate-600 dark:text-slate-300">76km</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+<h3 class="font-bold text-slate-800 dark:text-slate-100 mb-4">Latest Badges</h3>
+<div class="grid grid-cols-3 gap-3">
+<div class="aspect-square bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/10 dark:to-red-900/10 rounded-xl flex flex-col items-center justify-center p-2 text-center group cursor-pointer border border-orange-100 dark:border-orange-900/20 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl text-orange-500 mb-2 drop-shadow-sm">local_fire_department</span>
+<span class="text-[10px] text-slate-600 dark:text-slate-400 font-bold leading-tight">10K Streak</span>
+</div>
+<div class="aspect-square bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/10 dark:to-cyan-900/10 rounded-xl flex flex-col items-center justify-center p-2 text-center group cursor-pointer border border-blue-100 dark:border-blue-900/20 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl text-blue-500 mb-2 drop-shadow-sm">water_drop</span>
+<span class="text-[10px] text-slate-600 dark:text-slate-400 font-bold leading-tight">Rain Runner</span>
+</div>
+<div class="aspect-square bg-slate-50 dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-2 text-center group cursor-pointer border border-slate-100 dark:border-slate-700 opacity-60 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-3xl text-purple-400 mb-2">terrain</span>
+<span class="text-[10px] text-slate-500 dark:text-slate-500 font-medium leading-tight">Mountain King</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<h2 class="text-lg font-bold text-slate-800 dark:text-slate-100">My Registrations</h2>
+<button class="text-sm text-slate-500 hover:text-primary transition-colors flex items-center gap-1">
+                        View History <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 font-semibold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-6 py-4">Event Details</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-xs shadow-sm">JM</div>
+<div>
+<div class="font-bold text-slate-800 dark:text-slate-100">Jakarta Marathon 2023</div>
+<div class="text-xs text-slate-500">Full Marathon (42K)</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400 font-medium">Oct 15, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                        Confirmed
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 font-bold text-xs shadow-sm">BD</div>
+<div>
+<div class="font-bold text-slate-800 dark:text-slate-100">Borobudur 10K Run</div>
+<div class="text-xs text-slate-500">10K Open</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400 font-medium">Nov 20, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                                        Pending Payment
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-primary hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-colors shadow-sm shadow-primary/30">
+                                        Pay Now
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="mt-12 border-t border-slate-200 dark:border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
+<span>© 2023 LariIndo Event Management.</span>
+<div class="flex gap-4 mt-2 md:mt-0">
+<a class="hover:text-primary" href="#">Privacy</a>
+<a class="hover:text-primary" href="#">Terms</a>
+<a class="hover:text-primary" href="#">Support</a>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

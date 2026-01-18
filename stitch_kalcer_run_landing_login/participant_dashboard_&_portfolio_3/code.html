@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Race Results &amp; Timing Details - LariIndo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1d4ed8",
+                        "primary-hover": "#1e40af",
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#0f172a",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "text-main-light": "#111827",
+                        "text-main-dark": "#f9fafb",
+                        "text-muted-light": "#6b7280",
+                        "text-muted-dark": "#9ca3af",
+                        "accent": "#f59e0b",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'glow': '0 0 15px rgba(29, 78, 216, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 3px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }@keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark transition-colors duration-200 relative">
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in" id="split-modal">
+<div class="bg-surface-light dark:bg-surface-dark w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+<div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between bg-gray-50 dark:bg-gray-800/50">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-primary/10 rounded-xl text-primary">
+<span class="material-symbols-outlined">timer</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-text-main-light dark:text-text-main-dark tracking-tight">Split Analysis</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-xs font-medium text-text-muted-light dark:text-text-muted-dark">Jakarta Marathon 2023</span>
+<span class="text-xs text-gray-300">•</span>
+<span class="text-xs font-medium text-text-muted-light dark:text-text-muted-dark">Full Marathon</span>
+</div>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-text-muted-light transition-colors" onclick="document.getElementById('split-modal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto custom-scrollbar bg-white dark:bg-surface-dark">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+<div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+<span class="text-[10px] uppercase text-text-muted-light font-bold tracking-wider">Total Elev. Gain</span>
+<div class="text-xl font-bold text-text-main-light dark:text-text-main-dark mt-1 flex items-center gap-1">
+                        +142m <span class="material-symbols-outlined text-sm text-green-500">trending_up</span>
+</div>
+</div>
+<div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+<span class="text-[10px] uppercase text-text-muted-light font-bold tracking-wider">Best 5K Split</span>
+<div class="text-xl font-bold text-green-600 dark:text-green-400 mt-1">26:45</div>
+</div>
+<div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+<span class="text-[10px] uppercase text-text-muted-light font-bold tracking-wider">Avg Heart Rate</span>
+<div class="text-xl font-bold text-red-600 dark:text-red-400 mt-1">162 bpm</div>
+</div>
+<div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+<span class="text-[10px] uppercase text-text-muted-light font-bold tracking-wider">Cadence</span>
+<div class="text-xl font-bold text-primary mt-1">178 spm</div>
+</div>
+</div>
+<div class="border border-gray-100 dark:border-gray-700 rounded-xl overflow-hidden">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-text-muted-light dark:text-text-muted-dark uppercase bg-gray-50 dark:bg-gray-800/50 tracking-wider">
+<tr>
+<th class="px-6 py-4 font-semibold">Split Segment</th>
+<th class="px-6 py-4 font-semibold">Split Time</th>
+<th class="px-6 py-4 font-semibold">Cumulative</th>
+<th class="px-6 py-4 font-semibold">Pace</th>
+<th class="px-6 py-4 text-right font-semibold">Elevation</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium">5 KM</td>
+<td class="px-6 py-4 font-mono">00:27:10</td>
+<td class="px-6 py-4 text-text-muted-light font-mono">00:27:10</td>
+<td class="px-6 py-4">5:26 /km</td>
+<td class="px-6 py-4 text-right text-green-600 dark:text-green-400 text-xs font-mono">▲ 12m</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium">10 KM</td>
+<td class="px-6 py-4 font-mono">00:26:45</td>
+<td class="px-6 py-4 text-text-muted-light font-mono">00:53:55</td>
+<td class="px-6 py-4 text-primary font-bold">5:21 /km</td>
+<td class="px-6 py-4 text-right text-green-600 dark:text-green-400 text-xs font-mono">▲ 8m</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium">15 KM</td>
+<td class="px-6 py-4 font-mono">00:27:30</td>
+<td class="px-6 py-4 text-text-muted-light font-mono">01:21:25</td>
+<td class="px-6 py-4">5:30 /km</td>
+<td class="px-6 py-4 text-right text-green-600 dark:text-green-400 text-xs font-mono">▲ 15m</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium">20 KM</td>
+<td class="px-6 py-4 font-mono">00:28:10</td>
+<td class="px-6 py-4 text-text-muted-light font-mono">01:49:35</td>
+<td class="px-6 py-4">5:38 /km</td>
+<td class="px-6 py-4 text-right text-green-600 dark:text-green-400 text-xs font-mono">▲ 42m</td>
+</tr>
+<tr class="bg-yellow-50 dark:bg-yellow-900/10 border-y border-yellow-100 dark:border-yellow-900/30">
+<td class="px-6 py-4 font-bold text-accent flex items-center gap-2">
+<span class="material-symbols-outlined text-sm material-symbols-filled">flag</span>
+                                Half (21.1K)
+                            </td>
+<td class="px-6 py-4 font-medium font-mono text-accent">00:06:15</td>
+<td class="px-6 py-4 font-medium font-mono text-accent">01:55:50</td>
+<td class="px-6 py-4 text-accent">5:40 /km</td>
+<td class="px-6 py-4 text-right text-green-600 dark:text-green-400 text-xs font-mono">▲ 5m</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium">25 KM</td>
+<td class="px-6 py-4 font-mono">00:29:10</td>
+<td class="px-6 py-4 text-text-muted-light font-mono">02:25:00</td>
+<td class="px-6 py-4">5:50 /km</td>
+<td class="px-6 py-4 text-right text-green-600 dark:text-green-400 text-xs font-mono">▲ 10m</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium">30 KM</td>
+<td class="px-6 py-4 font-mono">00:30:15</td>
+<td class="px-6 py-4 text-text-muted-light font-mono">02:55:15</td>
+<td class="px-6 py-4 text-red-500">6:03 /km</td>
+<td class="px-6 py-4 text-right text-green-600 dark:text-green-400 text-xs font-mono">▲ 22m</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+<span class="text-xs text-text-muted-light">Data verified from official chip timing (v_hasil_lomba)</span>
+<button class="px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-hover transition shadow-glow">
+                View Full Analytics Report
+            </button>
+</div>
+</div>
+</div>
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-700 hidden lg:flex flex-col transition-colors duration-200">
+<div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700">
+<div class="flex items-center gap-2 text-primary font-bold text-xl tracking-tight">
+<span class="material-symbols-outlined text-3xl">directions_run</span>
+<span>Lari<span class="text-text-main-light dark:text-text-main-dark">Indo</span></span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+                Dashboard
+            </a>
+<div class="mt-8 mb-2 px-3 text-xs font-semibold text-text-muted-light dark:text-text-muted-dark uppercase tracking-wider">
+                Management
+            </div>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">calendar_month</span>
+                Upcoming Events
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">confirmation_number</span>
+                My Registrations
+            </a>
+<div class="mt-8 mb-2 px-3 text-xs font-semibold text-text-muted-light dark:text-text-muted-dark uppercase tracking-wider">
+                Race Data
+            </div>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-primary/10 text-primary rounded-lg font-medium" href="#">
+<span class="material-symbols-outlined material-symbols-filled">timer</span>
+                Results &amp; Timing
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">workspace_premium</span>
+                My Portfolio
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">leaderboard</span>
+                Leaderboards
+            </a>
+<div class="mt-8 mb-2 px-3 text-xs font-semibold text-text-muted-light dark:text-text-muted-dark uppercase tracking-wider">
+                System
+            </div>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">history</span>
+                Logs &amp; Audit
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+                Settings
+            </a>
+</div>
+<div class="p-4 border-t border-gray-200 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-surface-light dark:border-surface-dark shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeuX32_dpslQmyeegzMYnf5dejCUV7fbMonG_fLiKnhczy7ff0mjs0dBlNk_Dy6MZxBDNNeyb3NRvp1GYoiLBWPaob2OAkSNiA6GXxmWewRYEDlMa4BnQDGsMj703mZETgwdM4RIriMtg96eztH2nTrPri0hCPKCAsKEJ_Sf2-bUN3p5kawXLHifTilkMPgp9uQjOYw5IkDzdK_PffW_lDkWZOO7ko78jSxfOxRSWQbtCDDlNDDaTL9xFEd_mDF6uLW0A90Ebwlt8"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Budi Santoso</span>
+<span class="text-xs text-text-muted-light dark:text-text-muted-dark">Peserta (Runner)</span>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto relative z-0 focus:outline-none bg-background-light dark:bg-background-dark">
+<header class="bg-surface-light/95 dark:bg-surface-dark/95 backdrop-blur-md sticky top-0 z-20 border-b border-gray-200 dark:border-gray-700 px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="text-text-muted-light dark:text-text-muted-dark hover:text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-bold text-lg">LariIndo</span>
+</div>
+<h1 class="hidden lg:block text-xl font-bold text-text-main-light dark:text-text-main-dark uppercase tracking-tight">Race Results &amp; Timing Details</h1>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="relative p-2 rounded-full text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+</button>
+</div>
+</header>
+<div class="max-w-7xl mx-auto px-6 py-8">
+<div class="mb-8 flex flex-col xl:flex-row gap-6">
+<div class="flex-1">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-accent material-symbols-filled">stars</span>
+                            Personal Bests (PB)
+                        </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 2xl:grid-cols-4 gap-4">
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm cursor-pointer hover:border-primary hover:shadow-md transition-all group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-gray-100 to-transparent dark:from-gray-800 rounded-bl-full -mr-4 -mt-4"></div>
+<p class="text-xs font-bold text-text-muted-light dark:text-text-muted-dark uppercase group-hover:text-primary transition-colors tracking-wider">5K PB</p>
+<h3 class="text-3xl font-bold text-primary mt-2">21:45</h3>
+<p class="text-[10px] text-text-muted-light dark:text-text-muted-dark mt-2 font-medium">IndoRun Series 2023</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm cursor-pointer hover:border-primary hover:shadow-md transition-all group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-gray-100 to-transparent dark:from-gray-800 rounded-bl-full -mr-4 -mt-4"></div>
+<p class="text-xs font-bold text-text-muted-light dark:text-text-muted-dark uppercase group-hover:text-primary transition-colors tracking-wider">10K PB</p>
+<h3 class="text-3xl font-bold text-primary mt-2">45:12</h3>
+<p class="text-[10px] text-text-muted-light dark:text-text-muted-dark mt-2 font-medium">Borobudur 10K 2023</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm cursor-pointer hover:border-primary hover:shadow-md transition-all group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-gray-100 to-transparent dark:from-gray-800 rounded-bl-full -mr-4 -mt-4"></div>
+<p class="text-xs font-bold text-text-muted-light dark:text-text-muted-dark uppercase group-hover:text-primary transition-colors tracking-wider">Half Marathon PB</p>
+<h3 class="text-3xl font-bold text-primary mt-2">01:42:05</h3>
+<p class="text-[10px] text-text-muted-light dark:text-text-muted-dark mt-2 font-medium">Bali Marathon 2022</p>
+</div>
+<div class="relative bg-blue-50 dark:bg-blue-900/10 p-5 rounded-xl border-2 border-primary shadow-glow cursor-pointer transition-all">
+<div class="absolute -top-3 -right-3 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm z-10">FILTER ACTIVE</div>
+<p class="text-xs font-bold text-primary uppercase flex items-center gap-1 tracking-wider">
+                                Full Marathon PB
+                                <span class="material-symbols-outlined text-sm material-symbols-filled">check_circle</span>
+</p>
+<h3 class="text-3xl font-bold text-primary mt-2">03:55:22</h3>
+<p class="text-[10px] text-text-muted-light dark:text-text-muted-dark mt-2 font-medium">Jakarta Marathon 2022</p>
+</div>
+</div>
+</div>
+<div class="xl:w-80 w-full flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600">map</span>
+                            Race Locations
+                        </h2>
+</div>
+<div class="flex-1 bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden relative min-h-[160px]">
+<div class="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center bg-[url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/106.8272, -6.1751, 11, 0, 0/600x400?access_token=YOUR_ACCESS_TOKEN')] bg-cover bg-center opacity-80 hover:opacity-100 transition-opacity cursor-pointer">
+<div class="absolute top-1/2 left-1/2 w-4 h-4 bg-red-500/60 rounded-full blur-sm -translate-x-4 -translate-y-2 animate-pulse"></div>
+<div class="absolute top-1/3 left-1/3 w-6 h-6 bg-red-500/50 rounded-full blur-sm animate-pulse" style="animation-delay: 0.5s"></div>
+<div class="absolute bottom-1/3 right-1/3 w-5 h-5 bg-red-500/50 rounded-full blur-sm animate-pulse" style="animation-delay: 1s"></div>
+<div class="bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur px-3 py-1.5 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Heat Map View</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft overflow-hidden">
+<div class="p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50/30 dark:bg-gray-800/20">
+<div class="flex flex-col gap-4">
+<div class="flex flex-col xl:flex-row gap-3">
+<div class="relative flex-grow">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted-light pointer-events-none">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:ring-primary focus:border-primary text-sm shadow-sm placeholder:text-gray-400" placeholder="Search event name, location..." type="text"/>
+</div>
+<div class="flex flex-wrap gap-2 w-full xl:w-auto">
+<div class="relative flex-grow xl:flex-grow-0">
+<select class="appearance-none w-full pl-3 pr-8 py-2.5 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm focus:ring-primary focus:border-primary shadow-sm cursor-pointer font-medium text-text-main-light dark:text-text-main-dark">
+<option>Year: All</option>
+<option>2023</option>
+<option>2022</option>
+<option>2021</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted-light material-symbols-outlined text-lg">expand_more</span>
+</div>
+<div class="relative flex-grow xl:flex-grow-0">
+<select class="appearance-none w-full pl-3 pr-8 py-2.5 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm focus:ring-primary focus:border-primary shadow-sm cursor-pointer font-medium text-text-main-light dark:text-text-main-dark">
+<option>Type: All</option>
+<option>Road Race</option>
+<option>Trail Run</option>
+<option>Charity</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted-light material-symbols-outlined text-lg">expand_more</span>
+</div>
+<div class="relative flex-grow xl:flex-grow-0">
+<select class="appearance-none w-full pl-3 pr-8 py-2.5 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm focus:ring-primary focus:border-primary shadow-sm cursor-pointer font-medium text-text-main-light dark:text-text-main-dark">
+<option>Dist: All</option>
+<option>5K</option>
+<option>10K</option>
+<option>21K</option>
+<option>42K</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted-light material-symbols-outlined text-lg">expand_more</span>
+</div>
+<div class="relative flex-grow xl:flex-grow-0">
+<select class="appearance-none w-full pl-3 pr-8 py-2.5 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm focus:ring-primary focus:border-primary shadow-sm cursor-pointer font-medium text-text-main-light dark:text-text-main-dark">
+<option>Status: All</option>
+<option>Finished</option>
+<option>DNF</option>
+<option>DNS</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted-light material-symbols-outlined text-lg">expand_more</span>
+</div>
+<div class="relative flex-grow xl:flex-grow-0">
+<select class="appearance-none w-full pl-3 pr-8 py-2.5 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm focus:ring-primary focus:border-primary shadow-sm cursor-pointer font-medium text-text-main-light dark:text-text-main-dark">
+<option>Seas: All</option>
+<option>Dry</option>
+<option>Rainy</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted-light material-symbols-outlined text-lg">expand_more</span>
+</div>
+<button class="flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-hover transition shadow-sm ml-auto xl:ml-0 w-full xl:w-auto">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                                    Filter
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm whitespace-nowrap">
+<thead class="bg-gray-50 dark:bg-gray-800/50 text-text-muted-light dark:text-text-muted-dark border-b border-gray-200 dark:border-gray-700 uppercase text-[10px] font-bold tracking-wider">
+<tr>
+<th class="px-6 py-4">Event &amp; Date</th>
+<th class="px-6 py-4">Distance</th>
+<th class="px-6 py-4">Official Time</th>
+<th class="px-6 py-4">Net Time</th>
+<th class="px-6 py-4">Avg Pace</th>
+<th class="px-6 py-4">Rank (Ovr/Cat)</th>
+<th class="px-6 py-4 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+<tr class="bg-blue-50/50 dark:bg-blue-900/10 hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-text-main-light dark:text-text-main-dark">Jakarta Marathon 2023</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border border-green-200 dark:border-green-800">Finished</span>
+</div>
+<span class="text-xs text-text-muted-light dark:text-text-muted-dark mt-0.5">22 Oct 2023 • Rainy • <span class="italic">Road</span></span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 border border-blue-200 dark:border-blue-800">42.195 KM</span>
+</td>
+<td class="px-6 py-5 font-mono font-medium text-gray-500">04:02:15</td>
+<td class="px-6 py-5 font-mono font-bold text-primary text-base">03:59:44</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1">
+<span class="font-medium">5:41</span> <span class="text-xs text-gray-500">/km</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-xs"><span class="font-bold text-text-main-light dark:text-text-main-dark">#412</span> <span class="text-gray-400">/ 2,500</span></span>
+<span class="text-[10px] text-text-muted-light dark:text-text-muted-dark font-medium uppercase mt-0.5">M-Open: #182</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-center gap-2">
+<button class="group p-2 text-primary bg-primary/10 hover:bg-primary hover:text-white rounded-lg transition-all border border-primary/20 shadow-sm" onclick="document.getElementById('split-modal').classList.remove('hidden')" title="View Split Analysis">
+<span class="material-symbols-outlined text-xl">analytics</span>
+</button>
+<div class="relative group/cert">
+<button class="p-2 text-accent bg-accent/10 hover:bg-accent hover:text-white rounded-lg transition-all border border-accent/20 shadow-sm" title="Download Certificate">
+<span class="material-symbols-outlined text-xl material-symbols-filled">workspace_premium</span>
+</button>
+<div class="hidden group-hover/cert:block absolute right-full top-1/2 -translate-y-1/2 mr-3 z-50 animate-fade-in w-48">
+<div class="bg-white dark:bg-surface-dark p-2 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-accent text-3xl mb-1">workspace_premium</span>
+<span class="text-[8px] font-serif uppercase tracking-widest text-text-main-light dark:text-text-main-dark">Certificate</span>
+</div>
+<div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+</div>
+<div class="mt-2 text-center">
+<span class="text-[10px] font-bold text-accent block">Certificate Ready</span>
+<span class="text-[9px] text-gray-500 block">Click to download</span>
+</div>
+</div>
+<div class="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-white dark:bg-surface-dark border-t border-r border-gray-200 dark:border-gray-700 rotate-45 transform"></div>
+</div>
+</div>
+<button class="p-2 text-text-muted-light hover:text-text-main-light hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition border border-transparent hover:border-gray-200" title="Compare Performance">
+<span class="material-symbols-outlined text-xl">compare_arrows</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-text-main-light dark:text-text-main-dark">Bali 10K Coastal Run</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border border-green-200 dark:border-green-800">Finished</span>
+</div>
+<span class="text-xs text-text-muted-light dark:text-text-muted-dark mt-0.5">15 Aug 2023 • Dry • <span class="italic">Road</span></span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 border border-green-200 dark:border-green-800">10 KM</span>
+</td>
+<td class="px-6 py-5 font-mono font-medium text-gray-500">00:46:20</td>
+<td class="px-6 py-5 font-mono font-bold text-primary text-base">00:46:02</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1">
+<span class="font-medium">4:36</span> <span class="text-xs text-gray-500">/km</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-xs"><span class="font-bold text-text-main-light dark:text-text-main-dark">#56</span> <span class="text-gray-400">/ 1,200</span></span>
+<span class="text-[10px] text-text-muted-light dark:text-text-muted-dark font-medium uppercase mt-0.5">M-Open: #24</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-center gap-2">
+<button class="p-2 text-text-muted-light hover:text-primary hover:bg-primary/10 rounded-lg transition" title="View Split Analysis">
+<span class="material-symbols-outlined text-xl">analytics</span>
+</button>
+<button class="p-2 text-text-muted-light hover:text-accent hover:bg-accent/10 rounded-lg transition" title="Download Certificate">
+<span class="material-symbols-outlined text-xl">workspace_premium</span>
+</button>
+<button class="p-2 text-text-muted-light hover:text-text-main-light hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition" title="Compare Performance">
+<span class="material-symbols-outlined text-xl">compare_arrows</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-text-main-light dark:text-text-main-dark">Bandung Half Marathon</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border border-green-200 dark:border-green-800">Finished</span>
+</div>
+<span class="text-xs text-text-muted-light dark:text-text-muted-dark mt-0.5">04 Jun 2023 • Dry • <span class="italic">Road</span></span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300 border border-orange-200 dark:border-orange-800">21.1 KM</span>
+</td>
+<td class="px-6 py-5 font-mono font-medium text-gray-500">01:48:30</td>
+<td class="px-6 py-5 font-mono font-bold text-primary text-base">01:47:12</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1">
+<span class="font-medium">5:05</span> <span class="text-xs text-gray-500">/km</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-xs"><span class="font-bold text-text-main-light dark:text-text-main-dark">#201</span> <span class="text-gray-400">/ 3,000</span></span>
+<span class="text-[10px] text-text-muted-light dark:text-text-muted-dark font-medium uppercase mt-0.5">M-Open: #88</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-center gap-2">
+<button class="p-2 text-text-muted-light hover:text-primary hover:bg-primary/10 rounded-lg transition" title="View Split Analysis">
+<span class="material-symbols-outlined text-xl">analytics</span>
+</button>
+<button class="p-2 text-text-muted-light hover:text-accent hover:bg-accent/10 rounded-lg transition" title="Download Certificate">
+<span class="material-symbols-outlined text-xl">workspace_premium</span>
+</button>
+<button class="p-2 text-text-muted-light hover:text-text-main-light hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition" title="Compare Performance">
+<span class="material-symbols-outlined text-xl">compare_arrows</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-text-main-light dark:text-text-main-dark">IndoRun Independence 5K</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border border-green-200 dark:border-green-800">Finished</span>
+</div>
+<span class="text-xs text-text-muted-light dark:text-text-muted-dark mt-0.5">17 Aug 2022 • Dry • <span class="italic">Road</span></span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 border border-purple-200 dark:border-purple-800">5 KM</span>
+</td>
+<td class="px-6 py-5 font-mono font-medium text-gray-500">00:22:10</td>
+<td class="px-6 py-5 font-mono font-bold text-primary text-base">00:21:45</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1">
+<span class="font-medium">4:21</span> <span class="text-xs text-gray-500">/km</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-xs"><span class="font-bold text-text-main-light dark:text-text-main-dark">#12</span> <span class="text-gray-400">/ 500</span></span>
+<span class="text-[10px] text-text-muted-light dark:text-text-muted-dark font-medium uppercase mt-0.5">M-Open: #8</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-center gap-2">
+<button class="p-2 text-text-muted-light hover:text-primary hover:bg-primary/10 rounded-lg transition" title="View Split Analysis">
+<span class="material-symbols-outlined text-xl">analytics</span>
+</button>
+<button class="p-2 text-text-muted-light hover:text-accent hover:bg-accent/10 rounded-lg transition" title="Download Certificate">
+<span class="material-symbols-outlined text-xl">workspace_premium</span>
+</button>
+<button class="p-2 text-text-muted-light hover:text-text-main-light hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition" title="Compare Performance">
+<span class="material-symbols-outlined text-xl">compare_arrows</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-gray-50/50 dark:bg-gray-800/30 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+<span class="text-xs text-text-muted-light">Showing 1 to 4 of 12 results</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 dark:border-gray-600 disabled:opacity-50 text-text-muted-light hover:bg-gray-100 dark:hover:bg-gray-700 transition" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center text-xs font-bold bg-primary text-white rounded shadow-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center text-xs font-medium text-text-muted-light hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition">2</button>
+<button class="w-8 h-8 flex items-center justify-center text-xs font-medium text-text-muted-light hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 dark:border-gray-600 text-text-muted-light hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-blue-50 dark:bg-blue-900/10 p-5 rounded-xl border border-blue-100 dark:border-blue-900/20 shadow-sm">
+<h4 class="text-sm font-bold text-blue-800 dark:text-blue-300 flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-base">info</span>
+                        About Net Time vs Gun Time
+                    </h4>
+<p class="text-xs text-blue-700 dark:text-blue-400 leading-relaxed opacity-90">
+                        Net Time (Chip Time) is measured from the moment you cross the start mat to the moment you cross the finish mat. Official Time (Gun Time) is measured from the start signal. Prizes are usually based on Gun Time.
+                    </p>
+</div>
+<div class="bg-amber-50 dark:bg-amber-900/10 p-5 rounded-xl border border-amber-100 dark:border-amber-900/20 shadow-sm">
+<h4 class="text-sm font-bold text-amber-800 dark:text-amber-300 flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-base material-symbols-filled">military_tech</span>
+                        E-Certificate &amp; Medal
+                    </h4>
+<p class="text-xs text-amber-700 dark:text-amber-400 leading-relaxed opacity-90">
+                        Official digital certificates are available for download 24 hours after verification. Physical finisher medals for virtual runs will be shipped within 7 days of completion. Keep running, pelari kalcer!
+                    </p>
+</div>
+</div>
+<div class="mt-12 border-t border-gray-200 dark:border-gray-700 pt-6 flex flex-col items-center justify-center text-center gap-3">
+<div class="text-sm text-text-muted-light dark:text-text-muted-dark font-medium">
+                    © 2023 LariIndo Event Management. Supporting Indonesian Running Culture.
+                </div>
+<div class="flex items-center gap-2 text-[10px] font-medium text-text-muted-light bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-[14px] text-green-500 material-symbols-filled">verified_user</span>
+                    Data Verification: 22 Oct 2023, 16:45 WIB
+                </div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

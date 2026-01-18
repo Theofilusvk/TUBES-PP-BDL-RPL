@@ -19,9 +19,9 @@ Route::get('/register', function () {
 })->name('register');
 
 // Participant Routes
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->name('dashboard');
+use App\Http\Controllers\ParticipantDashboardController;
+
+Route::get('/dashboard', [ParticipantDashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/events/register', function () {
     return view('events.register');
