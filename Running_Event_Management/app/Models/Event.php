@@ -10,4 +10,9 @@ class Event extends Model
     protected $primaryKey = 'EventID';
     public $timestamps = false;
     protected $guarded = [];
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'EventID', 'EventID');
+    }
 }

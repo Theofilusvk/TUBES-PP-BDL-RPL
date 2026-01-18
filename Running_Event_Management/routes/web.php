@@ -8,6 +8,7 @@ Route::get('/', function () {
 
 // Auth Routes
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ParticipantController;
@@ -20,19 +21,20 @@ use App\Http\Controllers\AdminController; // Added for the new admin route
 Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout'); // Kept existing logout route
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
+Route::get('/register', [RegisterController::class, 'create'])->name('register');
+Route::post('/register', [RegisterController::class, 'store']);
 
 // Dashboard Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/events', [EventController::class, 'index'])->name('dashboard.events');
-    Route::get('/participants', [ParticipantController::class, 'index'])->name('dashboard.participants');
-    Route::get('/participants/{id}', [ParticipantController::class, 'show'])->name('dashboard.participants.show');
+    // Route::get('/participants', [ParticipantController::class, 'index'])->name('dashboard.participants');
+    // Route::get('/participants/{id}', [ParticipantController::class, 'show'])->name('dashboard.participants.show');
     Route::get('/results', [ResultController::class, 'index'])->name('dashboard.results');
     Route::get('/leaderboards', [LeaderboardController::class, 'index'])->name('dashboard.leaderboards');
     Route::get('/settings', [SettingController::class, 'index'])->name('dashboard.settings');
+    Route::post('/settings/profile', [SettingController::class, 'updateProfile'])->name('dashboard.settings.update-profile');
+    Route::post('/settings/password', [SettingController::class, 'updatePassword'])->name('dashboard.settings.update-password');
 });
 
 // Legacy Admin Routes (Keep as is or integrate later)

@@ -27,6 +27,8 @@ class User extends Authenticatable
         'Email',
         'Password',
         'PeranID',
+        'NomorTelepon',
+        'Gambar',
     ];
 
     /**
@@ -50,5 +52,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function totalDistance()
+    {
+        return $this->hasOne(TotalDistance::class, 'PenggunaID', 'PenggunaID');
     }
 }

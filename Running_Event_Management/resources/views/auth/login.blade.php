@@ -64,7 +64,6 @@
 <div class="hidden group-hover:block pl-11 pr-2 pb-2 space-y-1">
 <a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Upcoming</a>
 <a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Past Events</a>
-<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Race Packs</a>
 </div>
 </div>
 <a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.participants') }}">
@@ -195,6 +194,12 @@
                                     Sign In
                                 </button>
 </div>
+@error('email')
+    <div class="mt-4 p-3 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3">
+        <span class="material-icons text-red-500 text-xl">error_outline</span>
+        <span class="text-sm text-red-600 dark:text-red-400 font-medium">{{ $message }}</span>
+    </div>
+@enderror
 </form>
 <div class="mt-6">
 <div class="relative">

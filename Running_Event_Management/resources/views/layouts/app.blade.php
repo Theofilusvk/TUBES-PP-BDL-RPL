@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <!-- Alpine.js & Collapse Plugin -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
@@ -43,6 +46,13 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
@@ -65,11 +75,7 @@
                 <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">calendar_today</span>
                 <span class="font-medium text-sm">Events</span>
             </a>
-            <a class="flex items-center gap-3 px-4 py-2.5 text-blue-100 hover:bg-sidebar-hover/50 hover:text-white rounded-lg transition-colors group"
-                href="#">
-                <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">groups</span>
-                <span class="font-medium text-sm">Participants</span>
-            </a>
+
             <div class="pt-4 pb-2">
                 <p class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Race Data</p>
             </div>
@@ -89,16 +95,16 @@
         </nav>
         <div class="p-4 border-t border-blue-800">
             <div class="flex items-center gap-3">
-                <img alt="User Profile" class="w-10 h-10 rounded-full border-2 border-blue-400"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfncrwZZFqdQCCufJfp-nrjbxj62ZflSjNPh8GYgShbkPpto9A92HICmNjs5RTsy15z3LbDL2yPY53htupuw2EYZtPJ9D_R3haFs9PMIueU2BVEF8qibNlleYiG51gQqy71sWrDU6jrS_MeUbR0vfyeHIAtISziyty8rgdDdYb54cSgaRIKDJCfACAwUWWK1CcIOnAsls4UR75EmMXSCFWJeF2xfgKygWWnW909RRP8KWwdQsnd4rdF_PNwODFcdwFKeZoE0tNksk" />
+                <img alt="{{ Auth::user()->NamaLengkap }}" class="w-10 h-10 rounded-full border-2 border-blue-400 object-cover"
+                    src="{{ Auth::user()->Gambar ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->NamaLengkap ?? 'User') . '&background=random' }}" />
                 <div class="flex flex-col">
-                    <span class="text-sm font-semibold text-white">Budi Santoso</span>
-                    <span class="text-xs text-blue-300">Organizer</span>
+                    <span class="text-sm font-semibold text-white">{{ Auth::user()->NamaLengkap ?? 'User' }}</span>
+                    <span class="text-xs text-blue-300">{{ Auth::user()->PeranID == 1 ? 'Administrator' : 'Participants' }}</span>
                 </div>
             </div>
         </div>
     </aside>
-    <main class="flex-1 md:ml-64 p-4 md:p-8 overflow-y-auto">
+    <main class="flex-1 md:ml-64 p-4 md:p-8 overflow-y-auto fade-in">
         <div class="md:hidden flex items-center justify-between mb-6">
             <h1 class="text-xl font-bold italic text-sidebar-bg dark:text-blue-400">Lari<span
                     class="text-yellow-500">Kalcer</span></h1>

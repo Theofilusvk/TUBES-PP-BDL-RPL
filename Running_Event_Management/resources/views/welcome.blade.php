@@ -64,7 +64,6 @@
 <div class="hidden group-hover:block pl-11 pr-2 pb-2 space-y-1">
 <a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Upcoming</a>
 <a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Past Events</a>
-<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Race Packs</a>
 </div>
 </div>
 <a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.participants') }}">

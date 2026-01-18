@@ -15,4 +15,9 @@ class Category extends Model
     {
         return $this->belongsTo(Event::class, 'EventID', 'EventID');
     }
+
+    public function slots()
+    {
+        return $this->hasMany(Slot::class, 'KategoriID', 'KategoriID');
+    }
 }

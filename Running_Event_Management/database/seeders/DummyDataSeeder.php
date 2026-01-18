@@ -56,6 +56,8 @@ class DummyDataSeeder extends Seeder
                 'name' => 'Jakarta Marathon 2026',
                 'desc' => 'Lari keliling Jakarta.',
                 'status' => 'Buka',
+                'status' => 'Buka',
+                'image' => 'https://images.unsplash.com/photo-1533560906634-887cd79210f5?w=600&h=400&fit=crop',
                 'categories' => [
                     ['name' => '5K Fun Run', 'dist' => '5K', 'min' => 12, 'max' => 70, 'quota' => 100],
                     ['name' => '10K Race', 'dist' => '10K', 'min' => 15, 'max' => 60, 'quota' => 100],
@@ -66,6 +68,8 @@ class DummyDataSeeder extends Seeder
                 'name' => 'Bali Ultra 2026',
                 'desc' => 'Lari lintas alam di Bali.',
                 'status' => 'Buka',
+                'status' => 'Buka',
+                'image' => 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=600&h=400&fit=crop',
                 'categories' => [
                     ['name' => 'Trail 25K', 'dist' => '25K', 'min' => 17, 'max' => 65, 'quota' => 50],
                     ['name' => 'Ultra 50K', 'dist' => '50K', 'min' => 20, 'max' => 50, 'quota' => 30],
@@ -75,6 +79,8 @@ class DummyDataSeeder extends Seeder
                 'name' => 'Bandung Night Run 2025',
                 'desc' => 'Lari malam menikmati kota Bandung.',
                 'status' => 'Tutup', // Past Event
+                'status' => 'Tutup', // Past Event
+                'image' => 'https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?w=600&h=400&fit=crop',
                 'categories' => [
                     ['name' => '10K Night', 'dist' => '10K', 'min' => 15, 'max' => 60, 'quota' => 200],
                 ]
@@ -93,10 +99,14 @@ class DummyDataSeeder extends Seeder
                 $eid = DB::table('ms_event')->insertGetId([
                     'NamaEvent' => $evtData['name'],
                     'DeskripsiEvent' => $evtData['desc'],
-                    'StatusEvent' => $evtData['status']
+                    'StatusEvent' => $evtData['status'],
+                    'GambarEvent' => $evtData['image'] ?? null
                 ]);
             } else {
                 $eid = $evt->EventID;
+                DB::table('ms_event')->where('EventID', $eid)->update([
+                    'GambarEvent' => $evtData['image'] ?? null
+                ]);
             }
             $eventIds[$evtData['name']] = $eid;
 
@@ -170,18 +180,59 @@ class DummyDataSeeder extends Seeder
                     ]);
                 }
             }
+            // Return PendaftaranID for result usage
+            return $pid;
         };
 
         // Budi: Registered and Paid for Jakarta Marathon 5K
-        $register('budi_runner', 'Jakarta Marathon 2026', '5K Fun Run', 'Terverifikasi', true);
+        $pid1 = $register('budi_runner', 'Jakarta Marathon 2026', '5K Fun Run', 'Selesai', true);
         
         // Budi: Register for Bali Ultra (Pending)
-        $register('budi_runner', 'Bali Ultra 2026', 'Trail 25K', 'Menunggu Pembayaran', false);
+        $pid2 = $register('budi_runner', 'Bali Ultra 2026', 'Trail 25K', 'Menunggu Pembayaran', false);
 
         // Siti: Registered for Jakarta 10K (Paid)
-        $register('siti_lari', 'Jakarta Marathon 2026', '10K Race', 'Terverifikasi', true);
+        $pid3 = $register('siti_lari', 'Jakarta Marathon 2026', '10K Race', 'Terverifikasi', true);
 
         // Joko: Registered for Past Event (Bandung)
-        $register('joko_speed', 'Bandung Night Run 2025', '10K Night', 'Selesai', true);
+        $pid4 = $register('joko_speed', 'Bandung Night Run 2025', '10K Night', 'Selesai', true);
+        
+        // Budi: Past Events (Seeded for History)
+        $pid5 = $register('budi_runner', 'Bandung Night Run 2025', '10K Night', 'Selesai', true);
+
+        // 5. Results (tr_hasillomba)
+        // Add results for Budi and Joko
+        $addResult = function($pid, $time, $rank) {
+            if (!$pid) return;
+            DB::table('tr_hasillomba')->updateOrInsert(
+                ['PendaftaranID' => $pid],
+                ['WaktuFinish' => $time, 'PeringkatUmum' => $rank, 'StatusHasil' => 'Finish']
+            );
+        };
+
+        // Budi finished 5K in 25 mins
+        $addResult($pid1, '00:25:00', 45);
+        // Budi finished 10K in 55 mins
+        $addResult($pid5, '00:55:00', 120);
+        // Joko finished 10K in 40 mins
+        $addResult($pid4, '00:40:00', 15);
+
+        // 4. Populate total_distances based on registered events (Dummy Logic)
+        // In a real scenario, this would sum tr_hasillomba, but we don't have results seeded yet.
+        // So we'll just assign random distances based on what they registered for.
+        
+        $distances = [
+            'budi_runner' => 5.0 + 25.0, // 5K + 25K
+            'siti_lari' => 10.0, // 10K
+            'joko_speed' => 10.0, // 10K
+        ];
+
+        foreach ($distances as $username => $dist) {
+            if (isset($userIds[$username])) {
+                DB::table('total_distances')->updateOrInsert(
+                    ['PenggunaID' => $userIds[$username]],
+                    ['TotalDistance' => $dist, 'LastUpdated' => Carbon::now()]
+                );
+            }
+        }
     }
 }
