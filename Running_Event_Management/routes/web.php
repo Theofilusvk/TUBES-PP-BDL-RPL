@@ -7,17 +7,12 @@ Route::get('/', function () {
 });
 
 // Auth Routes
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\EnsureAdminEmail;
 
-Route::post('/login', function () {
-    return redirect()->route('dashboard'); // Mock login
-});
-
-Route::post('/logout', function () {
-    return redirect()->route('login');
-})->name('logout');
+Route::get('/login', [LoginController::class, 'create'])->name('login');
+Route::post('/login', [LoginController::class, 'store']);
+Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/register', function () {
     return view('auth.register');
@@ -37,9 +32,11 @@ Route::get('/history', function () {
 })->name('history');
 
 // Admin Routes
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+use App\Http\Controllers\AdminDashboardController;
+
+Route::middleware(['auth', EnsureAdminEmail::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+});
 
 // Temporary or Testing
 Route::get('/profile', function () {
