@@ -65,9 +65,6 @@ class EventController extends Controller
 
     public function store(Request $request) 
     {
-        // Debug Log
-        file_put_contents(storage_path('logs/debug_registration.log'), date('Y-m-d H:i:s') . " - Request Data: " . json_encode($request->all()) . "\n", FILE_APPEND);
-
         $request->validate([
             'category_id' => 'required',
             'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:10240', // Increased to 10MB

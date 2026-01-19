@@ -1,59 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Running Event Management System 🏃‍♂️
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel-based web application for managing running events, participants, and leaderboards.
 
-## About Laravel
+## 📋 Prerequisites
+- **Laragon** (Recommended for Windows) - Includes PHP, MySQL, Composer, and Node.js.
+- **Git** (Optional, for version control).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Setup Guide (From Scratch)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Install & Configure Laragon
+1. Download **Laragon Full** from [laragon.org](https://laragon.org/download/).
+2. Install and launch Laragon.
+3. Click **Start All** to start the Web Server (Apache/Nginx) and Database (MySQL).
+4. Ensure you have the following reachable in your terminal (Laragon usually adds them to PATH):
+   - `php -v`
+   - `composer -v`
+   - `npm -v`
+   - `mysql --version`
 
-## Learning Laravel
+### 2. Prepare the Project
+1. Copy the project folder `Running_Event_Management` to your desired location (e.g., `C:\laragon\www\Running_Event_Management`).
+2. Open a terminal inside this folder.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 3. Database Setup
+1. Open **Laragon Database Manager** (HeidiSQL) or use the terminal.
+2. Create a new empty database named `db_sistemmanajemenevent_lari`.
+3. **Import the SQL Script**:
+   - We have provided a full database export file: `final_db_export.sql` (located in the project root).
+   - In terminal:
+     ```bash
+     mysql -u root db_sistemmanajemenevent_lari < final_db_export.sql
+     ```
+   - *Alternatively in HeidiSQL*: File > Load SQL file > Select `final_db_export.sql` > Run.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 4. Application Configuration
+1. **Environment File**:
+   Duplicate `.env.example` and rename it to `.env`.
+   ```bash
+   cp .env.example .env
+   ```
+2. **Edit `.env`**:
+   Open `.env` and configure your database connection:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=db_sistemmanajemenevent_lari
+   DB_USERNAME=root
+   DB_PASSWORD=      # Leave empty if using default Laragon settings
+   ```
 
-## Laravel Sponsors
+### 5. Install Dependencies
+Run the following commands in your project terminal:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+# Install PHP dependencies
+composer install
 
-### Premium Partners
+# Install JavaScript dependencies (TailwindCSS, Alpine.js)
+npm install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 6. Final Initialization
+```bash
+# Generate App Key
+php artisan key:generate
 
-## Contributing
+# Link Storage (for uploading images)
+php artisan storage:link
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Compile Assets (Build CSS/JS)
+npm run build
+```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ▶️ Running the Application
 
-## Security Vulnerabilities
+You can run the application in two ways:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Option A: Using Artisan Serve (Easiest)
+1. Run this command:
+   ```bash
+   php artisan serve
+   ```
+2. Open your browser and go to `http://127.0.0.1:8000`.
 
-## License
+### Option B: Using Laragon Host
+1. If you placed the folder in `C:\laragon\www\Running_Event_Management`:
+2. Reload Laragon.
+3. Visit `http://running_event_management.test` (assuming Laragon auto-host is enabled).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 👤 Login Credentials
+
+### Admin Account
+- **Email**: `admin@bandungrun.com`
+- **Password**: `admin123`
+- **Access**: Full access to manage events, participants, and payments.
+
+### User Account (Participant)
+- **Email**: `user@example.com` (or create a new one)
+- **Password**: `user123`
+- **Access**: Register for events, view leaderboard, upload payment.
+
+---
+
+## 📂 Important Files
+- **`final_db_export.sql`**: The full SQL script to restore the database.
+- **`database_features.md`**: Documentation of Triggers, Views, and Procedures used.

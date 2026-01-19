@@ -130,11 +130,106 @@ class LeaderboardController extends Controller
             $topRunners = $rankings->take(3);
         }
 
-        // Find Auth User Rank
-        // This is expensive in SQL without window functions in MySQL 5.7, but valid in 8.0
-        // For simple usage, we'll just check if user is in the loaded list, implies proper offset
-        // Real-world would need a separate 'COUNT(*)' query dependent on user's metric
+        // Find Auth User Rank and Stats
+        $userStats = null;
+        $user = Auth::user();
+
+        if ($user) {
+            if ($isSpeedRank) {
+                // Get User's Best Time for this Category
+                $userBest = DB::table('tr_hasillomba as h')
+                    ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                    ->join('ms_kategorilomba as k', 'p.KategoriID', '=', 'k.KategoriID')
+                    ->where('p.PenggunaID', $user->PenggunaID)
+                    ->where('k.Jarak', 'LIKE', "%$category%")
+                    ->where('h.StatusHasil', 'Finish')
+                    ->orderBy('h.WaktuFinish', 'asc')
+                    ->select('h.WaktuFinish', 'k.Jarak') // Select Jarak to match view expectation
+                    ->first();
+
+                if ($userBest) {
+                    // Count how many people are faster
+                    $fasterCount = DB::table('tr_hasillomba as h')
+                        ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                        ->join('ms_kategorilomba as k', 'p.KategoriID', '=', 'k.KategoriID')
+                        ->where('k.Jarak', 'LIKE', "%$category%")
+                        ->where('h.StatusHasil', 'Finish')
+                        ->where('h.WaktuFinish', '<', $userBest->WaktuFinish)
+                        ->count();
+
+                    // Count total participants in this category
+                    $totalParticipants = DB::table('tr_hasillomba as h')
+                        ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                        ->join('ms_kategorilomba as k', 'p.KategoriID', '=', 'k.KategoriID')
+                        ->where('k.Jarak', 'LIKE', "%$category%")
+                        ->where('h.StatusHasil', 'Finish')
+                        ->count();
+
+                    $rank = $fasterCount + 1;
+                    $percentile = $totalParticipants > 1 ? round((($totalParticipants - $rank) / $totalParticipants) * 100) : 100;
+
+                    $userStats = (object) [
+                        'rank' => $rank,
+                        'value' => $userBest->WaktuFinish,
+                        'label' => 'Best Time',
+                        'percentile' => $percentile,
+                        'total_events' => DB::table('tr_hasillomba as h')
+                                        ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                                        ->where('p.PenggunaID', $user->PenggunaID)
+                                        ->where('h.StatusHasil', 'Finish')
+                                        ->count(),
+                        // Add display helper
+                        'display_value' => $userBest->WaktuFinish
+                    ];
+                }
+
+            } else {
+                // Global Rank by Distance
+                 $userTotal = DB::table('tr_hasillomba as h')
+                    ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                    ->join('ms_kategorilomba as k', 'p.KategoriID', '=', 'k.KategoriID')
+                    ->where('p.PenggunaID', $user->PenggunaID)
+                    ->where('h.StatusHasil', 'Finish')
+                    ->sum('k.JarakKM');
+
+                 if ($userTotal > 0) {
+                     // Count how many have more distance
+                     // Subquery for aggregation
+                     $betterRunners = DB::table('tr_hasillomba as h')
+                        ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                        ->join('ms_kategorilomba as k', 'p.KategoriID', '=', 'k.KategoriID')
+                        ->where('h.StatusHasil', 'Finish')
+                        ->select('p.PenggunaID', DB::raw('SUM(k.JarakKM) as TotalDist'))
+                        ->groupBy('p.PenggunaID')
+                        ->having('TotalDist', '>', $userTotal)
+                        ->get() // count() on having doesn't work directly in some drivers accurately without get() count
+                        ->count();
+
+                     $totalRunners = DB::table('tr_hasillomba as h')
+                        ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                        ->where('h.StatusHasil', 'Finish')
+                        ->distinct('p.PenggunaID')
+                        ->count('p.PenggunaID');
+
+                     $rank = $betterRunners + 1;
+                     $percentile = $totalRunners > 1 ? round((($totalRunners - $rank) / $totalRunners) * 100) : 100;
+
+                     $userStats = (object) [
+                        'rank' => $rank,
+                        'value' => $userTotal,
+                        'label' => 'Total Distance',
+                        'percentile' => $percentile,
+                        'total_events' => DB::table('tr_hasillomba as h')
+                                        ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
+                                        ->where('p.PenggunaID', $user->PenggunaID)
+                                        ->where('h.StatusHasil', 'Finish')
+                                        ->count(),
+                        'display_value' => number_format($userTotal, 1) . ' KM'
+                     ];
+                 }
+            }
+        }
         
-        return view('dashboard.leaderboards.index', compact('rankings', 'topRunners', 'category', 'isSpeedRank', 'sort', 'search'));
+        return view('dashboard.leaderboards.index', compact('rankings', 'topRunners', 'category', 'isSpeedRank', 'sort', 'search', 'userStats'));
     }
 }

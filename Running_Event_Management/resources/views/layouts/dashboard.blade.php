@@ -166,7 +166,67 @@
             </div>
             
             <div class="flex items-center gap-4">
-                 <!-- Theme Toggle -->
+                <!-- Notification Dropdown -->
+                <div class="relative" x-data="{
+                    notificationsOpen: false,
+                    hasUnread: true,
+                    notifications: [
+                        { id: 1, title: 'Upcoming Event: Jakarta Marathon', time: '2 hours ago', desc: 'Don\'t forget to pick up your race pack!', icon: 'event', color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' },
+                        { id: 2, title: 'Results Published', time: '1 day ago', desc: 'Your timing for Bandung Night Run is out.', icon: 'emoji_events', color: 'text-yellow-500', bg: 'bg-yellow-100 dark:bg-yellow-900/30' },
+                        { id: 3, title: 'Registration Verified', time: '3 days ago', desc: 'See you at Bali Ultra 2026!', icon: 'check_circle', color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-900/30' }
+                    ],
+                    toggleNotifications() {
+                        this.notificationsOpen = !this.notificationsOpen;
+                        if (this.notificationsOpen) {
+                            this.hasUnread = false;
+                        }
+                    }
+                }">
+                    <button @click="toggleNotifications()" @click.outside="notificationsOpen = false" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none text-gray-600 dark:text-gray-300">
+                        <span class="material-icons text-xl">notifications</span>
+                        <span x-show="hasUnread" x-transition.scale class="absolute top-2 right-2.5 w-2.5 h-2.5 bg-accent rounded-full border-2 border-white dark:border-card-dark"></span>
+                    </button>
+                    
+                    <div x-show="notificationsOpen"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 translate-y-1"
+                         style="display: none;"
+                         class="absolute right-0 mt-3 w-80 bg-white dark:bg-card-dark rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] dark:shadow-none border border-gray-100 dark:border-gray-700 py-2 z-50 origin-top-right">
+                         
+                         <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
+                            <h3 class="font-bold text-gray-900 dark:text-white text-sm">Notifications</h3>
+                            <button @click="hasUnread = false" class="text-xs text-primary hover:text-blue-600 font-medium transition-colors">Mark all read</button>
+                         </div>
+                
+                         <div class="max-h-[300px] overflow-y-auto no-scrollbar">
+                             <template x-for="note in notifications" :key="note.id">
+                                 <a href="#" class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-b border-gray-50 dark:border-gray-800/50 last:border-0 group">
+                                    <div class="flex gap-3">
+                                        <div class="mt-1 flex-shrink-0">
+                                             <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="note.bg">
+                                                <span class="material-icons text-sm" :class="note.color" x-text="note.icon"></span>
+                                             </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors" x-text="note.title"></p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2" x-text="note.desc"></p>
+                                            <p class="text-[10px] text-gray-400 mt-1 font-medium" x-text="note.time"></p>
+                                        </div>
+                                    </div>
+                                 </a>
+                             </template>
+                         </div>
+                         <div class="px-4 py-2 border-t border-gray-100 dark:border-gray-700 text-center">
+                             <a href="#" class="text-xs font-bold text-gray-500 hover:text-primary transition-colors">View All History</a>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- Theme Toggle -->
                 <button class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all text-gray-600 dark:text-gray-300" onclick="document.documentElement.classList.toggle('dark')">
                     <span class="material-icons text-xl">light_mode</span>
                 </button>

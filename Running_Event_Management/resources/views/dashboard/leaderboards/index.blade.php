@@ -266,29 +266,45 @@
         <table class="w-full text-left">
             <tbody>
                 <tr class="bg-gradient-to-r from-primary to-blue-600 dark:from-blue-900 dark:to-slate-900">
+                    @if(isset($userStats))
                     <td class="px-6 py-3 text-center w-20">
                         <div class="flex flex-col items-center">
                             <span class="text-[10px] uppercase tracking-wider opacity-75">Your Rank</span>
-                            <span class="font-display font-bold text-2xl">142</span>
+                            <span class="font-display font-bold text-2xl">#{{ $userStats->rank }}</span>
                         </div>
                     </td>
                     <td class="px-6 py-3 min-w-[200px]">
                         <div class="flex items-center gap-3">
-                            <img class="w-10 h-10 rounded-full border-2 border-white/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmZwswpz4cpKy4hkwQlaAY4ojgyIu6Yxf3_-LIz6Dj6g9cVcBSeGP4IkWzC4LmJtoPir7rsY-3tque50sg9u8Yo20eDUi9oXJNxQbOgshsSmyLUPBhKnCmMcPcIUHnqArH-5y7i34QhOfFFGNnjOfknZZLPCR_Y_FkZpliEaA5sZP-cEt6oFkpjo_tfUZmem9uv4SCleiJsxwc-2afVwZsjip6lGyv1y1uVP2-CSsnjywlOUSJJMu_Qkf17WIylaX5rcEloi-YBJw"/>
+                            <img class="w-10 h-10 rounded-full border-2 border-white/30" src="{{ Auth::user()->Gambar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->NamaLengkap).'&background=random' }}"/>
                             <div>
                                 <span class="font-bold block text-lg">You</span>
-                                <span class="text-xs text-blue-100 flex items-center gap-1"><span class="material-icons text-[10px]">arrow_upward</span> Top 15%</span>
+                                <span class="text-xs text-blue-100 flex items-center gap-1">
+                                    <span class="material-icons text-[10px]">arrow_upward</span> Top {{ $userStats->percentile }}%
+                                </span>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-3 hidden md:table-cell text-blue-100 font-medium">Pelari Kalcer Member</td>
-                    <td class="px-6 py-3 hidden lg:table-cell text-right font-bold text-lg">5</td>
-                    <td class="px-6 py-3 hidden sm:table-cell text-right font-mono text-blue-100">2,100m</td>
+                    <td class="px-6 py-3 hidden md:table-cell text-blue-100 font-medium">{{ Auth::user()->Kota ?? 'Runner' }}</td>
+                    <td class="px-6 py-3 hidden lg:table-cell text-right font-bold text-lg">{{ $userStats->total_events }}</td>
+                    <td class="px-6 py-3 hidden sm:table-cell text-right font-mono text-blue-100">-</td>
                     <td class="px-6 py-3 text-right">
                         <div class="flex flex-col items-end">
-                            <span class="font-display font-bold text-white text-xl">450 <span class="text-sm font-sans font-normal opacity-80">KM</span></span>
+                            <span class="font-display font-bold text-white text-xl">{{ $userStats->display_value }}</span>
+                            <span class="text-[10px] uppercase opacity-75">{{ $userStats->label }}</span>
                         </div>
                     </td>
+                    @else
+                    <td colspan="6" class="px-6 py-4 text-center">
+                        <div class="flex items-center justify-center gap-4">
+                            <span class="material-icons text-yellow-300 text-3xl">emoji_events</span>
+                            <div class="text-left">
+                                <div class="font-bold text-lg text-white">Not Ranked Yet</div>
+                                <div class="text-xs text-blue-100">Join a race to see your standing on the leaderboard!</div>
+                            </div>
+                            <a href="{{ route('dashboard.events') }}" class="ml-4 px-4 py-2 bg-white text-primary font-bold rounded-lg text-sm hover:bg-gray-100 transition-colors">Find a Race</a>
+                        </div>
+                    </td>
+                    @endif
                 </tr>
             </tbody>
         </table>
