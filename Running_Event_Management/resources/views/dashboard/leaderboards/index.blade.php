@@ -61,10 +61,24 @@
 <span class="hidden lg:block ml-3 font-medium text-sm">Dashboard</span>
 </a>
 <div class="hidden lg:block px-3 mt-6 mb-2 text-[10px] font-bold text-blue-300 uppercase tracking-widest opacity-80">Race Management</div>
-<a class="group flex items-center px-3 py-2.5 text-blue-100 hover:bg-white/10 hover:text-white rounded-lg transition-colors cursor-pointer" href="{{ route('dashboard.events') }}">
-<span class="material-icons group-hover:text-accent text-xl">calendar_today</span>
-<span class="hidden lg:block ml-3 font-medium text-sm flex-1">Events</span>
-</a>
+<div class="relative" x-data="{ open: false }">
+    <button @click="open = !open" class="w-full group flex items-center px-3 py-2.5 text-blue-100 hover:bg-white/10 hover:text-white rounded-lg transition-colors cursor-pointer text-left">
+        <span class="material-icons group-hover:text-accent text-xl">calendar_today</span>
+        <span class="hidden lg:block ml-3 font-medium text-sm flex-1">Events</span>
+        <span class="hidden lg:block material-icons text-sm text-blue-300 transition-transform duration-200" :class="{'rotate-180': open}">expand_more</span>
+    </button>
+    <div x-show="open" x-collapse class="pl-4 space-y-1 mt-1 bg-black/10 rounded-lg p-2" style="display: none;">
+        <a href="{{ route('dashboard.events') }}?filter=upcoming" class="flex items-center px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+             <span class="w-1.5 h-1.5 bg-green-400 rounded-full mr-2"></span> Upcoming
+        </a>
+        <a href="{{ route('dashboard.events') }}?filter=past" class="flex items-center px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+             <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span> Past Events
+        </a>
+        <a href="{{ route('dashboard.events') }}?filter=my_events" class="flex items-center px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+             <span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span> My Events
+        </a>
+    </div>
+</div>
 
 <div class="hidden lg:block px-3 mt-6 mb-2 text-[10px] font-bold text-blue-300 uppercase tracking-widest opacity-80">Competition</div>
 <a class="group flex items-center px-3 py-2.5 text-blue-100 hover:bg-white/10 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.results') }}">

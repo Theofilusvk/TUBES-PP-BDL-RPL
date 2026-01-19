@@ -63,8 +63,9 @@
 <span class="hidden lg:block material-icons text-sm text-blue-300">expand_more</span>
 </a>
 <div class="hidden group-hover:block pl-11 pr-2 pb-2 space-y-1">
-<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Upcoming</a>
-<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Past Events</a>
+<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="{{ route('dashboard.events', ['filter' => 'upcoming']) }}">Upcoming</a>
+<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="{{ route('dashboard.events', ['filter' => 'past']) }}">Past Events</a>
+<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="{{ route('dashboard.events', ['filter' => 'my_events']) }}">My Events</a>
 </div>
 </div>
 <a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.participants') }}">
@@ -188,13 +189,7 @@
                     </div>
                 </div>
 </div>
-<div class="flex items-center justify-between">
-<div class="flex items-center">
-<input class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" id="remember_me" type="checkbox" name="remember">
-<label class="ml-2 block text-xs text-gray-900 dark:text-gray-300" for="remember_me">
-                                        Remember me
-                                    </label>
-</div>
+<div class="flex justify-end">
 <div class="text-xs">
 <a class="font-medium text-primary hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300" href="#">
                                         Forgot password?

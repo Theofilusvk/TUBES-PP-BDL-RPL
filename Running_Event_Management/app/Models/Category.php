@@ -20,4 +20,9 @@ class Category extends Model
     {
         return $this->hasMany(Slot::class, 'KategoriID', 'KategoriID');
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'KategoriID', 'KategoriID');
+    }
 }

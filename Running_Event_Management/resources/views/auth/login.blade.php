@@ -185,13 +185,7 @@
         </button>
     </div>
 </div>
-<div class="flex items-center justify-between">
-<div class="flex items-center">
-<input class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" id="remember_me" type="checkbox" name="remember">
-<label class="ml-2 block text-xs text-gray-900 dark:text-gray-300" for="remember_me">
-                                        Remember me
-                                    </label>
-</div>
+<div class="flex items-center justify-end">
 <div class="text-xs">
 <a class="font-medium text-primary hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300" href="#">
                                         Forgot password?

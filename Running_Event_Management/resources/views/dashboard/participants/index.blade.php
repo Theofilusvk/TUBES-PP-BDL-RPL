@@ -77,6 +77,9 @@
         <a href="{{ route('dashboard.events') }}?filter=past" class="flex items-center px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
              <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span> Past Events
         </a>
+        <a href="{{ route('dashboard.events') }}?filter=my_events" class="flex items-center px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+             <span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span> My Events
+        </a>
     </div>
 </div>
 <a class="group flex items-center px-3 py-3 text-white bg-white/20 shadow-inner rounded-lg transition-colors relative" href="{{ route('dashboard.participants') }}">

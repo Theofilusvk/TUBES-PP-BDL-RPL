@@ -1,3 +1,30 @@
+SET FOREIGN_KEY_CHECKS=0;
+DROP VIEW IF EXISTS v_aktivitas_terbaru; DROP TABLE IF EXISTS v_aktivitas_terbaru;
+DROP VIEW IF EXISTS v_audit_sistem; DROP TABLE IF EXISTS v_audit_sistem;
+DROP VIEW IF EXISTS v_cek_sertifikat; DROP TABLE IF EXISTS v_cek_sertifikat;
+DROP VIEW IF EXISTS v_data_pendaftaran; DROP TABLE IF EXISTS v_data_pendaftaran;
+DROP VIEW IF EXISTS v_identitas_event_medsos; DROP TABLE IF EXISTS v_identitas_event_medsos;
+DROP VIEW IF EXISTS v_jadwal_slot_lengkap; DROP TABLE IF EXISTS v_jadwal_slot_lengkap;
+DROP VIEW IF EXISTS v_katalog_event; DROP TABLE IF EXISTS v_katalog_event;
+DROP VIEW IF EXISTS v_keamanan_akses; DROP TABLE IF EXISTS v_keamanan_akses;
+DROP VIEW IF EXISTS v_konfirmasi_pembayaran; DROP TABLE IF EXISTS v_konfirmasi_pembayaran;
+DROP VIEW IF EXISTS v_leaderboard; DROP TABLE IF EXISTS v_leaderboard;
+DROP VIEW IF EXISTS v_logistik_racepack; DROP TABLE IF EXISTS v_logistik_racepack;
+DROP VIEW IF EXISTS v_monitoring_stok_rp; DROP TABLE IF EXISTS v_monitoring_stok_rp;
+DROP VIEW IF EXISTS v_profil_pengguna; DROP TABLE IF EXISTS v_profil_pengguna;
+DROP VIEW IF EXISTS v_rekap_keuangan_event; DROP TABLE IF EXISTS v_rekap_keuangan_event;
+DROP VIEW IF EXISTS v_rekap_sponsor_peserta; DROP TABLE IF EXISTS v_rekap_sponsor_peserta;
+DROP VIEW IF EXISTS v_riwayat_notifikasi; DROP TABLE IF EXISTS v_riwayat_notifikasi;
+DROP VIEW IF EXISTS v_statistik_admin; DROP TABLE IF EXISTS v_statistik_admin;
+DROP VIEW IF EXISTS v_timeline_aktivitas; DROP TABLE IF EXISTS v_timeline_aktivitas;
+DROP VIEW IF EXISTS v_verifikasi_dokumen; DROP TABLE IF EXISTS v_verifikasi_dokumen;
+SET FOREIGN_KEY_CHECKS=1;
+DROP PROCEDURE IF EXISTS sp_buat_notifikasi_dan_log;
+DROP PROCEDURE IF EXISTS sp_daftar_event;
+DROP PROCEDURE IF EXISTS sp_input_hasil;
+DROP PROCEDURE IF EXISTS sp_request_reset_password;
+DROP PROCEDURE IF EXISTS sp_simpan_pesan_kontak;
+DROP PROCEDURE IF EXISTS sp_verifikasi_bayar;
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
@@ -25,23 +52,6 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ambil_racepack` (IN `p_pendaftaran_id` INT, IN `p_petugas_id` INT, IN `p_item_id` INT, IN `p_ukuran` VARCHAR(10))   BEGIN
-    -- Cek ketersediaan stok
-    IF (SELECT JumlahStok FROM ms_stokracepack WHERE ItemID = p_item_id AND Ukuran = p_ukuran) > 0 THEN
-        START TRANSACTION;
-            -- Catat distribusi
-            INSERT INTO tr_racepackdistribusi (PendaftaranID, PetugasID, StatusPengambilan, TanggalPengambilan)
-            VALUES (p_pendaftaran_id, p_petugas_id, 'Sudah Diambil', NOW());
-            
-            -- Kurangi stok item
-            UPDATE ms_stokracepack 
-            SET JumlahStok = JumlahStok - 1 
-            WHERE ItemID = p_item_id AND Ukuran = p_ukuran;
-        COMMIT;
-    ELSE
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stok ukuran tersebut habis';
-    END IF;
-END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_buat_notifikasi_dan_log` (IN `p_user_id` INT, IN `p_tipe_notif` VARCHAR(50), IN `p_judul` VARCHAR(150), IN `p_isi` TEXT, IN `p_aktivitas` VARCHAR(50))   BEGIN
     -- 1. Insert ke MS_Notifikasi (Template/Master)

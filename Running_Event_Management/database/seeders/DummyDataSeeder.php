@@ -86,46 +86,147 @@ class DummyDataSeeder extends Seeder
 
         // 2. Events & Categories
         $events = [
+            // --- UPCOMING ---
             [
                 'name' => 'Jakarta Marathon 2026',
-                'desc' => 'Lari keliling Jakarta.',
+                'desc' => 'The biggest marathon in Indonesia, traversing iconic landmarks.',
                 'status' => 'Buka',
-                'status' => 'Buka',
-                'image' => 'https://images.unsplash.com/photo-1533560906634-887cd79210f5?w=600&h=400&fit=crop',
+                'image' => 'images/events/jakarta_marathon_2026.png',
                 'categories' => [
-                    ['name' => '5K Fun Run', 'dist' => '5K', 'min' => 12, 'max' => 70, 'quota' => 100],
-                    ['name' => '10K Race', 'dist' => '10K', 'min' => 15, 'max' => 60, 'quota' => 100],
-                    ['name' => 'Full Marathon', 'dist' => '42K', 'min' => 18, 'max' => 55, 'quota' => 50],
+                    ['name' => '5K Fun Run', 'dist' => '5K', 'min' => 12, 'max' => 70, 'quota' => 500],
+                    ['name' => '10K Race', 'dist' => '10K', 'min' => 15, 'max' => 65, 'quota' => 300],
+                    ['name' => 'Full Marathon', 'dist' => '42K', 'min' => 18, 'max' => 60, 'quota' => 100],
                 ]
             ],
             [
                 'name' => 'Bali Ultra 2026',
-                'desc' => 'Lari lintas alam di Bali.',
+                'desc' => 'Extreme trail running across the beautiful landscape of Bali.',
                 'status' => 'Buka',
-                'status' => 'Buka',
-                'image' => 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=600&h=400&fit=crop',
+                'image' => 'images/events/bali_ultra_2026.png',
                 'categories' => [
-                    ['name' => 'Trail 25K', 'dist' => '25K', 'min' => 17, 'max' => 65, 'quota' => 50],
-                    ['name' => 'Ultra 50K', 'dist' => '50K', 'min' => 20, 'max' => 50, 'quota' => 30],
+                    ['name' => 'Trail 25K', 'dist' => '25K', 'min' => 17, 'max' => 65, 'quota' => 100],
+                    ['name' => 'Ultra 50K', 'dist' => '50K', 'min' => 20, 'max' => 55, 'quota' => 50],
+                    ['name' => 'Summit 80K', 'dist' => '80K', 'min' => 21, 'max' => 50, 'quota' => 20],
                 ]
             ],
             [
+                'name' => 'Borobudur 10K 2026',
+                'desc' => 'Run around the magnificent Borobudur Temple.',
+                'status' => 'Buka',
+                'image' => 'images/events/borobudur_10k_2026.png',
+                'categories' => [
+                    ['name' => '10K Temple Run', 'dist' => '10K', 'min' => 13, 'max' => 70, 'quota' => 200],
+                ]
+            ],
+            [
+                'name' => 'Surabaya City Run 2026',
+                'desc' => 'Urban running experience in the heart of Surabaya.',
+                'status' => 'Buka',
+                'image' => 'images/events/surabaya_city_run_2026.png',
+                'categories' => [
+                    ['name' => '5K City', 'dist' => '5K', 'min' => 10, 'max' => 80, 'quota' => 300],
+                    ['name' => 'Half Marathon', 'dist' => '21K', 'min' => 17, 'max' => 60, 'quota' => 150],
+                ]
+            ],
+
+            // --- PAST (History) ---
+            [
                 'name' => 'Bandung Night Run 2025',
-                'desc' => 'Lari malam menikmati kota Bandung.',
-                'status' => 'Tutup', // Past Event
-                'image' => 'https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?w=600&h=400&fit=crop',
+                'desc' => 'Lari malam menikmati kota Bandung yang sejuk.',
+                'status' => 'Tutup',
+                'image' => 'images/events/bandung_night_run_2025.png',
                 'categories' => [
                     ['name' => '10K Night', 'dist' => '10K', 'min' => 15, 'max' => 60, 'quota' => 200],
                 ]
             ],
             [
-                'name' => 'Surabaya Heritage Run 2025',
-                'desc' => 'Menelusuri jejak sejarah kota pahlawan.',
-                'status' => 'Tutup', // Past Event (Assuming early 2025)
-                'image' => 'https://images.unsplash.com/photo-1596423736561-12502755e966?w=600&h=400&fit=crop', // Historical/City vibe
+                'name' => 'Lombok Triathlon 2025',
+                'desc' => 'Run, Swim, and Bike in Mandalika.',
+                'status' => 'Tutup',
+                'image' => 'images/events/lombok_triathlon_2025.png',
                 'categories' => [
-                    ['name' => '5K Historical', 'dist' => '5K', 'min' => 10, 'max' => 80, 'quota' => 150],
-                    ['name' => '10K City', 'dist' => '10K', 'min' => 15, 'max' => 70, 'quota' => 100],
+                    ['name' => 'Olympic Distance', 'dist' => '51K', 'min' => 18, 'max' => 55, 'quota' => 50],
+                ]
+            ],
+            [
+                'name' => 'Jogja Heritage Run 2024',
+                'desc' => 'Running through the historic streets of Yogyakarta.',
+                'status' => 'Tutup',
+                'image' => 'images/events/jogja_heritage_run_2024.png',
+                'categories' => [
+                    ['name' => '5K Fun', 'dist' => '5K', 'min' => 10, 'max' => 75, 'quota' => 300],
+                ]
+            ],
+            [
+                'name' => 'Color Run Jakarta 2024',
+                'desc' => 'The happiest 5K on the planet.',
+                'status' => 'Tutup',
+                'image' => 'images/events/color_run_jakarta_2024.png',
+                'categories' => [
+                    ['name' => '5K Color', 'dist' => '5K', 'min' => 5, 'max' => 90, 'quota' => 1000],
+                ]
+            ],
+            [
+                'name' => 'Mount Rinjani Trek 2023',
+                'desc' => 'Hardcore trekking and trail running.',
+                'status' => 'Tutup',
+                'image' => 'images/events/mount_rinjani_trek_2023.png',
+                'categories' => [
+                    ['name' => '100K Ultra', 'dist' => '100K', 'min' => 21, 'max' => 50, 'quota' => 10],
+                ]
+            ],
+            [
+                'name' => 'Semarang 10K 2023',
+                'desc' => 'Flat course perfect for PB.',
+                'status' => 'Tutup',
+                'image' => 'images/events/semarang_10k_2023.png',
+                'categories' => [
+                    ['name' => '10K Race', 'dist' => '10K', 'min' => 15, 'max' => 65, 'quota' => 200],
+                ]
+            ],
+            [
+                'name' => 'Makassar Half 2023',
+                'desc' => 'Running along Losari Beach.',
+                'status' => 'Tutup',
+                'image' => 'images/events/makassar_half_2023.png',
+                'categories' => [
+                    ['name' => '21K Half', 'dist' => '21K', 'min' => 17, 'max' => 60, 'quota' => 150],
+                ]
+            ],
+            [
+                'name' => 'Merapi Lava Run 2022',
+                'desc' => 'Adrenaline rush near the volcano.',
+                'status' => 'Tutup',
+                'image' => 'images/events/merapi_lava_run_2022.png',
+                'categories' => [
+                    ['name' => '10K Lava', 'dist' => '10K', 'min' => 18, 'max' => 55, 'quota' => 50],
+                ]
+            ],
+            [
+                'name' => 'Independence Day Run 2022',
+                'desc' => 'Celebrating national independence.',
+                'status' => 'Tutup',
+                'image' => 'images/events/independence_day_run_2022.png',
+                'categories' => [
+                    ['name' => '8K Merdeka', 'dist' => '8K', 'min' => 10, 'max' => 80, 'quota' => 500],
+                ]
+            ],
+            [
+                'name' => 'Medan Heritage 2021',
+                'desc' => 'Virtual run due to restrictions.',
+                'status' => 'Tutup',
+                'image' => 'images/events/medan_heritage_2021.png',
+                'categories' => [
+                    ['name' => '5K Virtual', 'dist' => '5K', 'min' => 10, 'max' => 90, 'quota' => 1000],
+                ]
+            ],
+            [
+                'name' => 'Papua PON Run 2021',
+                'desc' => 'Supporting the National Sports Week.',
+                'status' => 'Tutup',
+                'image' => 'images/events/papua_pon_run_2021.png',
+                'categories' => [
+                    ['name' => '10K PON', 'dist' => '10K', 'min' => 15, 'max' => 45, 'quota' => 100],
                 ]
             ]
         ];

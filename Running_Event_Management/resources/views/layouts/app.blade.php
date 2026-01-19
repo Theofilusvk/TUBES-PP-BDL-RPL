@@ -70,11 +70,24 @@
             <div class="pt-4 pb-2">
                 <p class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Management</p>
             </div>
-            <a class="flex items-center gap-3 px-4 py-2.5 {{ request()->routeIs('events.*') ? 'bg-sidebar-hover/80 text-white' : 'text-blue-100 hover:bg-sidebar-hover/50 hover:text-white' }} rounded-lg transition-colors group"
-                href="{{ route('events.register') }}">
-                <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">calendar_today</span>
-                <span class="font-medium text-sm">Events</span>
-            </a>
+            <div class="relative" x-data="{ open: {{ request()->routeIs('events.*') ? 'true' : 'false' }} }">
+                <button @click="open = !open" type="button" class="w-full flex items-center gap-3 px-4 py-2.5 {{ request()->routeIs('events.*') ? 'bg-sidebar-hover/80 text-white' : 'text-blue-100 hover:bg-sidebar-hover/50 hover:text-white' }} rounded-lg transition-colors group">
+                    <span class="material-icons-outlined text-xl group-hover:scale-110 transition-transform">calendar_today</span>
+                    <span class="font-medium text-sm flex-1 text-left">Events</span>
+                    <span class="material-icons-outlined text-sm transition-transform duration-200" :class="{'rotate-180': open}">expand_more</span>
+                </button>
+                <div x-show="open" x-collapse class="pl-4 space-y-1 mt-1 bg-black/10 rounded-lg p-2">
+                    <a href="{{ route('dashboard.events') }}?filter=upcoming" class="flex items-center gap-2 px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+                        <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span> Upcoming
+                    </a>
+                    <a href="{{ route('dashboard.events') }}?filter=past" class="flex items-center gap-2 px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+                        <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span> Past Events
+                    </a>
+                    <a href="{{ route('dashboard.events') }}?filter=my_events" class="flex items-center gap-2 px-3 py-2 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+                        <span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> My Events
+                    </a>
+                </div>
+            </div>
 
             <div class="pt-4 pb-2">
                 <p class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Race Data</p>

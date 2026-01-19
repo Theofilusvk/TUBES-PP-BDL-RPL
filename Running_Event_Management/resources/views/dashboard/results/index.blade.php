@@ -62,6 +62,7 @@
                     <div x-show="open" x-collapse class="block pl-3 pr-2 py-2 space-y-1 border-l-2 border-accent/30 ml-4 lg:ml-6 my-1">
                         <a href="{{ route('dashboard.events') }}?filter=upcoming" class="block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors">Upcoming</a>
                         <a href="{{ route('dashboard.events') }}?filter=past" class="block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors">Past Events</a>
+                        <a href="{{ route('dashboard.events') }}?filter=my_events" class="block px-2 py-1.5 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded transition-colors">My Events</a>
                     </div>
                 </div>
 
