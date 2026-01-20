@@ -43,6 +43,7 @@ class LeaderboardController extends Controller
                     'u.Username',
                     'u.Kota', // Replaced Komunitas with Kota
                     'h.WaktuFinish',
+                    'h.Pace',
                     'h.PendaftaranID',
                     'k.NamaKategori',
                     'k.Jarak',

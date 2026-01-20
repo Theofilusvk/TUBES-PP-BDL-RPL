@@ -89,6 +89,7 @@
                         <th class="px-6 py-4">Date</th>
                         <th class="px-6 py-4">Distance</th>
                         <th class="px-6 py-4">Official Time</th>
+                        <th class="px-6 py-4">Pace</th>
                         <th class="px-6 py-4 text-center">Rank</th>
                         <th class="px-6 py-4 text-center">Actions</th>
                     </tr>
@@ -118,6 +119,9 @@
                         <td class="px-6 py-4 font-mono font-medium text-gray-900 dark:text-white">
                             {{ $res->WaktuFinish }}
                         </td>
+                        <td class="px-6 py-4 font-mono text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+                            {{ $res->Pace ?? 'N/A' }}
+                        </td>
                         <td class="px-6 py-4 text-center">
                             <span class="font-bold text-gray-900 dark:text-white">#{{ $res->PeringkatUmum }}</span>
                         </td>
@@ -134,7 +138,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                        <td colspan="7" class="px-6 py-8 text-center text-gray-500">
                             No race results found.
                         </td>
                     </tr>

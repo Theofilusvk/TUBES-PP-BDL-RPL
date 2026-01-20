@@ -342,15 +342,13 @@ class AdminEventController extends Controller
                 // Get registration details including category distance
                 $registration = DB::table('tr_pendaftaran')
                     ->join('ms_kategorilomba', 'tr_pendaftaran.KategoriID', '=', 'ms_kategorilomba.KategoriID')
-                    ->join('tr_pengguna', 'tr_pendaftaran.PenggunaID', '=', 'tr_pengguna.PenggunaID')
                     ->where('tr_pendaftaran.PendaftaranID', $request->PendaftaranID)
                     ->select(
                         'tr_pendaftaran.PendaftaranID',
                         'tr_pendaftaran.PenggunaID',
                         'ms_kategorilomba.Jarak',
                         'ms_kategorilomba.KategoriID',
-                        'ms_kategorilomba.EventID',
-                        'tr_pengguna.TanggalLahir'
+                        'ms_kategorilomba.EventID'
                     )
                     ->first();
 
@@ -388,11 +386,6 @@ class AdminEventController extends Controller
                         ['PendaftaranID' => $request->PendaftaranID],
                         $resultData
                     ));
-                }
-
-                // Update age group rankings if we have finish time
-                if ($request->WaktuFinish && $registration->TanggalLahir) {
-                    $this->updateAgeGroupRanking($hasilID, $registration);
                 }
 
                 // Recalculate overall rankings for this event
