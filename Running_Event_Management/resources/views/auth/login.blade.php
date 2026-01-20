@@ -88,11 +88,7 @@
 <span class="hidden lg:block ml-3 font-medium">Settings</span>
 </a>
 <div class="mt-4 flex flex-col gap-3 px-1">
-<div class="flex items-center justify-between lg:justify-between bg-black/20 rounded-lg p-1.5 border border-white/5">
-<button class="flex-1 text-xs font-bold text-white bg-white/20 shadow-sm px-2 py-1.5 rounded transition-all hover:bg-white/30">ID</button>
-<div class="w-px h-4 bg-white/20 mx-1"></div>
-<button class="flex-1 text-xs font-medium text-blue-200 hover:text-white px-2 py-1.5 rounded transition-colors">EN</button>
-</div>
+
 <button class="w-full flex items-center justify-center lg:justify-between gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all border border-transparent hover:border-white/10" onclick="document.documentElement.classList.toggle('dark')">
 <div class="flex items-center gap-2">
 <span class="material-icons text-sm">dark_mode</span>
@@ -157,6 +153,16 @@
 <h3 class="text-2xl font-display font-bold text-gray-900 dark:text-white mb-2">Welcome Runner!</h3>
 <p class="text-sm text-gray-500 dark:text-gray-400">Log in to manage your races &amp; results.</p>
 </div>
+
+                        @if($errors->any())
+                            <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3 animate-pulse">
+                                <span class="material-icons text-red-500">error</span>
+                                <span class="text-sm text-red-600 dark:text-red-400 font-bold">
+                                    {{ $errors->first() }}
+                                </span>
+                            </div>
+                        @endif
+
 <form class="space-y-5" method="POST" action="{{ route('login') }}">
 @csrf
 <div>

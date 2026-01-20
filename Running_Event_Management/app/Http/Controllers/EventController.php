@@ -15,13 +15,23 @@ class EventController extends Controller
         $query = Event::with('categories.slots');
 
         if ($filter == 'past') {
-            $query->where('StatusEvent', 'Tutup');
+            $query->where('StatusEvent', 'Buka')
+                  ->whereDoesntHave('categories.slots', function($q) {
+                $q->where('TanggalMulai', '>=', now());
+            });
         } elseif ($filter == 'my_events') {
              $query->whereHas('categories.registrations', function($q) {
-                 $q->where('PenggunaID', auth()->id());
+                 $q->where('PenggunaID', auth()->id())
+                   ->where('StatusPendaftaran', '!=', 'Pendaftaran Ditolak')
+                   ->whereDoesntHave('payment', function($qp) {
+                       $qp->where('StatusPembayaran', 'Ditolak');
+                   });
              });
         } else {
-            $query->where('StatusEvent', '!=', 'Tutup');
+            $query->where('StatusEvent', 'Buka')
+                  ->whereHas('categories.slots', function($q) {
+                $q->where('TanggalMulai', '>=', now());
+            });
         }
 
         $events = $query->get();
@@ -81,23 +91,79 @@ class EventController extends Controller
             $userId = auth()->id();
 
             // Check if already registered
-            $exists = DB::table('tr_pendaftaran')
+            $existingReg = DB::table('tr_pendaftaran')
                 ->where('PenggunaID', $userId)
                 ->where('KategoriID', $categoryId)
-                ->exists();
+                ->first();
 
-            if ($exists) {
-                return back()->with('error', 'You are already registered for this category.');
+            // Check duplicate but allow if Rejected (Registration OR Payment)
+            $isRejected = false;
+            if ($existingReg) {
+                if ($existingReg->StatusPendaftaran == 'Pendaftaran Ditolak') {
+                    $isRejected = true;
+                } else {
+                     // Check if payment is rejected
+                     $payment = DB::table('tr_pembayaran')->where('PendaftaranID', $existingReg->PendaftaranID)->orderBy('PembayaranID', 'desc')->first();
+                     if ($payment && $payment->StatusPembayaran == 'Ditolak') {
+                         $isRejected = true;
+                     }
+                }
             }
 
-            // 1. Create Registration (Pending)
-            $registrationId = DB::table('tr_pendaftaran')->insertGetId([
-                'PenggunaID' => $userId,
-                'KategoriID' => $categoryId,
-                'StatusPendaftaran' => 'Menunggu Pembayaran', // Pending Approval
-                'TanggalPendaftaran' => now(),
-                'NomorBIB' => 'BIB-' . rand(1000, 9999), 
-            ]);
+            if ($existingReg && !$isRejected) {
+                 return back()->with('error', 'You are already registered for this category.');
+            }
+
+            if ($existingReg) {
+                // Re-submission: Update status
+                $registrationId = $existingReg->PendaftaranID;
+                DB::table('tr_pendaftaran')
+                    ->where('PendaftaranID', $registrationId)
+                    ->update(['StatusPendaftaran' => 'Menunggu Pembayaran']);
+            } else {
+                 // 1. Get Category Info for Distance & EventID
+                $category = DB::table('ms_kategorilomba')->where('KategoriID', $categoryId)->first();
+                $eventId = $category->EventID; // Assuming EventID is present
+                
+                // Extract Distance (e.g., '10K' -> '10')
+                $distanceStr = preg_replace('/[^0-9]/', '', $category->Jarak);
+                if(empty($distanceStr)) $distanceStr = '00';
+
+                // 2. Get Next Sequence
+                $sequenceRec = DB::table('tr_bib_sequence')
+                    ->where('EventID', $eventId)
+                    ->where('KategoriID', $categoryId)
+                    ->lockForUpdate()
+                    ->first();
+                
+                if (!$sequenceRec) {
+                    $newSeq = 1;
+                    DB::table('tr_bib_sequence')->insert([
+                        'EventID' => $eventId,
+                        'KategoriID' => $categoryId,
+                        'LastSequence' => $newSeq,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                } else {
+                    $newSeq = $sequenceRec->LastSequence + 1;
+                    DB::table('tr_bib_sequence')
+                        ->where('id', $sequenceRec->id)
+                        ->update(['LastSequence' => $newSeq, 'updated_at' => now()]);
+                }
+
+                // 3. Format BIB: EventID (2) - Distance (2) - Sequence (4)
+                $bibNumber = sprintf('%02d-%s-%04d', $eventId % 100, $distanceStr, $newSeq);
+
+                 // New Registration
+                $registrationId = DB::table('tr_pendaftaran')->insertGetId([
+                    'PenggunaID' => $userId,
+                    'KategoriID' => $categoryId,
+                    'StatusPendaftaran' => 'Menunggu Pembayaran', // Pending Approval
+                    'TanggalPendaftaran' => now(),
+                    'NomorBIB' => $bibNumber, 
+                ]);
+            }
 
             // 2. Upload Image
             if ($request->hasFile('payment_proof')) {
@@ -105,15 +171,17 @@ class EventController extends Controller
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $path = $file->storeAs('payments', $filename, 'public'); // Ensure storage link
                 
-                // 3. Create Payment Record
-                DB::table('tr_pembayaran')->insert([
-                    'PendaftaranID' => $registrationId,
-                    'TanggalBayar' => now(),
-                    'NominalBayar' => 0, // Should fetch from category price ideally
-                    'MetodeID' => 1, // Default Transfer
-                    'StatusPembayaran' => 'Menunggu Konfirmasi',
-                    'BuktiPembayaran' => 'storage/' . $path
-                ]);
+                // 3. Create or Update Payment Record
+                DB::table('tr_pembayaran')->updateOrInsert(
+                    ['PendaftaranID' => $registrationId],
+                    [
+                        'TanggalBayar' => now(),
+                        'NominalBayar' => 0, 
+                        'MetodeID' => 1, 
+                        'StatusPembayaran' => 'Menunggu Konfirmasi',
+                        'BuktiPembayaran' => 'storage/' . $path
+                    ]
+                );
             }
 
             DB::commit();

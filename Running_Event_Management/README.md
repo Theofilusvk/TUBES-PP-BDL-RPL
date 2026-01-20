@@ -3,112 +3,126 @@
 A Laravel-based web application for managing running events, participants, and leaderboards.
 
 ## 📋 Prerequisites
-- **Laragon** (Recommended for Windows) - Includes PHP, MySQL, Composer, and Node.js.
-- **Git** (Optional, for version control).
+
+Before running the project, ensure you have the following installed on your system.
+
+### 1. PHP & Composer
+Laravel requires PHP and Composer.
+- **Download PHP**: [windows.php.net](https://windows.php.net/download/) (VS16 x64 Non Thread Safe is usually fine for Nginx, Thread Safe for Apache).
+- **Download Composer**: [getcomposer.org](https://getcomposer.org/download/)
+  - Run the installer (`Composer-Setup.exe`).
+  - It will ask to point to your `php.exe`.
+  - Verify installation by opening a terminal (cmd/powershell) and running:
+    ```bash
+    composer -v
+    ```
+
+### 2. Node.js & NPM
+Required for compiling frontend assets (TailwindCSS, etc.).
+- **Download Node.js** (LTS version recommended): [nodejs.org](https://nodejs.org/)
+- Install it and verify by running:
+  ```bash
+  node -v
+  npm -v
+  ```
+
+### 3. Database Server (MySQL/MariaDB)
+You need a MySQL-compatible database.
+- **XAMPP / Laragon**: Easiest for Windows. Installing [Laragon](https://laragon.org/) will automatically install PHP, Composer, Node.js, and MySQL for you.
+- **Standalone MySQL**: [dev.mysql.com](https://dev.mysql.com/downloads/installer/)
 
 ---
 
-## 🚀 Setup Guide (From Scratch)
+## 🚀 Setup Guide (Fresh Install)
 
-### 1. Install & Configure Laragon
-1. Download **Laragon Full** from [laragon.org](https://laragon.org/download/).
-2. Install and launch Laragon.
-3. Click **Start All** to start the Web Server (Apache/Nginx) and Database (MySQL).
-4. Ensure you have the following reachable in your terminal (Laragon usually adds them to PATH):
-   - `php -v`
-   - `composer -v`
-   - `npm -v`
-   - `mysql --version`
+Follow these steps after unzipping `Running_Event_Management.zip`.
 
-### 2. Prepare the Project
-1. Copy the project folder `Running_Event_Management` to your desired location (e.g., `C:\laragon\www\Running_Event_Management`).
-2. Open a terminal inside this folder.
-
-### 3. Database Setup
-1. Open **Laragon Database Manager** (HeidiSQL) or use the terminal.
-2. Create a new empty database named `db_sistemmanajemenevent_lari`.
-3. **Import the SQL Script**:
-   - We have provided a full database export file: `final_db_export.sql` (located in the project root).
-   - In terminal:
-     ```bash
-     mysql -u root db_sistemmanajemenevent_lari < final_db_export.sql
-     ```
-   - *Alternatively in HeidiSQL*: File > Load SQL file > Select `final_db_export.sql` > Run.
-
-### 4. Application Configuration
-1. **Environment File**:
-   Duplicate `.env.example` and rename it to `.env`.
+### 1. Prepare the Environment
+1. Open a terminal (PowerShell or Command Prompt) in the unzipped project folder.
+2. Duplicate the environment file:
    ```bash
-   cp .env.example .env
+   copy .env.example .env
    ```
-2. **Edit `.env`**:
-   Open `.env` and configure your database connection:
+   *(Or manually copy and paste `.env.example` and rename it to `.env`)*
+
+### 2. Configure Database
+1. Create a new, empty database in your MySQL server (e.g., named `db_sistemmanajemenevent_lari`).
+2. Open the `.env` file in a text editor (Notepad, VS Code, etc.).
+3. specific these lines to match your database settings:
    ```env
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
    DB_DATABASE=db_sistemmanajemenevent_lari
    DB_USERNAME=root
-   DB_PASSWORD=      # Leave empty if using default Laragon settings
+   DB_PASSWORD=      # Enter your database password here (leave empty for default XAMPP/Laragon)
    ```
 
-### 5. Install Dependencies
-Run the following commands in your project terminal:
+### 3. Install Dependencies
+Run the following commands in your terminal to install the necessary libraries.
 
+**Install PHP Dependencies:**
 ```bash
-# Install PHP dependencies
 composer install
+```
 
-# Install JavaScript dependencies (TailwindCSS, Alpine.js)
+**Install JavaScript Dependencies:**
+```bash
 npm install
 ```
 
-### 6. Final Initialization
-```bash
-# Generate App Key
-php artisan key:generate
+### 4. Application Initialization
+Once dependencies are installed, initialize the app:
 
-# Link Storage (for uploading images)
-php artisan storage:link
+1. **Generate Encryption Key**:
+   ```bash
+   php artisan key:generate
+   ```
 
-# Compile Assets (Build CSS/JS)
-npm run build
-```
+2. **Setup Database**:
+   You can migrate the database structure using Laravel:
+   ```bash
+   php artisan migrate
+   ```
+   *Alternatively, if you have the `final_db_export.sql` file, you can import it manually via HeidiSQL or phpMyAdmin.*
+
+3. **Link Storage** (for images):
+   ```bash
+   php artisan storage:link
+   ```
+
+4. **Build Frontend Assets**:
+   ```bash
+   npm run build
+   ```
 
 ---
 
 ## ▶️ Running the Application
 
-You can run the application in two ways:
-
-### Option A: Using Artisan Serve (Easiest)
-1. Run this command:
+1. **Start the Local Server**:
    ```bash
    php artisan serve
    ```
-2. Open your browser and go to `http://127.0.0.1:8000`.
-
-### Option B: Using Laragon Host
-1. If you placed the folder in `C:\laragon\www\Running_Event_Management`:
-2. Reload Laragon.
-3. Visit `http://running_event_management.test` (assuming Laragon auto-host is enabled).
+   
+2. **Access the App**:
+   Open your browser and navigate to: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## 👤 Login Credentials
+## 👤 Login Credentials (Default)
 
-### Admin Account
+**Admin Account**:
 - **Email**: `admin@bandungrun.com`
 - **Password**: `admin123`
-- **Access**: Full access to manage events, participants, and payments.
 
-### User Account (Participant)
-- **Email**: `user@example.com` (or create a new one)
+**User Account**:
+- **Email**: `user@example.com`
 - **Password**: `user123`
-- **Access**: Register for events, view leaderboard, upload payment.
 
 ---
 
-## 📂 Important Files
-- **`final_db_export.sql`**: The full SQL script to restore the database.
-- **`database_features.md`**: Documentation of Triggers, Views, and Procedures used.
+## 🛠 Troubleshooting
+- **Missing Vendor/Node_Modules**: Ensure `composer install` and `npm install` ran without errors.
+- **500 Server Error**: Check if `.env` exists and `php artisan key:generate` was run. Check logs in `storage/logs/laravel.log`.
+- **Database Connection Refused**: Ensure your MySQL server (XAMPP/Laragon) is running.

@@ -4,7 +4,7 @@
 @section('header_title', 'Events Hub')
 
 @section('content')
-<div x-data="eventModal" class="space-y-8">
+<div x-data="eventModal" x-init="checkAutoOpen(@json($events->firstWhere('EventID', request('event_id'))))" class="space-y-8">
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
             <h1 class="text-3xl lg:text-4xl font-display font-bold uppercase italic text-gray-900 dark:text-white">
@@ -66,9 +66,11 @@
                 }
                 $date = $earliestSlot ? $earliestSlot->TanggalMulai : null;
                 $location = $earliestSlot ? $earliestSlot->LokasiEvent : 'Location TBA';
+                $quota = $allSlots->sum('KuotaTotal');
                 
-                $distances = $event->categories->pluck('Jarak')->unique()->implode(', ');
-                 if(!$distances) $distances = "Multiple Distances";
+                // Format: 5K • 10K
+                $distances = $event->categories->pluck('Jarak')->unique()->implode(' • ');
+                 if(!$distances) $distances = "Multi-Category";
             @endphp
             
             <div class="group bg-white dark:bg-card-dark rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
@@ -104,15 +106,33 @@
                          {{ $event->DeskripsiEvent }}
                      </p>
                     <div class="mt-4 flex items-center justify-between">
-                        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                            <span class="material-icons text-base">calendar_today</span>
-                            <span>Start: {{ \Carbon\Carbon::parse($earliestSlot)->format('d M Y') }}</span>
+                        <div class="flex flex-col gap-1 text-sm text-gray-500 dark:text-gray-400">
+                            <div class="flex items-center gap-2">
+                                <span class="material-icons text-base">calendar_today</span>
+                                <span>{{ $date ? $date->format('d M Y, H:i') : 'TBA' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-400">
+                                <span class="material-icons text-sm">straighten</span>
+                                <span>{{ $distances }}</span>
+                                <span class="mx-1 text-gray-600">|</span>
+                                <span class="text-primary font-bold">{{ number_format($quota) }} Seats</span>
+                            </div>
                         </div>
                         
-                        @if($event->userRegistration)
+                        @if($event->userRegistration && ($event->userRegistration->StatusPendaftaran == 'Pendaftaran Ditolak' || ($event->userRegistration->payment && $event->userRegistration->payment->StatusPembayaran == 'Ditolak')))
                             <button @click="openRegistrationModal(@js($event))" 
-                                class="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all transform hover:-translate-y-0.5 shadow-lg shadow-green-500/20 bg-green-500 hover:bg-green-600">
-                                Check Credentials
+                                class="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all transform hover:-translate-y-0.5 shadow-lg shadow-red-500/20 bg-red-500 hover:bg-red-600">
+                                Fix Registration
+                            </button>
+                        @elseif($event->userRegistration && in_array($event->userRegistration->StatusPendaftaran, ['Terverifikasi', 'Selesai']))
+                            <button @click="openRegistrationModal(@js($event))" 
+                                class="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all transform hover:-translate-y-0.5 shadow-lg shadow-green-500/20 bg-green-600 hover:bg-green-700">
+                                <span class="flex items-center gap-1"><span class="material-icons text-sm">confirmation_number</span> Ticket Confirmed</span>
+                            </button>
+                        @elseif($event->userRegistration)
+                            <button @click="openRegistrationModal(@js($event))" 
+                                class="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all transform hover:-translate-y-0.5 shadow-lg shadow-yellow-500/20 bg-yellow-500 hover:bg-yellow-600">
+                                <span class="flex items-center gap-1"><span class="material-icons text-sm">hourglass_top</span> Check Status</span>
                             </button>
                         @elseif($event->StatusEvent == 'Buka')
                             <button @click="openRegistrationModal(@js($event))" 
@@ -214,10 +234,10 @@
                                      <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed" x-text="activeEvent.DeskripsiEvent"></p>
                                  </div>
 
-                                         <div x-show="!activeEvent.userRegistration || activeEvent.userRegistration.StatusPendaftaran == 'Pendaftaran Ditolak'">
+                                         <div x-show="!activeEvent.userRegistration || activeEvent.userRegistration.StatusPendaftaran == 'Pendaftaran Ditolak' || (activeEvent.userRegistration.payment && activeEvent.userRegistration.payment.StatusPembayaran == 'Ditolak')">
                                              
                                              <!-- Rejection Message -->
-                                             <div x-show="activeEvent.userRegistration && activeEvent.userRegistration.StatusPendaftaran == 'Pendaftaran Ditolak'" class="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+                                             <div x-show="activeEvent.userRegistration && (activeEvent.userRegistration.StatusPendaftaran == 'Pendaftaran Ditolak' || (activeEvent.userRegistration.payment && activeEvent.userRegistration.payment.StatusPembayaran == 'Ditolak'))" class="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
                                                 <div class="flex items-center gap-3 text-red-700 dark:text-red-400">
                                                     <span class="material-icons">error_outline</span>
                                                     <div class="font-bold">Registration Rejected</div>
@@ -292,7 +312,7 @@
                                          </div>
 
                                          <!-- STATUS: PENDING / ACCEPTED -->
-                                         <div x-show="activeEvent.userRegistration && activeEvent.userRegistration.StatusPendaftaran != 'Pendaftaran Ditolak'" class="space-y-6">
+                                         <div x-show="activeEvent.userRegistration && activeEvent.userRegistration.StatusPendaftaran != 'Pendaftaran Ditolak' && (!activeEvent.userRegistration.payment || activeEvent.userRegistration.payment.StatusPembayaran != 'Ditolak')" class="space-y-6">
                                             
                                             <!-- Accepted State -->
                                             <div x-show="['Terverifikasi', 'Selesai'].includes(activeEvent.userRegistration.StatusPendaftaran)" class="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800 rounded-2xl p-6 text-center">
@@ -357,6 +377,12 @@
             
             init() {
                 // Pre-load if needed
+            },
+
+            checkAutoOpen(event) {
+                if (event) {
+                    this.openRegistrationModal(event);
+                }
             },
 
             openRegistrationModal(event) {

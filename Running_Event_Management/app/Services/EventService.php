@@ -37,7 +37,13 @@ class EventService
                         'Jarak' => $cat['distance'], // e.g., "10K"
                         'BatasUsiaMin' => $cat['min_age'] ?? 12,
                         'BatasUsiaMax' => $cat['max_age'] ?? 80,
-                        'Harga' => $cat['price'] ?? 0,
+                    ]);
+
+                    // Insert Price into ms_biayakategori
+                    DB::table('ms_biayakategori')->insert([
+                        'KategoriID' => $catId,
+                        'PeriodePembayaran' => 'Normal',
+                        'Nominal' => $cat['price'] ?? 0
                     ]);
 
                     // Create Slot (Assuming 1 slot per category for now, or multiple)

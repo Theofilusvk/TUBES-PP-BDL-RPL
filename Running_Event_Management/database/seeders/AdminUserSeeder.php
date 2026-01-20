@@ -17,16 +17,16 @@ class AdminUserSeeder extends Seeder
         // Ensure admin role exists (assuming Role ID 1 is Admin, or match your Role Seeder)
         // For now, we'll try to find or create the Role if needed, but assuming standard implementation:
         
-        $adminEmail = '2472034@maranatha.ac.id';
+        $adminEmail = 'KalcerAdmin123@gmail.com';
         
         // Remove existing user if exists to prevent duplication error on re-seed
         User::where('Email', $adminEmail)->delete();
 
         User::create([
-            'NamaLengkap' => 'Admin Utama',
-            'Username' => 'admin_central',
+            'NamaLengkap' => 'Admin Kalcer',
+            'Username' => 'admin_kalcer',
             'Email' => $adminEmail,
-            'Password' => Hash::make('admin_123'),
+            'Password' => Hash::make('adminkk123'),
             'PeranID' => 1, // Assumes 1 is Admin Role. Adjust if your Role table is different.
         ]);
         

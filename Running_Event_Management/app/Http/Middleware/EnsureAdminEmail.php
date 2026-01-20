@@ -23,7 +23,7 @@ class EnsureAdminEmail
 
         // Check for specific admin email
         $user = Auth::user();
-        if ($user->Email !== '2472034@maranatha.ac.id') {
+        if ($user->Email !== 'KalcerAdmin123@gmail.com') {
             // Option 1: Abort 403
             // abort(403, 'Unauthorized access.');
             

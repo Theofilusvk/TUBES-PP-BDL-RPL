@@ -28,12 +28,15 @@ class LeaderboardController extends Controller
         if ($isSpeedRank) {
             // Rank by Fastest Time for specific Distance
             // Join: tr_hasillomba -> tr_pendaftaran -> ms_kategorilomba
+            // Rank by Fastest Time for specific Distance
+            // Join: tr_hasillomba -> tr_pendaftaran -> ms_kategorilomba
             $query = DB::table('tr_hasillomba as h')
                 ->join('tr_pendaftaran as p', 'h.PendaftaranID', '=', 'p.PendaftaranID')
                 ->join('tr_pengguna as u', 'p.PenggunaID', '=', 'u.PenggunaID')
                 ->join('ms_kategorilomba as k', 'p.KategoriID', '=', 'k.KategoriID')
                 ->where('k.Jarak', 'LIKE', "%$category%") // Simple text match for now, e.g. '42K' matches 'Full Marathon 42K'
                 ->where('h.StatusHasil', 'Finish')
+                ->where('u.PeranID', '!=', 1) // Exclude Admin
                 ->select(
                     'u.NamaLengkap',
                     'u.Gambar',
@@ -83,6 +86,7 @@ class LeaderboardController extends Controller
                 ->join('tr_pengguna as u', 'p.PenggunaID', '=', 'u.PenggunaID')
                 ->join('ms_kategorilomba as k', 'p.KategoriID', '=', 'k.KategoriID')
                 ->where('h.StatusHasil', 'Finish')
+                ->where('u.PeranID', '!=', 1) // Exclude Admin
                 ->select(
                     'u.PenggunaID',
                     'u.NamaLengkap',

@@ -11,10 +11,11 @@ class AdminTriggerController extends Controller
     {
         // Fetch System Logs (log_aktivitas)
         // Assuming table 'log_aktivitas' exists from 'create_system_logs_tables.php'
-        $logs = DB::table('log_aktivitas')
-            ->join('tr_pengguna', 'log_aktivitas.pengguna_id', '=', 'tr_pengguna.PenggunaID')
-            ->select('log_aktivitas.*', 'tr_pengguna.Username', 'tr_pengguna.NamaLengkap')
-            ->orderBy('waktu_aktivitas', 'desc')
+        // Fetch System Logs (tr_logaktivitassistem)
+        $logs = DB::table('tr_logaktivitassistem')
+            ->join('tr_pengguna', 'tr_logaktivitassistem.PenggunaID', '=', 'tr_pengguna.PenggunaID')
+            ->select('tr_logaktivitassistem.*', 'tr_pengguna.Username', 'tr_pengguna.NamaLengkap')
+            ->orderBy('WaktuLog', 'desc')
             ->limit(100)
             ->get();
 

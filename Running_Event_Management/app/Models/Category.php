@@ -25,4 +25,14 @@ class Category extends Model
     {
         return $this->hasMany(Registration::class, 'KategoriID', 'KategoriID');
     }
+
+    public function price()
+    {
+        return $this->hasOne(CategoryPrice::class, 'KategoriID', 'KategoriID');
+    }
+
+    public function getHargaAttribute()
+    {
+        return $this->price->Nominal ?? 0;
+    }
 }

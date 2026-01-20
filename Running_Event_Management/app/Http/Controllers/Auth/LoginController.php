@@ -45,17 +45,18 @@ class LoginController extends Controller
             // Redirection Logic
             $email = Auth::user()->Email; 
             
-            // Specific Admin Email Check
-            if ($email === '2472034@maranatha.ac.id') {
-                return redirect()->intended(route('admin.dashboard'));
+            // Role-based Redirection logic
+            // Check if user is Admin (PeranID = 1)
+            if (Auth::user()->PeranID == 1) {
+                return redirect()->route('admin.dashboard');
             }
 
             return redirect()->intended(route('dashboard'));
         }
 
-        throw ValidationException::withMessages([
-            'email' => trans('auth.failed'),
-        ]);
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     public function destroy(Request $request)
