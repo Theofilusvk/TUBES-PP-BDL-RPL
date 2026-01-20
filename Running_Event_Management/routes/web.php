@@ -93,3 +93,5 @@ Route::middleware(['auth', EnsureAdminEmail::class])->prefix('admin')->name('adm
 Route::get('/profile', function () {
     return view('profile.edit');
 })->name('profile.edit');
+
+    Route::patch('/events/{id}/status', [AdminEventController::class, 'updateStatus'])->name('events.updateStatus');

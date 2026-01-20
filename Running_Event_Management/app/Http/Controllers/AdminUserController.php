@@ -95,6 +95,16 @@ class AdminUserController extends Controller
     {
         $user = User::findOrFail($id);
         
+        // Prevent deletion of super admin
+        if ($user->Email === 'KalcerAdmin123@gmail.com') {
+            return back()->with('error', 'Cannot delete the super admin account.');
+        }
+        
+        // Prevent self-deletion
+        if ($user->PenggunaID == auth()->id()) {
+            return back()->with('error', 'You cannot delete your own account.');
+        }
+        
         try {
             DB::transaction(function () use ($user, $id) {
                 $adminId = auth()->id() ?? 1; // Fallback to 1 if not logged in (CLI test)
