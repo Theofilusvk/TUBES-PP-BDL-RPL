@@ -7,15 +7,27 @@ use Illuminate\Support\Facades\DB;
 
 class AdminTriggerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         // Fetch System Logs (log_aktivitas)
         // Assuming table 'log_aktivitas' exists from 'create_system_logs_tables.php'
         // Fetch System Logs (tr_logaktivitassistem)
-        $logs = DB::table('tr_logaktivitassistem')
+        $query = DB::table('tr_logaktivitassistem')
             ->join('tr_pengguna', 'tr_logaktivitassistem.PenggunaID', '=', 'tr_pengguna.PenggunaID')
-            ->select('tr_logaktivitassistem.*', 'tr_pengguna.Username', 'tr_pengguna.NamaLengkap')
-            ->orderBy('WaktuLog', 'desc')
+            ->select('tr_logaktivitassistem.*', 'tr_pengguna.Username', 'tr_pengguna.NamaLengkap');
+        
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('tr_logaktivitassistem.DetailAktivitas', 'like', "%{$search}%")
+                  ->orWhere('tr_logaktivitassistem.TipeAktivitas', 'like', "%{$search}%")
+                  ->orWhere('tr_pengguna.Username', 'like', "%{$search}%")
+                  ->orWhere('tr_pengguna.NamaLengkap', 'like', "%{$search}%");
+            });
+        }
+
+        $logs = $query->orderBy('WaktuLog', 'desc')
             ->limit(100)
             ->get();
 

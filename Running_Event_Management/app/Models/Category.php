@@ -10,6 +10,7 @@ class Category extends Model
     protected $primaryKey = 'KategoriID';
     public $timestamps = false;
     protected $guarded = [];
+    protected $appends = ['Harga'];
 
     public function event()
     {
@@ -33,6 +34,6 @@ class Category extends Model
 
     public function getHargaAttribute()
     {
-        return $this->price->Nominal ?? 0;
+        return optional($this->price)->Nominal ?? 0;
     }
 }

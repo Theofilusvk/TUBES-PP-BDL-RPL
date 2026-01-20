@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -165,18 +165,27 @@ class AdminEventController extends Controller
             DB::transaction(function () use ($id) {
                 $event = Event::findOrFail($id);
                 
-                // 1. Check Registrations first to avoid partial deletes if blocked
-                foreach ($event->categories as $category) {
-                    if ($category->registrations()->exists()) {
-                        throw new \Exception("Cannot delete event with active registrations. Please 'Close' the event instead.");
-                    }
-                }
+                // 1. Delete Dependencies outside Categories
+                DB::table('ms_mediasosialevent')->where('EventID', $id)->delete();
+                DB::table('tr_sponsor')->where('EventID', $id)->delete();
 
-                // 2. Delete Slots & Prices via Categories
+                // 2. Process Categories and deep dependencies
                 foreach ($event->categories as $category) {
+                    // Get Registrations to delete Payment and Results
+                    $registrations = DB::table('tr_pendaftaran')->where('KategoriID', $category->KategoriID)->get();
+                    foreach($registrations as $reg) {
+                        DB::table('tr_pembayaran')->where('PendaftaranID', $reg->PendaftaranID)->delete();
+                        DB::table('tr_hasillomba')->where('PendaftaranID', $reg->PendaftaranID)->delete();
+                    }
+                    
+                    // Delete Registrations
+                    DB::table('tr_pendaftaran')->where('KategoriID', $category->KategoriID)->delete();
+
+                    // Delete Configs
                     DB::table('ms_slotkategori')->where('KategoriID', $category->KategoriID)->delete();
                     DB::table('ms_biayakategori')->where('KategoriID', $category->KategoriID)->delete();
                     DB::table('tr_bib_sequence')->where('KategoriID', $category->KategoriID)->delete();
+                    
                     $category->delete();
                 }
 
@@ -189,7 +198,7 @@ class AdminEventController extends Controller
                 $event->delete();
             });
 
-            return redirect()->route('admin.events')->with('success', 'Event deleted successfully.');
+            return redirect()->route('admin.events')->with('success', 'Event and all related data deleted successfully.');
 
         } catch (\Exception $e) {
             return back()->with('error', 'Delete failed: ' . $e->getMessage());
@@ -493,5 +502,27 @@ class AdminEventController extends Controller
             $rank++;
         }
     }
+
+    /**
+     * Update event status (Buka/Tutup)
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'StatusEvent' => 'required|in:Buka,Tutup,Sedang Berlangsung'
+        ]);
+
+        try {
+            $event = Event::findOrFail($id);
+            $event->StatusEvent = $request->StatusEvent;
+            $event->save();
+
+            return back()->with('success', 'Event status updated successfully to: ' . $request->StatusEvent);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to update status: ' . $e->getMessage());
+        }
+    }
+    
 }
+
 

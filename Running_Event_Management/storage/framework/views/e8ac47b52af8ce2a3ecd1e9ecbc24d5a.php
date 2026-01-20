@@ -79,11 +79,21 @@
                      <div class="absolute top-4 left-4 flex gap-2">
                           <span class="bg-primary/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide"><?php echo e($event->categories->first()->NamaKategori ?? 'Event'); ?></span>
                      </div>
-                     <?php if($date && $date->diffInDays(now()) < 30 && $date->isFuture()): ?>
-                         <div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
-                              <span class="material-icons text-yellow-400 text-sm">timer</span>
-                              <span class="text-xs font-mono font-bold"><?php echo e($date->diffInDays(now())); ?> DAYS LEFT</span>
-                         </div>
+                     <?php
+                         $daysDiff = $date ? now()->diffInDays($date, false) : 0;
+                     ?>
+                     <?php if($date): ?>
+                         <?php if($daysDiff > 0): ?>
+                             <div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+                                  <span class="material-icons text-yellow-400 text-sm">timer</span>
+                                  <span class="text-xs font-mono font-bold"><?php echo e(ceil($daysDiff)); ?> DAYS LEFT</span>
+                             </div>
+                         <?php elseif($daysDiff < 0): ?>
+                              <div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+                                  <span class="material-icons text-gray-400 text-sm">history</span>
+                                  <span class="text-xs font-mono font-bold"><?php echo e(ceil(abs($daysDiff))); ?> DAYS AGO</span>
+                             </div>
+                         <?php endif; ?>
                      <?php endif; ?>
                 </div>
                 
@@ -120,7 +130,15 @@
                             </div>
                         </div>
                         
-                        <?php if($event->userRegistration && ($event->userRegistration->StatusPendaftaran == 'Pendaftaran Ditolak' || ($event->userRegistration->payment && $event->userRegistration->payment->StatusPembayaran == 'Ditolak'))): ?>
+                        <?php if($event->StatusEvent == 'Tutup'): ?>
+                            <button disabled class="px-4 py-2 rounded-lg text-sm font-bold text-gray-400 bg-gray-200 dark:bg-gray-700 cursor-not-allowed">
+                                Race Finished
+                            </button>
+                        <?php elseif($event->StatusEvent == 'Sedang Berlangsung'): ?>
+                            <button disabled class="px-4 py-2 rounded-lg text-sm font-bold text-white bg-green-500 cursor-not-allowed shadow-[0_0_15px_rgba(34,197,94,0.4)] animate-pulse">
+                                Race On Going
+                            </button>
+                        <?php elseif($event->userRegistration && ($event->userRegistration->StatusPendaftaran == 'Pendaftaran Ditolak' || ($event->userRegistration->payment && $event->userRegistration->payment->StatusPembayaran == 'Ditolak'))): ?>
                             <button @click="openRegistrationModal(<?php echo \Illuminate\Support\Js::from($event)->toHtml() ?>)" 
                                 class="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all transform hover:-translate-y-0.5 shadow-lg shadow-red-500/20 bg-red-500 hover:bg-red-600">
                                 Fix Registration
@@ -135,14 +153,10 @@
                                 class="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all transform hover:-translate-y-0.5 shadow-lg shadow-yellow-500/20 bg-yellow-500 hover:bg-yellow-600">
                                 <span class="flex items-center gap-1"><span class="material-icons text-sm">hourglass_top</span> Check Status</span>
                             </button>
-                        <?php elseif($event->StatusEvent == 'Buka'): ?>
+                        <?php else: ?>
                             <button @click="openRegistrationModal(<?php echo \Illuminate\Support\Js::from($event)->toHtml() ?>)" 
                                 class="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/20 bg-primary hover:bg-blue-600">
                                 Register Now
-                            </button>
-                        <?php else: ?>
-                            <button disabled class="px-4 py-2 rounded-lg text-sm font-bold text-gray-400 bg-gray-200 dark:bg-gray-700 cursor-not-allowed">
-                                Event Closed
                             </button>
                         <?php endif; ?>
                     </div>

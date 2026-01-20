@@ -89,22 +89,7 @@
 <span class="material-icons text-accent">settings</span>
 <span class="hidden lg:block ml-3 font-medium">Settings</span>
 </a>
-<div class="mt-4 flex flex-col gap-3 px-1">
-<div class="flex items-center justify-between lg:justify-between bg-black/20 rounded-lg p-1.5 border border-white/5">
-<button class="flex-1 text-xs font-bold text-white bg-white/20 shadow-sm px-2 py-1.5 rounded transition-all hover:bg-white/30">ID</button>
-<div class="w-px h-4 bg-white/20 mx-1"></div>
-<button class="flex-1 text-xs font-medium text-blue-200 hover:text-white px-2 py-1.5 rounded transition-colors">EN</button>
-</div>
-<button class="w-full flex items-center justify-center lg:justify-between gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all border border-transparent hover:border-white/10" onclick="document.documentElement.classList.toggle('dark')">
-<div class="flex items-center gap-2">
-<span class="material-icons text-sm">dark_mode</span>
-<span class="hidden lg:block text-xs font-medium">Dark Mode</span>
-</div>
-<div class="hidden lg:block relative w-8 h-4 bg-black/30 rounded-full">
-<div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"></div>
-</div>
-</button>
-</div>
+
 </div>
 </aside>
 <main class="flex-1 flex flex-col overflow-y-auto no-scrollbar relative bg-background-light dark:bg-background-dark fade-in">
@@ -269,14 +254,7 @@ function previewImage(input) {
 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-secondary"></div>
 </label>
 </div>
-<hr class="border-gray-100 dark:border-gray-700"/>
-<div>
-<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Language</h3>
-<div class="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-lg">
-<button class="flex-1 text-xs font-medium py-2 rounded-md bg-white dark:bg-gray-700 shadow-sm text-primary dark:text-white transition-all">English</button>
-<button class="flex-1 text-xs font-medium py-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all">Bahasa Indonesia</button>
-</div>
-</div>
+
 <hr class="border-gray-100 dark:border-gray-700"/>
 <div class="flex items-center justify-between">
 <div>

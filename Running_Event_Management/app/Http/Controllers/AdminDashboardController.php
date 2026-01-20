@@ -70,13 +70,14 @@ class AdminDashboardController extends Controller
         $recentLogs = [];
         try {
             $recentLogs = DB::table('tr_logaktivitassistem')
+                // ->where('WaktuLog', '>=', $startDate) // Removed strict date filter to ensure logs always show
                 ->orderBy('WaktuLog', 'desc')
                 ->limit(4)
                 ->get()
                 ->map(function($log) {
                     return [
-                        'type' => $log->Aktivitas,
-                        'message' => $log->Keterangan,
+                        'type' => $log->TipeAktivitas, // Fixed column name
+                        'message' => $log->DetailAktivitas, // Fixed column name
                         'time' => \Carbon\Carbon::parse($log->WaktuLog)->diffForHumans(),
                         'status' => 'SUCCESS' 
                     ];

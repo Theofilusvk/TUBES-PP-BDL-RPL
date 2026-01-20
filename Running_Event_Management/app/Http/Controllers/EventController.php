@@ -12,13 +12,16 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $filter = $request->query('filter', 'upcoming');
-        $query = Event::with('categories.slots');
+        $query = Event::with(['categories.slots', 'categories.price']);
 
         if ($filter == 'past') {
-            $query->where('StatusEvent', 'Buka')
+            $query->whereIn('StatusEvent', ['Buka', 'Sedang Berlangsung', 'Tutup']) // Allow all statuses but filter by date
                   ->whereDoesntHave('categories.slots', function($q) {
                 $q->where('TanggalMulai', '>=', now());
             });
+            // Or strictly where StatusEvent == 'Tutup' OR date < now?
+            // Actually, usually "Past" means Date < Now. Status doesn't matter much.
+            // But let's respect Date driven past.
         } elseif ($filter == 'my_events') {
              $query->whereHas('categories.registrations', function($q) {
                  $q->where('PenggunaID', auth()->id())
@@ -28,9 +31,10 @@ class EventController extends Controller
                    });
              });
         } else {
-            $query->where('StatusEvent', 'Buka')
+            // Upcoming = Buka OR Sedang Berlangsung AND Date >= Now (or recently started)
+            $query->whereIn('StatusEvent', ['Buka', 'Sedang Berlangsung'])
                   ->whereHas('categories.slots', function($q) {
-                $q->where('TanggalMulai', '>=', now());
+                $q->where('TanggalMulai', '>=', now()->subDays(1)); // Allow ongoing events started recently
             });
         }
 

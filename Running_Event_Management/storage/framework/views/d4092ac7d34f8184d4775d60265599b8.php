@@ -10,9 +10,7 @@
     <div class="flex items-center gap-6">
         <div class="flex items-center gap-4">
             <?php echo $__env->make('admin.partials.notification-button', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-            <button class="p-2 text-slate-500 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">settings</span>
-            </button>
+
         </div>
     </div>
 </header>

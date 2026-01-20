@@ -44,7 +44,7 @@
                 <!-- Search -->
                 <div class="relative group">
                     <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-500 text-lg group-focus-within:text-primary transition-colors">search</span>
-                    <input name="search" value="<?php echo e(request('search')); ?>" class="bg-surface-dark border border-border-dark rounded-xl pl-12 pr-6 py-2.5 text-sm focus:ring-1 focus:ring-primary focus:border-primary w-64 transition-all text-white placeholder:text-slate-600" placeholder="Query event master data..." type="text"/>
+                    <input name="search" value="<?php echo e(request('search')); ?>" class="bg-surface-dark border border-border-dark rounded-xl pl-12 pr-6 py-2.5 text-sm focus:ring-1 focus:ring-primary focus:border-primary w-64 transition-all text-white placeholder:text-slate-600" placeholder="Search events by name..." type="text"/>
                 </div>
             </form>
 
@@ -108,29 +108,6 @@
             </div>
         </section>
         
-        <!-- Additional configuration sections omitted for brevity in this migration step, can be added as needed -->
-         <div class="bg-primary p-8 rounded-2xl text-background-dark shadow-[0_0_40px_rgba(0,255,128,0.15)] relative overflow-hidden group">
-            <div class="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform duration-500">
-                <span class="material-symbols-outlined text-9xl">verified_user</span>
-            </div>
-            <h3 class="font-display font-black text-2xl mb-5 leading-none uppercase tracking-tighter italic">VALIDATION READY</h3>
-            <ul class="space-y-4 mb-8">
-                <li class="flex items-center gap-3 text-xs font-extrabold border-b border-background-dark/10 pb-3">
-                    <span class="material-symbols-outlined text-lg">check_circle</span>
-                    <span>MS_EVENT METADATA VERIFIED</span>
-                </li>
-                <li class="flex items-center gap-3 text-xs font-extrabold border-b border-background-dark/10 pb-3">
-                    <span class="material-symbols-outlined text-lg">check_circle</span>
-                    <span>PRICING LOGIC SYNCHRONIZED</span>
-                </li>
-            </ul>
-            <div class="flex items-center gap-4 bg-background-dark/5 p-4 rounded-xl border border-background-dark/10">
-                <div class="size-12 rounded-full border-4 border-background-dark/20 flex items-center justify-center font-display font-black text-sm">
-                    92%
-                </div>
-                <p class="text-[10px] leading-relaxed font-bold uppercase tracking-tight">System configuration health is optimal for public deployment.</p>
-            </div>
-        </div>
         <!-- Create Modal -->
         <div x-show="showCreateModal" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
             x-transition:enter="transition ease-out duration-300"

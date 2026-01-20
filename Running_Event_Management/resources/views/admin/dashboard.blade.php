@@ -10,9 +10,7 @@
     <div class="flex items-center gap-6">
         <div class="flex items-center gap-4">
             @include('admin.partials.notification-button')
-            <button class="p-2 text-slate-500 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">settings</span>
-            </button>
+
         </div>
     </div>
 </header>

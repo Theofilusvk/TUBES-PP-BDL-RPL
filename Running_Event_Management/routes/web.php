@@ -85,13 +85,14 @@ Route::middleware(['auth', EnsureAdminEmail::class])->prefix('admin')->name('adm
     Route::post('/events', [AdminEventController::class, 'store'])->name('events.store');
     Route::get('/financial', [AdminFinancialController::class, 'index'])->name('financial');
     Route::post('/financial/{id}/verify', [AdminFinancialController::class, 'verify'])->name('financial.verify');
+    Route::get('/financial/dump-nodes', [AdminFinancialController::class, 'dumpNodes'])->name('financial.dumpNodes');
+    Route::get('/financial/dump-schemas', [AdminFinancialController::class, 'dumpSchemas'])->name('financial.dumpSchemas');
     Route::get('/triggers', [AdminTriggerController::class, 'index'])->name('triggers');
     Route::post('/events/results/update', [AdminEventController::class, 'updateResult'])->name('events.results.update');
+    Route::patch('/events/{id}/status', [AdminEventController::class, 'updateStatus'])->name('events.updateStatus');
 });
 
 // Temporary or Testing
 Route::get('/profile', function () {
     return view('profile.edit');
 })->name('profile.edit');
-
-    Route::patch('/events/{id}/status', [AdminEventController::class, 'updateStatus'])->name('events.updateStatus');

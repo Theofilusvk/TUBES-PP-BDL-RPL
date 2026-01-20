@@ -49,65 +49,7 @@
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans h-screen flex overflow-hidden selection:bg-primary selection:text-white transition-colors duration-300">
-<aside class="w-20 lg:w-64 flex-shrink-0 bg-primary dark:bg-slate-900 flex flex-col justify-between border-r border-white/10 dark:border-gray-800 transition-all duration-300 z-20">
-<div>
-<div class="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-white/10 dark:border-gray-800">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-3xl text-white">directions_run</span>
-<h1 class="hidden lg:block font-display font-bold text-2xl text-white tracking-wide uppercase italic">Kalcer<span class="text-accent">Run</span></h1>
-</div>
-</div>
-<nav class="mt-8 px-2 space-y-2">
-<a class="group flex items-center px-3 py-3 text-white bg-white/10 rounded-lg transition-colors" href="{{ route('dashboard') }}">
-<span class="material-symbols-outlined text-white group-hover:text-accent">dashboard</span>
-<span class="hidden lg:block ml-3 font-medium">Dashboard</span>
-</a>
-<div class="hidden lg:block px-3 mt-6 mb-2 text-xs font-semibold text-blue-200 uppercase tracking-wider">Management</div>
-<div class="relative group">
-<a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors cursor-pointer" href="{{ route('dashboard.events') }}">
-<span class="material-symbols-outlined group-hover:text-accent">calendar_today</span>
-<span class="hidden lg:block ml-3 font-medium flex-1">Events</span>
-<span class="hidden lg:block material-symbols-outlined text-sm text-blue-300">expand_more</span>
-</a>
-<div class="hidden group-hover:block pl-11 pr-2 pb-2 space-y-1">
-<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Upcoming</a>
-<a class="block px-2 py-1 text-sm text-blue-200 hover:text-white hover:bg-white/5 rounded" href="#">Past Events</a>
-</div>
-</div>
-<a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.participants') }}">
-<span class="material-symbols-outlined group-hover:text-accent">groups</span>
-<span class="hidden lg:block ml-3 font-medium">Participants</span>
-</a>
-<div class="hidden lg:block px-3 mt-6 mb-2 text-xs font-semibold text-blue-200 uppercase tracking-wider">Race Data</div>
-<a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.results') }}">
-<span class="material-symbols-outlined group-hover:text-accent">timer</span>
-<span class="hidden lg:block ml-3 font-medium">Results &amp; Timing</span>
-</a>
-<a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.leaderboards') }}">
-<span class="material-symbols-outlined group-hover:text-accent">emoji_events</span>
-<span class="hidden lg:block ml-3 font-medium">Leaderboards</span>
-</a>
-</nav>
-</div>
-<div class="p-4 border-t border-white/10 dark:border-gray-800">
-<a class="group flex items-center px-3 py-3 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors" href="{{ route('dashboard.settings') }}">
-<span class="material-symbols-outlined group-hover:text-accent">settings</span>
-<span class="hidden lg:block ml-3 font-medium">Settings</span>
-</a>
-<div class="mt-4 flex flex-col gap-3 px-1">
 
-<button class="w-full flex items-center justify-center lg:justify-between gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all border border-transparent hover:border-white/10" onclick="document.documentElement.classList.toggle('dark')">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sm">dark_mode</span>
-<span class="hidden lg:block text-xs font-medium">Dark Mode</span>
-</div>
-<div class="hidden lg:block relative w-8 h-4 bg-black/30 rounded-full">
-<div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"></div>
-</div>
-</button>
-</div>
-</div>
-</aside>
 <main class="flex-1 relative flex flex-col overflow-y-auto no-scrollbar">
 <div class="absolute inset-0 z-0">
 <img alt="Marathon runners active crowd in Jakarta morning" class="w-full h-full object-cover filter brightness-75 dark:brightness-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZRiF2pskk4AQOiclOx-dh79wkwt0yZfoTFfFEpXiD-18Azy1AgayQLWGPXiUxwiV3-BiyNV58vfL91jNkYGAnpDa1AePnPift1sre5CAHSUgOg5OZd7CaY9THy0kRkcHiVoCTOxYgM95x3TlOmRdW0rr2nHdb9IYxkAAgRIEkbRwWfuzZ81s2TUjcDtQ4nCCNrCHzFOYnLF1Oh_oX40gpxwA5Xx_ICPNkHdXgqIZr9BnHRF4wfHaynRHpFzdd5PZ2DU5iwfg8qB8"/>
@@ -156,34 +98,11 @@
 <a href="{{ route('register') }}" class="flex-1 py-4 text-center font-bold text-primary border-b-2 border-primary bg-blue-50/50 dark:bg-blue-900/20 dark:text-blue-400 transition-all">Sign Up</a>
 </div>
 <div class="p-8 overflow-y-auto no-scrollbar">
-<div class="text-center mb-6">
-<h3 class="text-2xl font-display font-bold text-gray-900 dark:text-white mb-1">Join the Community</h3>
-<p class="text-sm text-gray-500 dark:text-gray-400">Start your journey with Kalcer Run today.</p>
-</div>
-<div class="grid grid-cols-2 gap-3 mb-6">
-<button class="w-full inline-flex justify-center items-center py-2.5 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-<svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-<path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"></path>
-</svg>
-<span class="text-xs sm:text-sm">Sign up with Google</span>
-</button>
-<button class="w-full inline-flex justify-center items-center py-2.5 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-<svg class="h-5 w-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
-</svg>
-<span class="text-xs sm:text-sm">Sign up with Facebook</span>
-</button>
-</div>
-<div class="relative mb-6">
-<div class="absolute inset-0 flex items-center">
-<div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
-</div>
-<div class="relative flex justify-center text-sm">
-<span class="px-3 bg-white dark:bg-card-dark rounded-full text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">
-                                Or register with email
-                            </span>
-</div>
-</div>
+                            <div class="text-center mb-6">
+                                <h3 class="text-2xl font-display font-bold text-gray-900 dark:text-white mb-1">Join the Community</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Start your journey with Kalcer Run today.</p>
+                            </div>
+
 <form class="space-y-6" method="POST" action="{{ route('register') }}">
 @csrf
 <div class="space-y-4">
@@ -287,11 +206,7 @@
 </div>
 </form>
 </div>
-<div class="px-8 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 text-center flex-shrink-0">
-<p class="text-xs text-gray-500 dark:text-gray-400">
-                        By signing up, you agree to our <a class="underline hover:text-primary" href="#">Terms</a> and <a class="underline hover:text-primary" href="#">Privacy Policy</a>.
-                    </p>
-</div>
+
 </div>
 </div>
 </div>

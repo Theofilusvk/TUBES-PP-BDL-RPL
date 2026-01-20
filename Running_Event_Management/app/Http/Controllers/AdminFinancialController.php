@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class AdminFinancialController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Calculate Totals directly from Table (Fallback if View fails)
         // Calculate Totals directly from Table (Fallback if View fails)
@@ -22,8 +22,11 @@ class AdminFinancialController extends Controller
             ->where('StatusPembayaran', 'Menunggu Pembayaran') // Assuming 'Menunggu Pembayaran' based on pendaftaran status default
             ->sum('NominalBayar');
 
+        // Get search parameter
+        $search = $request->input('search');
+
         // List of recent transactions with joins
-        $transactions = DB::table('tr_pembayaran')
+        $query = DB::table('tr_pembayaran')
             ->join('tr_pendaftaran', 'tr_pembayaran.PendaftaranID', '=', 'tr_pendaftaran.PendaftaranID')
             ->join('tr_pengguna', 'tr_pendaftaran.PenggunaID', '=', 'tr_pengguna.PenggunaID')
             ->leftJoin('ms_kategorilomba', 'tr_pendaftaran.KategoriID', '=', 'ms_kategorilomba.KategoriID')
@@ -33,14 +36,25 @@ class AdminFinancialController extends Controller
                 'tr_pembayaran.NominalBayar',
                 'tr_pembayaran.TanggalBayar',
                 'tr_pembayaran.StatusPembayaran',
-                'tr_pembayaran.BuktiTransfer', // New Column
+                'tr_pembayaran.BuktiPembayaran', // Correct Column Name
                 'tr_pendaftaran.PendaftaranID', // Needed for verification
                 'tr_pengguna.NamaLengkap as RunnerName',
                 'tr_pengguna.Username',
                 'ms_event.NamaEvent',
                 'ms_kategorilomba.NamaKategori'
-            )
-            ->orderBy('tr_pembayaran.TanggalBayar', 'desc')
+            );
+
+        // Apply search filter if provided
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('tr_pengguna.NamaLengkap', 'like', "%{$search}%")
+                  ->orWhere('tr_pengguna.Username', 'like', "%{$search}%")
+                  ->orWhere('ms_event.NamaEvent', 'like', "%{$search}%")
+                  ->orWhere('tr_pembayaran.PembayaranID', 'like', "%{$search}%");
+            });
+        }
+
+        $transactions = $query->orderBy('tr_pembayaran.TanggalBayar', 'desc')
             ->limit(50)
             ->get();
             
@@ -111,5 +125,72 @@ class AdminFinancialController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Verification failed: ' . $e->getMessage());
         }
+    }
+    public function dumpNodes()
+    {
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="financial_nodes_dump.csv"',
+        ];
+
+        $callback = function () {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['PaymentID', 'Amount', 'Date', 'Status', 'ProofPath', 'RegistrationID', 'RunnerName', 'Username', 'Event', 'Category']);
+
+            DB::table('tr_pembayaran')
+                ->join('tr_pendaftaran', 'tr_pembayaran.PendaftaranID', '=', 'tr_pendaftaran.PendaftaranID')
+                ->join('tr_pengguna', 'tr_pendaftaran.PenggunaID', '=', 'tr_pengguna.PenggunaID')
+                ->leftJoin('ms_kategorilomba', 'tr_pendaftaran.KategoriID', '=', 'ms_kategorilomba.KategoriID')
+                ->leftJoin('ms_event', 'ms_kategorilomba.EventID', '=', 'ms_event.EventID')
+                ->select(
+                    'tr_pembayaran.PembayaranID',
+                    'tr_pembayaran.NominalBayar',
+                    'tr_pembayaran.TanggalBayar',
+                    'tr_pembayaran.StatusPembayaran',
+                    'tr_pembayaran.BuktiPembayaran',
+                    'tr_pendaftaran.PendaftaranID',
+                    'tr_pengguna.NamaLengkap',
+                    'tr_pengguna.Username',
+                    'ms_event.NamaEvent',
+                    'ms_kategorilomba.NamaKategori'
+                )
+                ->orderBy('tr_pembayaran.TanggalBayar', 'desc')
+                ->chunk(100, function ($rows) use ($handle) {
+                    foreach ($rows as $row) {
+                        fputcsv($handle, [
+                            $row->PembayaranID,
+                            $row->NominalBayar,
+                            $row->TanggalBayar,
+                            $row->StatusPembayaran,
+                            $row->BuktiPembayaran,
+                            $row->PendaftaranID,
+                            $row->NamaLengkap,
+                            $row->Username,
+                            $row->NamaEvent,
+                            $row->NamaKategori
+                        ]);
+                    }
+                });
+
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function dumpSchemas()
+    {
+        $tables = ['tr_pembayaran', 'tr_pendaftaran', 'ms_biayakategori'];
+        $content = "SCHEMA DUMP GENERATED AT " . now() . "\n\n";
+
+        foreach ($tables as $table) {
+            $create = DB::select("SHOW CREATE TABLE $table")[0]->{'Create Table'};
+            $content .= "-- Structure for table `$table` --\n";
+            $content .= $create . ";\n\n";
+        }
+
+        return response($content)
+            ->header('Content-Type', 'text/plain')
+            ->header('Content-Disposition', 'attachment; filename="financial_schema_dump.sql"');
     }
 }

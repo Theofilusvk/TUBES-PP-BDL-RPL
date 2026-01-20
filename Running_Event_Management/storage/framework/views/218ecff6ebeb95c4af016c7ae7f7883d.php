@@ -28,6 +28,35 @@
         </div>
         
         <div class="flex items-center gap-4">
+            <!-- Add this code after line 30 in resources/views/admin/events/show.blade.php -->
+<!-- Insert it right after: <div class="flex items-center gap-4"> -->
+
+            <!-- Status Change Dropdown -->
+            <div class="relative" x-data="{ open: false }">
+                <button @click="open = !open" type="button" class="px-6 py-2.5 bg-surface-dark text-white border border-border-dark rounded-xl text-sm font-extrabold hover:border-primary transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-xl">swap_horiz</span>
+                    CHANGE STATUS
+                </button>
+                <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-56 bg-surface-dark border border-border-dark rounded-xl shadow-2xl z-50 overflow-hidden">
+                    <form action="<?php echo e(route('admin.events.updateStatus', $event->EventID)); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('PATCH'); ?>
+                        <button type="submit" name="status" value="Upcoming" class="w-full px-4 py-3 text-left text-sm font-bold text-blue-400 hover:bg-blue-400/10 transition-colors flex items-center gap-3 <?php echo e($event->StatusEvent === 'Upcoming' ? 'bg-blue-400/10' : ''); ?>">
+                            <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                            Upcoming
+                        </button>
+                        <button type="submit" name="status" value="Ongoing" class="w-full px-4 py-3 text-left text-sm font-bold text-primary hover:bg-primary/10 transition-colors flex items-center gap-3 <?php echo e($event->StatusEvent === 'Ongoing' ? 'bg-primary/10' : ''); ?>">
+                            <span class="w-2 h-2 rounded-full bg-primary"></span>
+                            Ongoing
+                        </button>
+                        <button type="submit" name="status" value="Closed" onclick="return confirm('Marking this event as Closed will publish all race results to leaderboards. Continue?');" class="w-full px-4 py-3 text-left text-sm font-bold text-red-400 hover:bg-red-400/10 transition-colors flex items-center gap-3 <?php echo e($event->StatusEvent === 'Closed' ? 'bg-red-400/10' : ''); ?>">
+                            <span class="w-2 h-2 rounded-full bg-red-400"></span>
+                            Closed
+                        </button>
+                    </form>
+                </div>
+            </div>
+
              <form action="<?php echo e(route('admin.events.destroy', $event->EventID)); ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone and will remove all related data (Categories, Slots, Prices).');">
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('DELETE'); ?>

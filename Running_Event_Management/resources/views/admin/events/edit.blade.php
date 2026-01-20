@@ -76,6 +76,7 @@
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Detailed Status</label>
                             <select name="StatusEvent" class="w-full bg-surface-dark border border-border-dark rounded-xl px-4 py-3 text-white font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all appearance-none cursor-pointer">
                                 <option value="Buka" {{ $event->StatusEvent == 'Buka' ? 'selected' : '' }}>Open (Buka)</option>
+                                <option value="Sedang Berlangsung" {{ $event->StatusEvent == 'Sedang Berlangsung' ? 'selected' : '' }}>On Going (Sedang Berlangsung)</option>
                                 <option value="Tutup" {{ $event->StatusEvent == 'Tutup' ? 'selected' : '' }}>Closed (Tutup)</option>
                             </select>
                         </div>

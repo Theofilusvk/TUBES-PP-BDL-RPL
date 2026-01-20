@@ -27,8 +27,10 @@
         </div>
         <div class="flex items-center gap-3">
             <div class="relative">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
-                <input class="w-64 h-8 bg-card-dark border border-border-dark rounded text-[10px] pl-9 focus:ring-1 focus:ring-primary focus:border-primary text-slate-300 placeholder:text-slate-600 uppercase tracking-widest font-bold" placeholder="Query Object Logs..." type="text"/>
+                <form method="GET" action="<?php echo e(route('admin.triggers')); ?>">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+                    <input name="search" value="<?php echo e(request('search')); ?>" class="w-64 h-8 bg-card-dark border border-border-dark rounded text-[10px] pl-9 focus:ring-1 focus:ring-primary focus:border-primary text-slate-300 placeholder:text-slate-600 uppercase tracking-widest font-bold" placeholder="Query Object Logs..." type="text"/>
+                </form>
             </div>
             <button class="size-8 flex items-center justify-center rounded bg-card-dark border border-border-dark text-slate-400 hover:text-primary transition-colors">
                 <span class="material-symbols-outlined text-lg">sync</span>
@@ -54,7 +56,6 @@
                     <div class="w-1 h-4 bg-primary shadow-[0_0_8px_rgba(0,255,102,0.6)]"></div>
                     <h2 class="text-white text-xs font-black uppercase tracking-[0.25em]">Schema Objects Matrix</h2>
                 </div>
-                <button class="text-[9px] font-black text-black bg-primary px-4 py-1.5 uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(0,255,102,0.2)]">Dump Schema</button>
             </div>
             <div class="bg-card-dark border border-border-dark overflow-hidden">
                 <table class="w-full text-left border-collapse">

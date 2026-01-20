@@ -22,14 +22,10 @@
             </div>
         </div>
         <div class="flex items-center gap-6">
-            <div class="relative">
+            <form method="GET" action="{{ route('admin.financial') }}" class="relative">
                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl">search</span>
-                <input class="w-80 pl-12 pr-6 py-2.5 bg-card-dark border border-border-dark rounded-full text-sm focus:ring-1 focus:ring-primary focus:border-primary transition-all text-white placeholder-gray-600" placeholder="Search hash, runner, or event..." type="text"/>
-            </div>
-            <button class="bg-primary text-black px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2">
-                <span class="material-symbols-outlined text-lg">download</span>
-                Export Statement
-            </button>
+                <input name="search" value="{{ request('search') }}" class="w-80 pl-12 pr-6 py-2.5 bg-card-dark border border-border-dark rounded-full text-sm focus:ring-1 focus:ring-primary focus:border-primary transition-all text-white placeholder-gray-600" placeholder="Search hash, runner, or event..." type="text"/>
+            </form>
         </div>
     </header>
     <div class="p-10 space-y-8 overflow-y-auto custom-scrollbar">
@@ -61,9 +57,9 @@
         <div class="bg-card-dark rounded-3xl border border-border-dark overflow-hidden">
             <div class="p-8 border-b border-border-dark flex items-center justify-between">
                 <h3 class="font-black text-white text-lg uppercase italic">Recent <span class="text-primary">Nodes</span></h3>
-                 <button class="text-[10px] font-black text-gray-500 hover:text-primary transition-colors uppercase tracking-widest flex items-center gap-2">
-                    Fetch full ledger <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </button>
+                <div class="flex items-center gap-4">
+                     
+                </div>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -104,7 +100,7 @@
                                 @elseif($txn->StatusPembayaran === 'Lunas')
                                     <span class="text-[10px] font-black text-emerald-500 uppercase tracking-widest border border-emerald-500/20 px-3 py-1 rounded-lg bg-emerald-500/10 cursor-not-allowed">Verified</span>
                                 @else
-                                    <button onclick="openModal('{{ $txn->PembayaranID }}', '{{ $txn->BuktiTransfer ?? '' }}')" class="bg-surface-dark border border-border-dark hover:border-primary text-slate-300 hover:text-white px-3 py-1 rounded-lg text-[10px] uppercase font-bold tracking-widest transition-all">
+                                    <button onclick="openModal('{{ $txn->PembayaranID }}', '{{ $txn->BuktiPembayaran ?? '' }}')" class="bg-surface-dark border border-border-dark hover:border-primary text-slate-300 hover:text-white px-3 py-1 rounded-lg text-[10px] uppercase font-bold tracking-widest transition-all">
                                         Inspect
                                     </button>
                                 @endif
@@ -123,6 +119,7 @@
 
     <!-- Validation Modal -->
     <div id="validationCheckModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center">
+        <!-- ... keeping modal structure ... -->
         <div class="bg-card-dark border border-primary/50 p-1 rounded-3xl max-w-2xl w-full shadow-[0_0_50px_rgba(57,255,20,0.2)]">
             <div class="bg-background-dark rounded-[1.2rem] p-8 relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-6">
@@ -183,7 +180,13 @@
 
             // Set Image
             if (proofUrl) {
-                img.src = '/storage/' + proofUrl; // Assuming storage link
+                // Remove leading 'storage/' if present to avoid duplication, then add /storage/
+                // proofUrl from DB is 'storage/payments/...'
+                // We want '/storage/payments/...'
+                // If we append '/' + proofUrl, it becomes '/storage/payments/...' (Correct)
+                // If we append '/storage/' + proofUrl, it becomes '/storage/storage/payments/...' (Wrong)
+                
+                img.src = '/' + proofUrl; 
                 img.classList.remove('hidden');
                 placeholder.classList.add('hidden');
             } else {
